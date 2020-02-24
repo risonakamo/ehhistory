@@ -4,5 +4,5 @@ import "./popup.less";
 
 function main()
 {
-    console.log("hello");
+    console.log("hello2");
 }

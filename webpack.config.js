@@ -6,7 +6,7 @@ const ForkTsCheckerWebpackPlugin=require("fork-ts-checker-webpack-plugin");
 module.exports={
     mode:"development",
     entry:{
-        popup:"./popup/popup.js"
+        popup:"./popup/popup.ts"
     },
     output:{
         path:`${__dirname}/build`,
