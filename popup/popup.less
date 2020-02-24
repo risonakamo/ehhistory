@@ -1,6 +1,52 @@
 @charset "UTF-8";
 
+@dark-brown: #3c2819;
+@darker-brown: #3c2819;
+@default-fontsize: 12px;
+
 body
 {
+    width: 300px;
     margin: 0;
+    background-color: @dark-brown;
+    color: white;
+    font-family: "游ゴシック体","YuGothic","游ゴシック Medium",
+        "Yu Gothic Medium","游ゴシック","Yu Gothic","メイリオ","sans-serif";
+    font-size: 0;
+}
+
+.entry-row
+{
+    padding: 0 10px 3px 10px;
+    line-height: 1.5;
+
+    &:first-of-type
+    {
+        padding-top: 10px;
+    }
+
+    &:last-of-type
+    {
+        padding-bottom: 10px;
+    }
+
+    &:hover
+    {
+        background-color: @darker-brown;
+    }
+
+    .entry-name
+    {
+        display: inline-block;
+        width: 20%;
+        font-size: @default-fontsize;
+    }
+
+    .entry-content
+    {
+        display: inline-block;
+        width: 80%;
+        vertical-align: top;
+        font-size: @default-fontsize;
+    }
 }
