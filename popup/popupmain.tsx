@@ -10,7 +10,12 @@ export default class PopupMain extends React.Component
         <EntryRow name="Type" content="NHSOMETHING" notEditable={true}/>
       </div>
       <div className="submit-zone">
-        <img className="submit-plus" src="../assets/addicon.svg"/>
+        <div className="submit-icon-hold bottom">
+          <img className="submit-plus" src="../assets/addicon-brown.svg"/>
+        </div>
+        <a className="submit-icon-hold top" href="">
+          <img className="submit-plus" src="../assets/addicon-white.svg"/>
+        </a>
       </div>
     </>;
   }
