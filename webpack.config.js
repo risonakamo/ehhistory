@@ -6,7 +6,8 @@ const ForkTsCheckerWebpackPlugin=require("fork-ts-checker-webpack-plugin");
 module.exports={
     mode:"development",
     entry:{
-        popup:"./popup/popup.tsx"
+        popup:"./popup/popup.tsx",
+        nhparser:"./pageparsers/nhparser.ts"
     },
     output:{
         path:`${__dirname}/build`,

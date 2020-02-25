@@ -1,3 +1,5 @@
+import runPageParser from "../pageparsers/parserrunner";
+
 /* PopupMain() */
 export default class PopupMain extends React.Component
 {
@@ -13,6 +15,11 @@ export default class PopupMain extends React.Component
     this.nameElement=React.createRef();
     this.contentElement=React.createRef();
     this.typeElement=React.createRef();
+  }
+
+  componentDidMount()
+  {
+    runPageParser();
   }
 
   submitEntry(e:Event):void
