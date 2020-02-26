@@ -7,19 +7,36 @@ export default class PopupMain extends React.Component
   contentElement:ReactRef
   typeElement:ReactRef
 
+  state:{
+    currentName:string
+    currentGroup:string
+    currentType:string
+  }
+
   constructor(props:any)
   {
     super(props);
     this.submitEntry=this.submitEntry.bind(this);
+
+    this.state={
+      currentName:"",
+      currentGroup:"",
+      currentType:""
+    };
 
     this.nameElement=React.createRef();
     this.contentElement=React.createRef();
     this.typeElement=React.createRef();
   }
 
-  componentDidMount()
+  async componentDidMount()
   {
-    runPageParser();
+    var parserResult:PageParseResult=await runPageParser();
+
+    this.setState({
+      currentName:parserResult.name,
+      currentGroup:parserResult.group
+    });
   }
 
   submitEntry(e:Event):void
@@ -33,10 +50,9 @@ export default class PopupMain extends React.Component
   {
     return <>
       <div className="entry-rows">
-        <EntryRow name="Name" content="(C97) [Wasabi Mochi (Momosawa)] Le Malin-chan wa Sabori Jouzu? + Omake (Azur Lane)"
-          ref={this.nameElement}/>
-        <EntryRow name="Group" content="wasabi mochi" ref={this.contentElement}/>
-        <EntryRow name="Type" content="NHSOMETHING" notEditable={true} ref={this.typeElement}/>
+        <EntryRow name="Name" content={this.state.currentName} ref={this.nameElement}/>
+        <EntryRow name="Group" content={this.state.currentGroup} ref={this.contentElement}/>
+        <EntryRow name="Type" content={this.state.currentType} notEditable={true} ref={this.typeElement}/>
       </div>
       <div className="submit-zone">
         <div className="submit-icon-hold bottom">

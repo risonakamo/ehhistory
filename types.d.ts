@@ -30,3 +30,10 @@ interface LocalStorage
 {
     entries:HistoryEntry[]
 }
+
+// return data from a page parser script
+interface PageParseResult
+{
+    name:string
+    group:string
+}
