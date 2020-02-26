@@ -94,7 +94,9 @@ class EntryRow extends React.Component
 
     return <div className="entry-row">
       <div className="entry-name">{this.props.name}</div>
-      <div className="entry-content" contentEditable={editability} ref={this.contentElement}>
+      <div className="entry-content" contentEditable={editability}
+        ref={this.contentElement} suppressContentEditableWarning={true}
+      >
         {this.props.content}
       </div>
     </div>;
