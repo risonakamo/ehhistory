@@ -12,6 +12,9 @@ declare namespace JSX
 
 type DateString=string;
 type ReactRef=any;
+type Tab=any;
+
+type EntryType="NHENTAI"|"OTHER";
 
 // a single history database entry
 interface HistoryEntry
@@ -36,4 +39,9 @@ interface PageParseResult
 {
     name:string
     group:string
+}
+
+interface PageParseResultWithType extends PageParseResult
+{
+    type:EntryType
 }
