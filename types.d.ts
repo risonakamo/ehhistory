@@ -1,6 +1,16 @@
-declare const React:any;
 declare const ReactDOM:any;
 declare const chrome:any;
+
+declare namespace React
+{
+    class Component
+    {
+        constructor(props:any)
+        setState:Function
+    }
+
+    const createRef:Function
+}
 
 declare namespace JSX
 {
@@ -21,7 +31,7 @@ interface HistoryEntry
 {
     name:string
     group:string
-    type:string
+    type:EntryType
 
     link:string
 
@@ -44,4 +54,5 @@ interface PageParseResult
 interface PageParseResultWithType extends PageParseResult
 {
     type:EntryType
+    url:string
 }

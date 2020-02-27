@@ -28,14 +28,19 @@ export default function runPageParser():Promise<PageParseResultWithType>
                 resolve({
                     name:"",
                     group:"",
-                    type:"OTHER"
+                    type:"OTHER",
+                    url:taburl
                 });
                 return;
             }
 
             chrome.tabs.executeScript({file:targetPageParser},(res:PageParseResult[])=>{
-                (res[0] as PageParseResultWithType).type=tabtype;
-                resolve(res[0] as PageParseResultWithType);
+                resolve({
+                    name:res[0].name,
+                    group:res[0].group,
+                    type:tabtype,
+                    url:taburl
+                });
             });
         });
     });

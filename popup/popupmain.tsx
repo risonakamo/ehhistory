@@ -3,15 +3,17 @@ import runPageParser from "../pageparsers/parserrunner";
 /* PopupMain() */
 export default class PopupMain extends React.Component
 {
-  nameElement:ReactRef
-  contentElement:ReactRef
-  typeElement:ReactRef
-
   state:{
     currentName:string
     currentGroup:string
     currentType:string
   }
+
+  currentUrl:string
+
+  nameElement:ReactRef
+  contentElement:ReactRef
+  typeElement:ReactRef
 
   constructor(props:any)
   {
@@ -24,6 +26,8 @@ export default class PopupMain extends React.Component
       currentType:""
     };
 
+    this.currentUrl="";
+
     this.nameElement=React.createRef();
     this.contentElement=React.createRef();
     this.typeElement=React.createRef();
@@ -33,6 +37,7 @@ export default class PopupMain extends React.Component
   {
     var parserResult:PageParseResultWithType=await runPageParser();
 
+    this.currentUrl=parserResult.url;
     this.setState({
       currentName:parserResult.name,
       currentGroup:parserResult.group,
