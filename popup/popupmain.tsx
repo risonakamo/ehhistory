@@ -31,11 +31,12 @@ export default class PopupMain extends React.Component
 
   async componentDidMount()
   {
-    var parserResult:PageParseResult=await runPageParser();
+    var parserResult:PageParseResultWithType=await runPageParser();
 
     this.setState({
       currentName:parserResult.name,
-      currentGroup:parserResult.group
+      currentGroup:parserResult.group,
+      currentType:parserResult.type
     });
   }
 
