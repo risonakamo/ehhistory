@@ -21,12 +21,20 @@ declare namespace JSX
 }
 
 type DateString=string;
-type EntryType="NHENTAI"|"OTHER";
 
+// chrome tab
 interface Tab
 {
     url:string
 }
+
+// react's ref
+interface ReactRef<T>
+{
+    current:T
+}
+
+type EntryType="NHENTAI"|"OTHER";
 
 // a single history database entry
 interface HistoryEntry
@@ -57,9 +65,4 @@ interface PageParseResultWithType extends PageParseResult
 {
     type:EntryType
     url:string
-}
-
-interface ReactRef<T>
-{
-    current:T
 }
