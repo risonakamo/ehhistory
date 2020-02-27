@@ -6,14 +6,14 @@ export default class PopupMain extends React.Component
   state:{
     currentName:string
     currentGroup:string
-    currentType:string
+    currentType:EntryType
   }
 
   currentUrl:string
 
-  nameElement:ReactRef
-  contentElement:ReactRef
-  typeElement:ReactRef
+  nameElement:ReactRef<EntryRow>
+  groupElement:ReactRef<EntryRow>
+  typeElement:ReactRef<EntryRow>
 
   constructor(props:any)
   {
@@ -23,13 +23,13 @@ export default class PopupMain extends React.Component
     this.state={
       currentName:"",
       currentGroup:"",
-      currentType:""
+      currentType:null
     };
 
     this.currentUrl="";
 
     this.nameElement=React.createRef();
-    this.contentElement=React.createRef();
+    this.groupElement=React.createRef();
     this.typeElement=React.createRef();
   }
 
@@ -49,7 +49,13 @@ export default class PopupMain extends React.Component
   {
     e.preventDefault();
 
-    console.log(this.nameElement.current.getContent());
+    console.log({
+      name:this.nameElement.current.getContent(),
+      group:this.groupElement.current.getContent(),
+      type:this.state.currentType,
+      link:this.currentUrl,
+      date:new Date().toISOString()
+    } as HistoryEntry);
   }
 
   render()
@@ -57,7 +63,7 @@ export default class PopupMain extends React.Component
     return <>
       <div className="entry-rows">
         <EntryRow name="Name" content={this.state.currentName} ref={this.nameElement}/>
-        <EntryRow name="Group" content={this.state.currentGroup} ref={this.contentElement}/>
+        <EntryRow name="Group" content={this.state.currentGroup} ref={this.groupElement}/>
         <EntryRow name="Type" content={this.state.currentType} notEditable={true} ref={this.typeElement}/>
       </div>
       <div className="submit-zone">
@@ -80,7 +86,7 @@ class EntryRow extends React.Component
     content:string //the content
     notEditable:boolean //make the content field not editable
   }
-  contentElement:ReactRef
+  contentElement:ReactRef<any>
 
   constructor(props:any)
   {
