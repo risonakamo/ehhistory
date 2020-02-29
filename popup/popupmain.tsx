@@ -71,8 +71,16 @@ export default class PopupMain extends React.Component
         date:new Date().toISOString()
       });
 
-      chrome.storage.local.set({entries});
+      chrome.storage.local.set({entries},()=>{
+        window.close();
+      });
     });
+  }
+
+  // open the entry viewer in a new tab
+  openEntryViewer():void
+  {
+    chrome.tabs.create({url:"entryviewer/entryviewer.html"});
   }
 
   render()
@@ -93,7 +101,7 @@ export default class PopupMain extends React.Component
           </a>
         </div>
       </div>
-      <a className="entryviewer-link">
+      <a className="entryviewer-link" onClick={this.openEntryViewer}>
         <img src="../assets/layers-white.svg"/>
       </a>
     </>;
