@@ -78,19 +78,24 @@ export default class PopupMain extends React.Component
   render()
   {
     return <>
-      <div className="entry-rows">
-        <EntryRow name="Name" content={this.state.currentName} ref={this.nameElement}/>
-        <EntryRow name="Group" content={this.state.currentGroup} ref={this.groupElement}/>
-        <EntryRow name="Type" content={this.state.currentType} notEditable={true} ref={this.typeElement}/>
-      </div>
-      <div className="submit-zone">
-        <div className="submit-icon-hold bottom">
-          <img className="submit-plus" src="../assets/addicon-brown.svg"/>
+      <div className="add-entry-zone">
+        <div className="entry-rows">
+          <EntryRow name="Name" content={this.state.currentName} ref={this.nameElement}/>
+          <EntryRow name="Group" content={this.state.currentGroup} ref={this.groupElement}/>
+          <EntryRow name="Type" content={this.state.currentType} notEditable={true} ref={this.typeElement}/>
         </div>
-        <a className="submit-icon-hold top" href="" onClick={this.submitEntry}>
-          <img className="submit-plus" src="../assets/addicon-white.svg"/>
-        </a>
+        <div className="submit-zone">
+          <div className="submit-icon-hold bottom">
+            <img className="submit-plus" src="../assets/addicon-brown.svg"/>
+          </div>
+          <a className="submit-icon-hold top" href="" onClick={this.submitEntry}>
+            <img className="submit-plus" src="../assets/addicon-white.svg"/>
+          </a>
+        </div>
       </div>
+      <a className="entryviewer-link">
+        <img src="../assets/layers-white.svg"/>
+      </a>
     </>;
   }
 }

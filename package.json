@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "webpack",
+    "build-watch": "webpack --watch",
     "linkall": "npm link @babel/core @babel/preset-react @babel/preset-typescript babel-loader css-loader fork-ts-checker-webpack-plugin less less-loader mini-css-extract-plugin typescript webpack webpack-cli"
   },
   "devDependencies": {

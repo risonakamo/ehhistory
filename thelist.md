@@ -4,6 +4,7 @@
 - entry editor
 
 - way to get to entry viewer page
+- adding a new entry needs to close the popup
 - program keyboard behaviour for popup text fields
     - esc key resets to initial value
     - enter moves to next field? or does nothing? or immediately submits it?
