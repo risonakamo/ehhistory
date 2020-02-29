@@ -1,0 +1,1 @@
+import "./entryviewer.less";

@@ -1,10 +1,15 @@
 # next things
-- button to submit entry to database
+- entry viewer page
+- entry list display
+- entry editor
+
+- way to get to entry viewer page
 - program keyboard behaviour for popup text fields
     - esc key resets to initial value
     - enter moves to next field? or does nothing? or immediately submits it?
     - tab definitely moves to next field, moving back to the top if last field
 
+- ~~button to submit entry to database~~
 - ~~parser runner needs to return the type in the message sent back to the popup~~
 - ~~popup needs to populate type field~~
 - ~~parser runner needs logic to decide which parser to use~~

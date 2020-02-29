@@ -1,12 +1,13 @@
 const MiniCssExtractPlugin=require("mini-css-extract-plugin");
 const ForkTsCheckerWebpackPlugin=require("fork-ts-checker-webpack-plugin");
 // const CopyPlugin=require("copy-webpack-plugin");
-// const WebpackBar=require("webpackbar");
+const WebpackBar=require("webpackbar");
 
 module.exports={
     mode:"development",
     entry:{
-        popup:"./popup/popup.tsx"
+        popup:"./popup/popup.tsx",
+        entryviewer:"./entryviewer/entryviewer.tsx"
     },
     output:{
         path:`${__dirname}/build`,
@@ -39,15 +40,14 @@ module.exports={
     plugins:[
         new MiniCssExtractPlugin({
             filename:"[name]-build.css"
-        })
+        }),
 
-        // new ForkTsCheckerWebpackPlugin(),
+        new ForkTsCheckerWebpackPlugin(),
+        new WebpackBar()
 
         // new CopyPlugin([
         //     {from:"src/index.html",to:"../"}
         // ]),
-
-        // new WebpackBar()
     ],
 
     optimization:{
