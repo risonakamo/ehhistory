@@ -2,6 +2,7 @@
 - entry list display
 - entry editor
 
+- maybe change popup to use off white yellow colour
 - program keyboard behaviour for popup text fields
     - esc key resets to initial value
     - enter moves to next field? or does nothing? or immediately submits it?
