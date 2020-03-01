@@ -94,15 +94,15 @@ export default class PopupMain extends React.Component
         </div>
         <div className="submit-zone">
           <div className="submit-icon-hold bottom">
-            <img className="submit-plus" src="../assets/addicon-brown.svg"/>
+            <img className="submit-plus" src="../imgs/addicon-brown.svg"/>
           </div>
           <a className="submit-icon-hold top" href="" onClick={this.submitEntry}>
-            <img className="submit-plus" src="../assets/addicon-white.svg"/>
+            <img className="submit-plus" src="../imgs/addicon-white.svg"/>
           </a>
         </div>
       </div>
       <a className="entryviewer-link" onClick={this.openEntryViewer}>
-        <img src="../assets/layers-white.svg"/>
+        <img src="../imgs/layers-white.svg"/>
       </a>
     </>;
   }
