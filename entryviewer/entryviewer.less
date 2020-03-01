@@ -5,4 +5,86 @@
 body
 {
     background-color: @dark-brown;
+    color: @off-white-yellow;
+}
+
+h1
+{
+    margin: 0;
+    font-weight: normal;
+    font-size: 22px;
+    letter-spacing: .7px;
+}
+
+p
+{
+    margin: 0;
+    font-size: 14px;
+}
+
+.entry-row
+{
+    width: 800px;
+    font-size: 0;
+
+    &>div
+    {
+        vertical-align: top;
+    }
+
+    .image-contain
+    {
+        display: inline-block;
+        width: 150px;
+
+        .image-box
+        {
+            width: 150px;
+            height: 150px;
+            box-sizing: border-box;
+
+            &.no-image
+            {
+                border: 1px dotted fade(@off-white-yellow,50%);
+            }
+        }
+    }
+
+    .content-contain
+    {
+        display: inline-flex;
+        width: 650px;
+        min-height: 150px;
+        padding-left: 20px;
+        box-sizing: border-box;
+        align-items: center;
+
+        .content-inner
+        {
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            line-height: 1.35;
+
+            .groupname
+            {
+                margin-bottom: 13px;
+            }
+
+            .tags
+            {
+                margin-bottom: 7px;
+                color: fade(@off-white-yellow,70%);
+
+                .type1test
+                {
+                    color: #e89c18;
+                }
+            }
+
+            .date
+            {
+                opacity: .2;
+            }
+        }
+    }
 }
