@@ -1,14 +1,14 @@
-/* EntryViewerMain() */
-export default class EntryViewerMain extends React.Component
+import "./entrys.less";
+
+/* Entrys() */
+export default class Entrys extends React.Component
 {
   render()
   {
-    return <>
-      <div className="entrys">
-        <Entry/>
-        <Entry/>
-      </div>
-    </>;
+    return <div className="entrys">
+      <Entry/>
+      <Entry/>
+    </div>;
   }
 }
 
