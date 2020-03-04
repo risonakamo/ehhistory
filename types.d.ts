@@ -1,5 +1,6 @@
 declare const ReactDOM:any;
 declare const chrome:any;
+declare const moment:any;
 
 declare namespace React
 {

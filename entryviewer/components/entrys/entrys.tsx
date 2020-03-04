@@ -42,6 +42,9 @@ class Entry extends React.Component
 
   render()
   {
+    var typeelement=createTypeElement(this.props.entrydata.type);
+    var datestring=moment(this.props.entrydata.date).format("YYYY/MM/DD HH:mm");
+
     return <div className="entry-row">
       <div className="image-contain">
         <div className="image-box no-image"></div>
@@ -50,10 +53,22 @@ class Entry extends React.Component
         <div className="content-inner">
           <h1>{this.props.entrydata.name}</h1>
           <p className="groupname">{this.props.entrydata.group} (1)</p>
-          <p className="tags"><span className="type1test">TYPENAME</span> TAG1 TAG2 TAG3</p>
-          <p className="date">2020/03/01</p>
+          <p className="tags">{typeelement} TAG1 TAG2 TAG3</p>
+          <p className="date">{datestring}</p>
         </div>
       </div>
     </div>;
   }
+}
+
+// return a span element for an input type string
+function createTypeElement(type:EntryType)
+{
+  switch (type)
+  {
+    case "NHENTAI":
+      return <span className="type nhentai">NHENTAI</span>;
+  }
+
+  return <span>OTHER</span>;
 }
