@@ -2,6 +2,7 @@
 - add imgur type
 
 - entry editor
+- image fit at some point
 - think about what to do about repeat entries
     - what to do if trying to add an entry that is already there
 
