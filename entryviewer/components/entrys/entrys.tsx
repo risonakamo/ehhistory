@@ -19,7 +19,25 @@ export default class Entrys extends React.Component
   componentDidMount()
   {
     chrome.storage.local.get(null,(storage:LocalStorage)=>{
-      this.setState({entries:storage.entries?storage.entries:[]});
+      var entries=storage.entries?storage.entries:[];
+      entries.sort((a:HistoryEntry,b:HistoryEntry)=>{
+        var adate=Date.parse(a.date);
+        var bdate=Date.parse(b.date);
+
+        if (adate>bdate)
+        {
+          return -1;
+        }
+
+        else if (adate<bdate)
+        {
+          return 1;
+        }
+
+        return 0;
+      });
+
+      this.setState({entries});
     });
   }
 
@@ -51,7 +69,7 @@ class Entry extends React.Component
       </div>
       <div className="content-contain">
         <div className="content-inner">
-          <h1>{this.props.entrydata.name}</h1>
+          <h1><a href={this.props.entrydata.link}>{this.props.entrydata.name}</a></h1>
           <p className="groupname">{this.props.entrydata.group} (1)</p>
           <p className="tags">{typeelement} TAG1 TAG2 TAG3</p>
           <p className="date">{datestring}</p>
@@ -67,8 +85,8 @@ function createTypeElement(type:EntryType)
   switch (type)
   {
     case "NHENTAI":
-      return <span className="type nhentai">NHENTAI</span>;
+      return <span className="type-tag nhentai">NHENTAI</span>;
   }
 
-  return <span>OTHER</span>;
+  return <span className="type-tag other">OTHER</span>;
 }

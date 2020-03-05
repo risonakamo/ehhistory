@@ -1,6 +1,9 @@
 # next things
-- entry list display
+- add imgur type
+
 - entry editor
+- think about what to do about repeat entries
+    - what to do if trying to add an entry that is already there
 
 - maybe change popup to use off white yellow colour
 - program keyboard behaviour for popup text fields
@@ -8,6 +11,11 @@
     - enter moves to next field? or does nothing? or immediately submits it?
     - tab definitely moves to next field, moving back to the top if last field
 
+- ~~sort by date~~
+- ~~colour for "other" type~~
+- ~~do something to make groupname stand out more~~
+- ~~make the entry into a link~~
+- ~~entry list display~~
 - ~~entry viewer page~~
 - ~~way to get to entry viewer page~~
 - ~~adding a new entry needs to close the popup~~

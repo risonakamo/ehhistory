@@ -14,6 +14,7 @@ h1
     font-weight: normal;
     font-size: 22px;
     letter-spacing: .7px;
+    margin-bottom: 7px;
 }
 
 p
@@ -22,10 +23,26 @@ p
     font-size: 14px;
 }
 
-.type
+a
+{
+    color: inherit;
+    text-decoration: none;
+
+    &:hover
+    {
+        opacity: .8;
+    }
+}
+
+.type-tag
 {
     &.nhentai
     {
         color: @nhentai-pink;
+    }
+
+    &.other
+    {
+        opacity: .5;
     }
 }
