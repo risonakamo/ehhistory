@@ -18,6 +18,8 @@
 
     .editor-row
     {
+        display: flex;
+
         .field-name
         {
             display: inline-block;
@@ -32,15 +34,15 @@
 
         input
         {
-            width: 300px; //TEMP
             height: 33px; //maybe temp?
             background: transparent;
             border: none;
             font-family: @default-fonts;
             font-size: 17px;
             letter-spacing: 2.5px;
-            padding: 0;
-            margin-left: 25px;
+            padding: 3px 0 0px 25px;
+            box-sizing: border-box;
+            flex: 1;
 
             &:focus
             {
