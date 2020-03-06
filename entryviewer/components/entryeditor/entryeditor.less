@@ -1,0 +1,57 @@
+@import (reference) "../../../shared/colours.less";
+
+.entry-editor
+{
+    width: 600px;
+    min-height: 300px;
+    color: @dark-brown;
+    padding: 30px 60px 30px 60px;
+    border: 1px solid @dark-brown;
+    outline: 2px solid @off-white-yellow;
+    background-color: @off-white-yellow;
+    box-sizing: border-box;
+
+    // CHANGE LATER FOR REAL POSITIONING
+    position: absolute;
+    top: 57px;
+    left: 120.4px;
+
+    .editor-row
+    {
+        .field-name
+        {
+            display: inline-block;
+            width: 75px;
+            height: 33px; //maybe temp?
+            font-size: 16px;
+            letter-spacing: 3px;
+            padding: 5px 0 5px 0;
+            border-bottom: 1px dashed @dark-brown;
+            box-sizing: border-box;
+        }
+
+        input
+        {
+            width: 300px; //TEMP
+            height: 33px; //maybe temp?
+            background: transparent;
+            border: none;
+            font-family: @default-fonts;
+            font-size: 17px;
+            letter-spacing: 2.5px;
+            padding: 0;
+            margin-left: 25px;
+
+            &:focus
+            {
+                outline: none;
+            }
+
+            &::selection
+            {
+                background-color: @dark-brown;
+                color: @off-white-yellow;
+            }
+        }
+    }
+}

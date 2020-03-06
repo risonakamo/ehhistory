@@ -1,6 +1,9 @@
 import Entrys from "./components/entrys/entrys";
 import {attachStorageFunctions} from "../shared/storagefunctions";
 
+// TEMPORARY
+import EntryEditor from "./components/entryeditor/entryeditor";
+
 import "./entryviewer.less";
 
 /* EntryViewerMain() */
@@ -10,6 +13,7 @@ class EntryViewerMain extends React.Component
   {
     return <>
       <Entrys/>
+      <EntryEditor/>
     </>;
   }
 }
