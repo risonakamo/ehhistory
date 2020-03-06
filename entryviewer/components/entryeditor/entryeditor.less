@@ -19,6 +19,7 @@
     .editor-row
     {
         display: flex;
+        margin-bottom: 4px;
 
         .field-name
         {
@@ -32,7 +33,7 @@
             box-sizing: border-box;
         }
 
-        input
+        input,textarea
         {
             height: 33px; //maybe temp?
             background: transparent;
@@ -43,6 +44,7 @@
             padding: 3px 0 0px 25px;
             box-sizing: border-box;
             flex: 1;
+            color: @dark-brown;
 
             &:focus
             {
@@ -54,6 +56,29 @@
                 background-color: @dark-brown;
                 color: @off-white-yellow;
             }
+        }
+
+        &.name-row
+        {
+            display: block;
+            margin-bottom: 0;
+
+            .field-name
+            {
+                display: block;
+            }
+
+            textarea
+            {
+                width: 100%;
+                height: 110px;
+                resize: none;
+            }
+        }
+
+        &.group-row
+        {
+            margin-bottom: 18px;
         }
     }
 }
