@@ -1,10 +1,15 @@
 import "./entryeditor.less";
 
+/* EntryEditor(bool shown) */
 export default class EntryEditor extends React.Component
 {
+  props:{
+    shown:boolean
+  }
+
   render()
   {
-    return <div className="entry-editor">
+    return <div className="entry-editor" style={{display:this.props.shown?"":"none"}}>
       <div className="editor-row name-row">
         <div className="field-name">NAME</div>
         <textarea/>

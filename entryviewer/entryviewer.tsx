@@ -13,7 +13,7 @@ class EntryViewerMain extends React.Component
   {
     return <>
       <Entrys/>
-      <EntryEditor/>
+      <EntryEditor shown={false}/>
     </>;
   }
 }
