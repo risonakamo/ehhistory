@@ -130,7 +130,7 @@
     }
 }
 
-.editor-button
+.confirmation-button
 {
     height: 30px;
     width: 80px;
@@ -140,11 +140,23 @@
     box-sizing: border-box;
     margin: 0 8px 0 8px;
     text-align: center;
+    cursor: pointer;
+    transition: background-color .2s;
 
     &.cancel
     {
         background-color: @cancel-salmon;
         outline-color: @cancel-salmon;
+
+        &:hover
+        {
+            background-color: @cancel-salmon-lighter;
+        }
+    }
+
+    &:hover
+    {
+        background-color: @confirm-purple-darker;
     }
 
     img

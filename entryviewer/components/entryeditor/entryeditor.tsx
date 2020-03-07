@@ -34,8 +34,8 @@ export default class EntryEditor extends React.Component
       </div>
 
       <div className="editor-row button-row">
-        <EditorButton/>
-        <EditorButton cancel={true}/>
+        <ConfirmationButton/>
+        <ConfirmationButton cancel={true}/>
       </div>
     </div>;
   }
@@ -70,8 +70,8 @@ class TypeChoice extends React.PureComponent
   }
 }
 
-/* EditorButton(bool cancel) */
-class EditorButton extends React.PureComponent
+/* ConfirmationButton(bool cancel) */
+class ConfirmationButton extends React.PureComponent
 {
   props:{
     cancel:boolean //make the button appear as a cancel button
@@ -92,7 +92,7 @@ class EditorButton extends React.PureComponent
       iconLink="../imgs/close-white.svg";
     }
 
-    return <div className={`editor-button ${cancelClass}`}>
+    return <div className={`confirmation-button ${cancelClass}`}>
       <img src={iconLink}/>
     </div>;
   }
