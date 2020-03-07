@@ -32,12 +32,17 @@ export default class EntryEditor extends React.Component
           <TypeChoice type="OTHER"/>
         </div>
       </div>
+
+      <div className="editor-row button-row">
+        <EditorButton/>
+        <EditorButton cancel={true}/>
+      </div>
     </div>;
   }
 }
 
 /* TypeChoice(EntryType type, bool selected) */
-class TypeChoice extends React.Component
+class TypeChoice extends React.PureComponent
 {
   props:{
     type:EntryType
@@ -47,6 +52,7 @@ class TypeChoice extends React.Component
   render()
   {
     var selectedClass=this.props.selected?"selected":"";
+
     var typetext;
     if (!this.props.selected)
     {
@@ -60,6 +66,34 @@ class TypeChoice extends React.Component
 
     return <div className={`type-choice ${this.props.type} ${selectedClass}`}>
       {typetext}
+    </div>;
+  }
+}
+
+/* EditorButton(bool cancel) */
+class EditorButton extends React.PureComponent
+{
+  props:{
+    cancel:boolean //make the button appear as a cancel button
+  }
+
+  render()
+  {
+    var cancelClass=this.props.cancel?"cancel":"";
+
+    var iconLink;
+    if (!this.props.cancel)
+    {
+      iconLink="../imgs/checkmark-white.svg";
+    }
+
+    else
+    {
+      iconLink="../imgs/close-white.svg";
+    }
+
+    return <div className={`editor-button ${cancelClass}`}>
+      <img src={iconLink}/>
     </div>;
   }
 }

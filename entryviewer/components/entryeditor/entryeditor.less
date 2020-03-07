@@ -80,47 +80,75 @@
         {
             margin-bottom: 18px;
         }
+
+        &.button-row
+        {
+            padding-top: 20px;
+            justify-content: center;
+        }
     }
 
     .type-choice-hold
     {
         flex: 1;
         padding: 9px 0 0px 25px;
+    }
+}
 
-        .type-choice
-        {
-            display: inline-block;
-            font-size: 17px;
-            letter-spacing: 2.5px;
-            margin: 0 10px 0 10px;
-            cursor: pointer;
-            line-height: 1;
-            --main-colour: inherit;
-            color: var(--main-colour);
+.type-choice
+{
+    display: inline-block;
+    font-size: 17px;
+    letter-spacing: 2.5px;
+    margin: 0 10px 0 10px;
+    cursor: pointer;
+    line-height: 1;
+    --main-colour: inherit;
+    color: var(--main-colour);
 
-            &:hover
-            {
-                opacity: .5;
-            }
-
-            &.NHENTAI
-            {
-                --main-colour: @nhentai-pink;
-            }
-
-            &.selected
-            {
-                color: @off-white-yellow;
-                background: var(--main-colour);
-                padding: 0 8px 0 8px;
-                cursor: default;
-
-                &:hover
-                {
-                    opacity: 1;
-                }
-            }
-        }
+    &:hover
+    {
+        opacity: .5;
     }
 
+    &.NHENTAI
+    {
+        --main-colour: @nhentai-pink;
+    }
+
+    &.selected
+    {
+        color: @off-white-yellow;
+        background: var(--main-colour);
+        padding: 0 8px 0 8px;
+        cursor: default;
+
+        &:hover
+        {
+            opacity: 1;
+        }
+    }
+}
+
+.editor-button
+{
+    height: 30px;
+    width: 80px;
+    background-color: @confirm-purple;
+    border: 1px solid @off-white-yellow;
+    outline: 1px solid @confirm-purple;
+    box-sizing: border-box;
+    margin: 0 8px 0 8px;
+    text-align: center;
+
+    &.cancel
+    {
+        background-color: @cancel-salmon;
+        outline-color: @cancel-salmon;
+    }
+
+    img
+    {
+        height: 100%;
+    }
 }

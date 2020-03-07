@@ -10,6 +10,11 @@ declare namespace React
         setState:Function
     }
 
+    class PureComponent extends Component
+    {
+
+    }
+
     const createRef:Function
 }
 
