@@ -28,7 +28,7 @@ export default class EntryEditor extends React.Component
       <div className="editor-row">
         <div className="field-name">TYPE</div>
         <div className="type-choice-hold">
-          <TypeChoice type="NHENTAI"/>
+          <TypeChoice type="NHENTAI" selected={true}/>
           <TypeChoice type="OTHER"/>
         </div>
       </div>
@@ -36,15 +36,30 @@ export default class EntryEditor extends React.Component
   }
 }
 
-/* TypeChoice(EntryType type) */
+/* TypeChoice(EntryType type, bool selected) */
 class TypeChoice extends React.Component
 {
   props:{
     type:EntryType
+    selected:boolean
   }
 
   render()
   {
-    return <div className={`type-choice ${this.props.type}`}>[{this.props.type}]</div>;
+    var selectedClass=this.props.selected?"selected":"";
+    var typetext;
+    if (!this.props.selected)
+    {
+      typetext=`[${this.props.type}]`;
+    }
+
+    else
+    {
+      typetext=this.props.type;
+    }
+
+    return <div className={`type-choice ${this.props.type} ${selectedClass}`}>
+      {typetext}
+    </div>;
   }
 }

@@ -85,7 +85,7 @@
     .type-choice-hold
     {
         flex: 1;
-        padding: 3px 0 0px 25px;
+        padding: 9px 0 0px 25px;
 
         .type-choice
         {
@@ -94,6 +94,9 @@
             letter-spacing: 2.5px;
             margin: 0 10px 0 10px;
             cursor: pointer;
+            line-height: 1;
+            --main-colour: inherit;
+            color: var(--main-colour);
 
             &:hover
             {
@@ -102,7 +105,20 @@
 
             &.NHENTAI
             {
-                color: @nhentai-pink;
+                --main-colour: @nhentai-pink;
+            }
+
+            &.selected
+            {
+                color: @off-white-yellow;
+                background: var(--main-colour);
+                padding: 0 8px 0 8px;
+                cursor: default;
+
+                &:hover
+                {
+                    opacity: 1;
+                }
             }
         }
     }
