@@ -67,8 +67,8 @@ class Entry extends React.Component
       <div className="image-contain">
         <div className="image-box no-image"></div>
         <div className="edit-zone">
-          <div className="edit-button edit-button"></div>
-          <div className="edit-button delete-button"><img src="../imgs/close-white.svg"/></div>
+          <div className="edit-button edit-button"><img src="../imgs/triangle-white.svg"/></div>
+          <div className="edit-button delete-button"><img src="../imgs/close-salmon.svg"/></div>
         </div>
       </div>
       <div className="content-contain">
