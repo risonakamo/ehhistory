@@ -66,6 +66,10 @@ class Entry extends React.Component
     return <div className="entry-row">
       <div className="image-contain">
         <div className="image-box no-image"></div>
+        <div className="edit-zone">
+          <div className="edit-button edit-button"></div>
+          <div className="edit-button delete-button"><img src="../imgs/close-white.svg"/></div>
+        </div>
       </div>
       <div className="content-contain">
         <div className="content-inner">

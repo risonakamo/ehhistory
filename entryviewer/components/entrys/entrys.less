@@ -19,6 +19,7 @@
 
     .image-contain
     {
+        position: relative;
         display: inline-block;
         width: 150px;
 
@@ -31,6 +32,38 @@
             &.no-image
             {
                 border: 1px dotted fade(@off-white-yellow,50%);
+            }
+        }
+
+        .edit-zone
+        {
+            position: absolute;
+            width: 50px;
+            height: 148px;
+            top: 1px;
+            left: -50px;
+
+
+            .edit-button
+            {
+                cursor: pointer;
+
+                &:hover
+                {
+                    border-right: 3px solid;
+                }
+
+                &.edit-button
+                {
+                    height: 70%;
+                    border-color: @off-white-yellow;
+                }
+
+                &.delete-button
+                {
+                    height: 30%;
+                    border-color: @cancel-salmon;
+                }
             }
         }
     }
