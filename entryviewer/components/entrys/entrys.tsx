@@ -1,7 +1,7 @@
 import "./entrys.less";
 
 /* Entrys(function loadEditor) */
-export default class Entrys extends React.Component
+export default class Entrys extends React.PureComponent
 {
   props:{
     loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
@@ -56,7 +56,7 @@ export default class Entrys extends React.Component
 }
 
 /* Entry(HistoryEntry entrydata, function loadEditor) */
-class Entry extends React.Component
+class Entry extends React.PureComponent
 {
   props:{
     entrydata:HistoryEntry //the entry data object for this element
@@ -77,6 +77,7 @@ class Entry extends React.Component
 
   render()
   {
+    console.log("entry render");
     var typeelement=createTypeElement(this.props.entrydata.type);
     var datestring=moment(this.props.entrydata.date).format("YYYY/MM/DD HH:mm");
 
