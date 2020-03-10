@@ -49,6 +49,7 @@ interface HistoryEntry
     group:string
     type:EntryType
 
+    image?:string
     link:string
 
     date:DateString

@@ -1,10 +1,16 @@
 import "./entryeditor.less";
 
-/* EntryEditor(bool shown) */
+/* EntryEditor(bool shown, HistoryEntry loadEntry) */
 export default class EntryEditor extends React.Component
 {
   props:{
     shown:boolean
+    loadEntry:HistoryEntry //entry to be edited right now
+  }
+
+  constructor(props:any)
+  {
+    super(props);
   }
 
   render()
@@ -12,28 +18,28 @@ export default class EntryEditor extends React.Component
     return <div className="entry-editor" style={{display:this.props.shown?"":"none"}}>
       <div className="editor-row name-row">
         <div className="field-name">NAME</div>
-        <textarea/>
+        <textarea value={this.props.loadEntry.name}/>
       </div>
 
       <div className="editor-row group-row">
         <div className="field-name">GROUP</div>
-        <input type="text"/>
+        <input type="text" value={this.props.loadEntry.group}/>
       </div>
 
       <div className="editor-row">
         <div className="field-name">URL</div>
-        <input type="text"/>
+        <input type="text" value={this.props.loadEntry.link}/>
       </div>
 
       <div className="editor-row">
         <div className="field-name">IMAGE</div>
-        <input type="text"/>
+        <input type="text" value={this.props.loadEntry.link}/>
       </div>
 
       <div className="editor-row">
         <div className="field-name">TYPE</div>
         <div className="type-choice-hold">
-          <TypeChoice type="NHENTAI" selected={true}/>
+          <TypeChoice type="NHENTAI"/>
           <TypeChoice type="OTHER"/>
         </div>
       </div>

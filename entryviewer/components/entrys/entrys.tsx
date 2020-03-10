@@ -1,8 +1,12 @@
 import "./entrys.less";
 
-/* Entrys() */
+/* Entrys(function loadEditor) */
 export default class Entrys extends React.Component
 {
+  props:{
+    loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
+  }
+
   state:{
     entries:HistoryEntry[] //array of all entry data
   }
@@ -45,17 +49,30 @@ export default class Entrys extends React.Component
   {
     return <div className="entrys">
       {this.state.entries.map((x:HistoryEntry,i:number)=>{
-        return <Entry entrydata={x} key={i}/>;
+        return <Entry entrydata={x} key={i} loadEditor={this.props.loadEditor}/>;
       })}
     </div>;
   }
 }
 
-/* Entry(HistoryEntry entrydata) */
+/* Entry(HistoryEntry entrydata, function loadEditor) */
 class Entry extends React.Component
 {
   props:{
     entrydata:HistoryEntry //the entry data object for this element
+    loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
+  }
+
+  constructor(props:any)
+  {
+    super(props);
+    this.editButtonClick=this.editButtonClick.bind(this);
+  }
+
+  // activate load editor
+  editButtonClick()
+  {
+    this.props.loadEditor(this.props.entrydata);
   }
 
   render()
@@ -67,7 +84,7 @@ class Entry extends React.Component
       <div className="image-contain">
         <div className="image-box no-image"></div>
         <div className="edit-zone">
-          <div className="edit-button edit-button"><img src="../imgs/triangle-white.svg"/></div>
+          <div className="edit-button edit-button" onClick={this.editButtonClick}><img src="../imgs/triangle-white.svg"/></div>
           <div className="edit-button delete-button"><img src="../imgs/close-salmon.svg"/></div>
         </div>
       </div>
