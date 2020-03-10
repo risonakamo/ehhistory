@@ -18,6 +18,7 @@ class EntryViewerMain extends React.Component
   {
     super(props);
     this.loadEditor=this.loadEditor.bind(this);
+    this.closeEditor=this.closeEditor.bind(this);
 
     this.state={
       currentEditEntry:{
@@ -41,11 +42,18 @@ class EntryViewerMain extends React.Component
     });
   }
 
+  // close the editor without changes
+  closeEditor():void
+  {
+    this.setState({editorShown:false});
+  }
+
   render()
   {
     return <>
       <Entrys loadEditor={this.loadEditor}/>
-      <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}/>
+      <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
+        closeEditor={this.closeEditor}/>
     </>;
   }
 }

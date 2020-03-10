@@ -1,16 +1,12 @@
 import "./entryeditor.less";
 
-/* EntryEditor(bool shown, HistoryEntry loadEntry) */
+/* EntryEditor(bool shown, HistoryEntry loadEntry, function closeEditor) */
 export default class EntryEditor extends React.Component
 {
   props:{
     shown:boolean
     loadEntry:HistoryEntry //entry to be edited right now
-  }
-
-  constructor(props:any)
-  {
-    super(props);
+    closeEditor:()=>void //parent function to close editor
   }
 
   render()
@@ -46,7 +42,7 @@ export default class EntryEditor extends React.Component
 
       <div className="editor-row button-row">
         <ConfirmationButton/>
-        <ConfirmationButton cancel={true}/>
+        <ConfirmationButton cancel={true} onClick={this.props.closeEditor}/>
       </div>
     </div>;
   }
@@ -81,11 +77,12 @@ class TypeChoice extends React.PureComponent
   }
 }
 
-/* ConfirmationButton(bool cancel) */
+/* ConfirmationButton(bool cancel, function onClick) */
 class ConfirmationButton extends React.PureComponent
 {
   props:{
     cancel:boolean //make the button appear as a cancel button
+    onClick:()=>void
   }
 
   render()
@@ -103,7 +100,7 @@ class ConfirmationButton extends React.PureComponent
       iconLink="../imgs/close-white.svg";
     }
 
-    return <div className={`confirmation-button ${cancelClass}`}>
+    return <div className={`confirmation-button ${cancelClass}`} onClick={this.props.onClick}>
       <img src={iconLink}/>
     </div>;
   }
