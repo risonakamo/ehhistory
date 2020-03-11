@@ -23,7 +23,8 @@ export default class Entrys extends React.PureComponent
   componentDidMount()
   {
     chrome.storage.local.get(null,(storage:LocalStorage)=>{
-      var entries=storage.entries?storage.entries:[];
+      var entries=storage.entries || [];
+
       entries.sort((a:HistoryEntry,b:HistoryEntry)=>{
         var adate=Date.parse(a.date);
         var bdate=Date.parse(b.date);
@@ -39,6 +40,12 @@ export default class Entrys extends React.PureComponent
         }
 
         return 0;
+      });
+
+      entries=entries.map((x:HistoryEntry)=>{
+        x.image=x.image || "";
+
+        return x;
       });
 
       this.setState({entries});

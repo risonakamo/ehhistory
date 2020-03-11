@@ -36,6 +36,11 @@ class EntryViewerMain extends React.Component
   // load the editor with a history entry
   loadEditor(entry:HistoryEntry):void
   {
+    if (!entry.image)
+    {
+      entry.image="";
+    }
+
     this.setState({
       currentEditEntry:entry,
       editorShown:true

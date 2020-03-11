@@ -1,19 +1,24 @@
 import "./entryeditor.less";
 
+interface EntryEditorProps
+{
+  shown:boolean
+  loadEntry:HistoryEntry //entry to be edited right now
+  closeEditor:()=>void //parent function to close editor
+}
+
+interface EntryEditorState
+{
+  currentEditEntry:HistoryEntry //state of current entry being edited
+}
+
 /* EntryEditor(bool shown, HistoryEntry loadEntry, function closeEditor) */
 export default class EntryEditor extends React.Component
 {
-  props:{
-    shown:boolean
-    loadEntry:HistoryEntry //entry to be edited right now
-    closeEditor:()=>void //parent function to close editor
-  }
+  props:EntryEditorProps
+  state:EntryEditorState
 
-  state:{
-    currentEditEntry:HistoryEntry //state of current entry being edited
-  }
-
-  constructor(props:any)
+  constructor(props:EntryEditorProps)
   {
     super(props);
     this.entryEditChange=this.entryEditChange.bind(this);
@@ -30,8 +35,14 @@ export default class EntryEditor extends React.Component
     };
   }
 
-  shouldComponentUpdate(newprops:any,newstate:any)
+  shouldComponentUpdate(newprops:EntryEditorProps,newstate:EntryEditorState)
   {
+    if (this.props!=newprops)
+    {
+      this.synchroniseEditorState(newprops.loadEntry);
+      return false;
+    }
+
     return true;
   }
 
@@ -44,6 +55,12 @@ export default class EntryEditor extends React.Component
         [e.target.name]:e.target.value
       }
     });
+  }
+
+  // set the editor state to an incoming load entry
+  synchroniseEditorState(loadEntry:HistoryEntry)
+  {
+    this.setState({currentEditEntry:loadEntry});
   }
 
   render()

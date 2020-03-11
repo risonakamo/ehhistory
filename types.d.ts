@@ -49,7 +49,8 @@ interface HistoryEntry
     group:string
     type:EntryType
 
-    image?:string
+    image?:string //might not exist when in database, but should definitely exist
+                  //everywhere outside
     link:string
 
     date:DateString
