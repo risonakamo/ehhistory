@@ -77,7 +77,6 @@ class Entry extends React.PureComponent
 
   render()
   {
-    console.log("entry render");
     var typeelement=createTypeElement(this.props.entrydata.type);
     var datestring=moment(this.props.entrydata.date).format("YYYY/MM/DD HH:mm");
 

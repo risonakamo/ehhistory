@@ -9,27 +9,64 @@ export default class EntryEditor extends React.Component
     closeEditor:()=>void //parent function to close editor
   }
 
+  state:{
+    currentEditEntry:HistoryEntry //state of current entry being edited
+  }
+
+  constructor(props:any)
+  {
+    super(props);
+    this.entryEditChange=this.entryEditChange.bind(this);
+
+    this.state={
+      currentEditEntry:{
+        name:"",
+        group:"",
+        type:"OTHER",
+        image:"",
+        link:"",
+        date:""
+      }
+    };
+  }
+
+  shouldComponentUpdate(newprops:any,newstate:any)
+  {
+    return true;
+  }
+
+  // handle entry editor textbox change events
+  entryEditChange(e:any)
+  {
+    this.setState({
+      currentEditEntry:{
+        ...this.state.currentEditEntry,
+        [e.target.name]:e.target.value
+      }
+    });
+  }
+
   render()
   {
     return <div className="entry-editor" style={{display:this.props.shown?"":"none"}}>
       <div className="editor-row name-row">
         <div className="field-name">NAME</div>
-        <textarea value={this.props.loadEntry.name}/>
+        <textarea value={this.state.currentEditEntry.name} name="name" onChange={this.entryEditChange}/>
       </div>
 
       <div className="editor-row group-row">
         <div className="field-name">GROUP</div>
-        <input type="text" value={this.props.loadEntry.group}/>
+        <input type="text" value={this.state.currentEditEntry.group} name="group" onChange={this.entryEditChange}/>
       </div>
 
       <div className="editor-row">
         <div className="field-name">URL</div>
-        <input type="text" value={this.props.loadEntry.link}/>
+        <input type="text" value={this.state.currentEditEntry.link} name="link" onChange={this.entryEditChange}/>
       </div>
 
       <div className="editor-row">
         <div className="field-name">IMAGE</div>
-        <input type="text" value={this.props.loadEntry.link}/>
+        <input type="text" value={this.state.currentEditEntry.image} name="image" onChange={this.entryEditChange}/>
       </div>
 
       <div className="editor-row">
