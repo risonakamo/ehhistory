@@ -1,4 +1,5 @@
 import Entrys from "./components/entrys/entrys";
+import store from "./store/entryviewerstore";
 import {attachStorageFunctions} from "../shared/storagefunctions";
 
 // TEMPORARY
@@ -65,7 +66,9 @@ class EntryViewerMain extends React.Component
 
 function main()
 {
-    ReactDOM.render(<EntryViewerMain/>,document.querySelector(".main"));
+    ReactDOM.render(<ReactRedux.Provider store={store}><EntryViewerMain/></ReactRedux.Provider>,
+      document.querySelector(".main"));
+
     attachStorageFunctions();
 }
 

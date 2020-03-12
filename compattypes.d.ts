@@ -1,7 +1,9 @@
 declare const ReactDOM:any;
 declare const chrome:any;
 declare const moment:any;
-declare const createStore:any;
+
+declare const Redux:any;
+declare const ReactRedux:any;
 
 declare namespace React
 {
@@ -39,4 +41,9 @@ interface Tab
 interface ReactRef<T>
 {
     current:T
+}
+
+interface ReduxStore
+{
+    dispatch:Function
 }
