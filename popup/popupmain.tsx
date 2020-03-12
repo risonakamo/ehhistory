@@ -50,28 +50,20 @@ export default class PopupMain extends React.Component
   {
     e.preventDefault();
 
-    chrome.storage.local.get("entries",(storageResult:LocalStorage)=>{
-      var entries:HistoryEntry[];
+    chrome.storage.local.get(["entries","maxId"],(storageResult:LocalStorage)=>{
+      storageResult.entries=storageResult.entries || {};
+      storageResult.maxId=storageResult.maxId || 0;
 
-      if (!storageResult.entries)
-      {
-        entries=[];
-      }
-
-      else
-      {
-        entries=storageResult.entries;
-      }
-
-      entries.push({
+      storageResult.entries[++storageResult.maxId]={
         name:this.nameElement.current.getContent(),
         group:this.groupElement.current.getContent(),
         type:this.state.currentType,
         link:this.currentUrl,
+        image:"",
         date:new Date().toISOString()
-      });
+      };
 
-      chrome.storage.local.set({entries},()=>{
+      chrome.storage.local.set(storageResult,()=>{
         window.close();
       });
     });

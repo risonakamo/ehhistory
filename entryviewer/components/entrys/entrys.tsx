@@ -23,7 +23,7 @@ export default class Entrys extends React.PureComponent
   componentDidMount()
   {
     chrome.storage.local.get(null,(storage:LocalStorage)=>{
-      var entries=storage.entries || [];
+      var entries=Object.values(storage.entries) || [];
 
       entries.sort((a:HistoryEntry,b:HistoryEntry)=>{
         var adate=Date.parse(a.date);

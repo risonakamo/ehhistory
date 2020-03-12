@@ -1,45 +1,3 @@
-declare const ReactDOM:any;
-declare const chrome:any;
-declare const moment:any;
-
-declare namespace React
-{
-    class Component
-    {
-        constructor(props:any)
-        setState:Function
-    }
-
-    class PureComponent extends Component
-    {
-
-    }
-
-    const createRef:Function
-}
-
-declare namespace JSX
-{
-    interface IntrinsicElements
-    {
-        [key:string]:any
-    }
-}
-
-type DateString=string;
-
-// chrome tab
-interface Tab
-{
-    url:string
-}
-
-// react's ref
-interface ReactRef<T>
-{
-    current:T
-}
-
 type EntryType="NHENTAI"|"OTHER";
 
 // a single history database entry
@@ -59,7 +17,13 @@ interface HistoryEntry
 // the local storage
 interface LocalStorage
 {
-    entries:HistoryEntry[]
+    entries:HistoryEntryDict
+    maxId:number
+}
+
+interface HistoryEntryDict
+{
+    [id:number]:HistoryEntry
 }
 
 // return data from a page parser script
