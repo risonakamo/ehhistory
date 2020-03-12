@@ -24,6 +24,7 @@ export default class EntryEditor extends React.Component
   {
     super(props);
     this.entryEditChange=this.entryEditChange.bind(this);
+    this.submitChangedEntry=this.submitChangedEntry.bind(this);
 
     this.state={
       currentEditEntry:{
@@ -66,6 +67,13 @@ export default class EntryEditor extends React.Component
     this.setState({currentEditEntry:loadEntry});
   }
 
+  // submit the current edited entry to the storage
+  submitChangedEntry()
+  {
+    updateEntry(this.state.currentEditEntry);
+    this.props.closeEditor();
+  }
+
   render()
   {
     return <div className="entry-editor" style={{display:this.props.shown?"":"none"}}>
@@ -98,7 +106,7 @@ export default class EntryEditor extends React.Component
       </div>
 
       <div className="editor-row button-row">
-        <ConfirmationButton/>
+        <ConfirmationButton onClick={this.submitChangedEntry}/>
         <ConfirmationButton cancel={true} onClick={this.props.closeEditor}/>
       </div>
     </div>;

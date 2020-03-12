@@ -1,6 +1,7 @@
-export interface EntryViewerStore extends ReduxStore
+export interface EntryViewerStore
 {
     entries:HistoryEntryDict
+    dispatch:(action:StoreAction)=>void
 }
 
 var store:EntryViewerStore;
@@ -24,24 +25,25 @@ export function updateEntriesFromStorage():void
         store.dispatch({
             type:"replaceEntries",
             entries
-        } as ReplaceEntriesAction);
+        });
     });
 }
 
-// update an entry with the provided index with the new entry
-export function updateEntry(entry:HistoryEntry,entryIndex:number):void
+// update an entry in storage with the provided entry. the id should
+// already be inside the entry.
+export function updateEntry(entry:HistoryEntry):void
 {
     chrome.storage.local.get("entries",(storage:LocalStorage)=>{
         var entries=storage.entries || {};
 
-        entries[entryIndex]=entry;
+        entries[entry.id]=entry;
 
         chrome.storage.local.set({entries});
 
         store.dispatch({
             type:"replaceEntries",
             entries
-        } as ReplaceEntriesAction);
+        });
     });
 }
 

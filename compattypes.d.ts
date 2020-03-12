@@ -42,8 +42,3 @@ interface ReactRef<T>
 {
     current:T
 }
-
-interface ReduxStore
-{
-    dispatch:Function
-}
