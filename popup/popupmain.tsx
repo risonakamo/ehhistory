@@ -53,8 +53,10 @@ export default class PopupMain extends React.Component
     chrome.storage.local.get(["entries","maxId"],(storageResult:LocalStorage)=>{
       storageResult.entries=storageResult.entries || {};
       storageResult.maxId=storageResult.maxId || 0;
+      ++storageResult.maxId;
 
-      storageResult.entries[++storageResult.maxId]={
+      storageResult.entries[storageResult.maxId]={
+        id:storageResult.maxId,
         name:this.nameElement.current.getContent(),
         group:this.groupElement.current.getContent(),
         type:this.state.currentType,

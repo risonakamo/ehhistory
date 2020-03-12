@@ -1,9 +1,9 @@
-export function clearAll()
+function clearAll()
 {
     chrome.storage.local.clear();
 }
 
-export function showAll()
+function showAll()
 {
     chrome.storage.local.get(null,(storage:LocalStorage)=>{
         console.log(storage);
@@ -34,10 +34,26 @@ function convertStorageArrayToDict()
     });
 }
 
+// update HistoryEntry objects in the entries with the id number
+function fixMissingIds()
+{
+    chrome.storage.local.get("entries",(storage:LocalStorage)=>{
+        var entries=storage.entries || {};
+
+        for (var x in entries)
+        {
+            entries[x].id=parseInt(x);
+        }
+
+        chrome.storage.local.set({entries});
+    });
+}
+
 // call this function to attach storage functions to dom window
 export function attachStorageFunctions()
 {
     (window as any).showAll=showAll;
     (window as any).clearAll=clearAll;
     (window as any).convertStorageArrayToDict=convertStorageArrayToDict;
+    (window as any).fixMissingIds=fixMissingIds;
 }

@@ -23,6 +23,7 @@ class EntryViewerMain extends React.Component
 
     this.state={
       currentEditEntry:{
+        id:0,
         name:"",
         group:"",
         type:"OTHER",

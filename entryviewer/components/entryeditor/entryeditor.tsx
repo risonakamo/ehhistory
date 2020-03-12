@@ -27,6 +27,7 @@ export default class EntryEditor extends React.Component
 
     this.state={
       currentEditEntry:{
+        id:0,
         name:"",
         group:"",
         type:"OTHER",

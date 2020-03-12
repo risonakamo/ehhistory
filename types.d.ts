@@ -3,6 +3,7 @@ type EntryType="NHENTAI"|"OTHER";
 // a single history database entry
 interface HistoryEntry
 {
+    id:number
     name:string
     group:string
     type:EntryType
