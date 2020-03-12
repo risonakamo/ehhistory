@@ -28,6 +28,23 @@ export function updateEntriesFromStorage():void
     });
 }
 
+// update an entry with the provided index with the new entry
+export function updateEntry(entry:HistoryEntry,entryIndex:number):void
+{
+    chrome.storage.local.get("entries",(storage:LocalStorage)=>{
+        var entries=storage.entries || {};
+
+        entries[entryIndex]=entry;
+
+        chrome.storage.local.set({entries});
+
+        store.dispatch({
+            type:"replaceEntries",
+            entries
+        } as ReplaceEntriesAction);
+    });
+}
+
 // REDUCERS
 function entriesReduce(entries:HistoryEntryDict,act:StoreAction):HistoryEntryDict
 {

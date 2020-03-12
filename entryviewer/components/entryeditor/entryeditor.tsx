@@ -1,3 +1,5 @@
+import {updateEntry} from "../../store/entryviewerstore";
+
 import "./entryeditor.less";
 
 interface EntryEditorProps
