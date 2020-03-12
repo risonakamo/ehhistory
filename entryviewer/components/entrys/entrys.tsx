@@ -2,7 +2,7 @@ import {EntryViewerStore,updateEntriesFromStorage} from "../../store/entryviewer
 
 import "./entrys.less";
 
-/* Entrys(function loadEditor) */
+/* Entrys(function loadEditor, store-HistoryEntryDict entries) */
 class Entrys extends React.PureComponent
 {
   props:{
@@ -10,55 +10,15 @@ class Entrys extends React.PureComponent
     entries:HistoryEntryDict
   }
 
-  state:{
-    entries:HistoryEntry[] //array of all entry data
-  }
-
-  constructor(props:any)
-  {
-    super(props);
-
-    this.state={
-      entries:[]
-    };
-  }
-
   componentDidMount()
   {
-    chrome.storage.local.get(null,(storage:LocalStorage)=>{
-      var entries=Object.values(storage.entries) || [];
-
-      entries.sort((a:HistoryEntry,b:HistoryEntry)=>{
-        var adate=Date.parse(a.date);
-        var bdate=Date.parse(b.date);
-
-        if (adate>bdate)
-        {
-          return -1;
-        }
-
-        else if (adate<bdate)
-        {
-          return 1;
-        }
-
-        return 0;
-      });
-
-      entries=entries.map((x:HistoryEntry)=>{
-        x.image=x.image || "";
-
-        return x;
-      });
-
-      this.setState({entries});
-    });
+    updateEntriesFromStorage();
   }
 
   render()
   {
     return <div className="entrys">
-      {this.state.entries.map((x:HistoryEntry,i:number)=>{
+      {historyEntryDictToArray(this.props.entries).map((x:HistoryEntry,i:number)=>{
         return <Entry entrydata={x} key={i} loadEditor={this.props.loadEditor}/>;
       })}
     </div>;
@@ -120,6 +80,31 @@ function createTypeElement(type:EntryType)
   }
 
   return <span className="type-tag other">OTHER</span>;
+}
+
+// converts a history entry dict to date sorted array for render
+function historyEntryDictToArray(entries:HistoryEntryDict):HistoryEntry[]
+{
+  var entriesArray=Object.values(entries);
+
+  entriesArray.sort((a:HistoryEntry,b:HistoryEntry)=>{
+    var adate=Date.parse(a.date);
+    var bdate=Date.parse(b.date);
+
+    if (adate>bdate)
+    {
+      return -1;
+    }
+
+    else if (adate<bdate)
+    {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  return entriesArray;
 }
 
 export default ReactRedux.connect((storestate:EntryViewerStore)=>{
