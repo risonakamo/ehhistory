@@ -1,6 +1,7 @@
 declare const ReactDOM:any;
 declare const chrome:any;
 declare const moment:any;
+declare const createStore:any;
 
 declare namespace React
 {
