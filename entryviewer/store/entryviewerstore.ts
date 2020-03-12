@@ -1,9 +1,9 @@
-interface TheStore extends ReduxStore
+export interface EntryViewerStore extends ReduxStore
 {
     entries:HistoryEntryDict
 }
 
-var store:TheStore;
+var store:EntryViewerStore;
 
 // ACTIONS
 interface ReplaceEntriesAction
@@ -40,12 +40,12 @@ function entriesReduce(entries:HistoryEntryDict,act:StoreAction):HistoryEntryDic
 }
 
 // STORE DEFINITION
-store=Redux.createStore((state:TheStore,act:StoreAction)=>{
+store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
     return {
         entries:entriesReduce(state.entries,act)
     };
 },{
     entries:{}
-} as TheStore);
+} as EntryViewerStore);
 
 export default store;

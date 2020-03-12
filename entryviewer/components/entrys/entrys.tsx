@@ -1,10 +1,13 @@
+import {EntryViewerStore,updateEntriesFromStorage} from "../../store/entryviewerstore";
+
 import "./entrys.less";
 
 /* Entrys(function loadEditor) */
-export default class Entrys extends React.PureComponent
+class Entrys extends React.PureComponent
 {
   props:{
     loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
+    entries:HistoryEntryDict
   }
 
   state:{
@@ -118,3 +121,9 @@ function createTypeElement(type:EntryType)
 
   return <span className="type-tag other">OTHER</span>;
 }
+
+export default ReactRedux.connect((storestate:EntryViewerStore)=>{
+  return {
+    entries:storestate.entries
+  };
+})(Entrys);
