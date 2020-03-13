@@ -100,8 +100,7 @@ export default class EntryEditor extends React.Component
       <div className="editor-row">
         <div className="field-name">TYPE</div>
         <div className="type-choice-hold">
-          <TypeChoice type="NHENTAI"/>
-          <TypeChoice type="OTHER"/>
+          {createTypeChoices(this.state.currentEditEntry.type)}
         </div>
       </div>
 
@@ -169,4 +168,17 @@ class ConfirmationButton extends React.PureComponent
       <img src={iconLink}/>
     </div>;
   }
+}
+
+const _allTypeChoices:EntryType[]=[
+  "NHENTAI",
+  "OTHER"
+];
+
+// return array of type choices, with the current choice set as selected
+function createTypeChoices(currentChoice:EntryType):TypeChoice[]
+{
+  return _allTypeChoices.map((x:EntryType)=>{
+    return <TypeChoice type={x} selected={x==currentChoice}/>;
+  });
 }
