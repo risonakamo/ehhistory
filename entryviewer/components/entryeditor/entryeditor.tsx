@@ -25,6 +25,7 @@ export default class EntryEditor extends React.Component
     super(props);
     this.entryEditChange=this.entryEditChange.bind(this);
     this.submitChangedEntry=this.submitChangedEntry.bind(this);
+    this.typeChangedHandler=this.typeChangedHandler.bind(this);
 
     this.state={
       currentEditEntry:{
@@ -51,12 +52,23 @@ export default class EntryEditor extends React.Component
   }
 
   // handle entry editor textbox change events
-  entryEditChange(e:any)
+  private entryEditChange(e:any)
   {
     this.setState({
       currentEditEntry:{
         ...this.state.currentEditEntry,
         [e.target.name]:e.target.value
+      }
+    });
+  }
+
+  // handler for type changing
+  typeChangedHandler(newtype:EntryType)
+  {
+    this.setState({
+      currentEditEntry:{
+        ...this.state.currentEditEntry,
+        type:newtype
       }
     });
   }
@@ -100,7 +112,7 @@ export default class EntryEditor extends React.Component
       <div className="editor-row">
         <div className="field-name">TYPE</div>
         <div className="type-choice-hold">
-          {createTypeChoices(this.state.currentEditEntry.type)}
+          {createTypeChoices(this.state.currentEditEntry.type,this.typeChangedHandler)}
         </div>
       </div>
 
@@ -112,12 +124,24 @@ export default class EntryEditor extends React.Component
   }
 }
 
-/* TypeChoice(EntryType type, bool selected) */
+/* TypeChoice(EntryType type, bool selected, function typeChosen) */
 class TypeChoice extends React.PureComponent
 {
   props:{
     type:EntryType
     selected:boolean
+    typeChosen:(selectedType:EntryType)=>void //callback choice is clicked, returns the choice
+  }
+
+  constructor(props:any)
+  {
+    super(props);
+    this.clickHandler=this.clickHandler.bind(this);
+  }
+
+  clickHandler()
+  {
+    this.props.typeChosen(this.props.type);
   }
 
   render()
@@ -135,7 +159,7 @@ class TypeChoice extends React.PureComponent
       typetext=this.props.type;
     }
 
-    return <div className={`type-choice ${this.props.type} ${selectedClass}`}>
+    return <div className={`type-choice ${this.props.type} ${selectedClass}`} onClick={this.clickHandler}>
       {typetext}
     </div>;
   }
@@ -176,9 +200,9 @@ const _allTypeChoices:EntryType[]=[
 ];
 
 // return array of type choices, with the current choice set as selected
-function createTypeChoices(currentChoice:EntryType):TypeChoice[]
+function createTypeChoices(currentChoice:EntryType,typeChosen:(type:EntryType)=>void):TypeChoice[]
 {
   return _allTypeChoices.map((x:EntryType)=>{
-    return <TypeChoice type={x} selected={x==currentChoice}/>;
+    return <TypeChoice type={x} selected={x==currentChoice} typeChosen={typeChosen} key={x}/>;
   });
 }
