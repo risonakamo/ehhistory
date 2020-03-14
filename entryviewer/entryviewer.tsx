@@ -2,6 +2,7 @@ import Entrys from "./components/entrys/entrys";
 import store from "./store/entryviewerstore";
 import {attachStorageFunctions} from "../shared/storagefunctions";
 import ImageLinkEditor from "./components/imagelinkedit/imagelinkedit";
+import EditorBar from "./components/editorbar/editorbar";
 
 // TEMPORARY
 import EntryEditor from "./components/entryeditor/entryeditor";
@@ -59,10 +60,11 @@ class EntryViewerMain extends React.Component
   render()
   {
     return <>
+      <EditorBar/>
       <Entrys loadEditor={this.loadEditor}/>
       <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
         closeEditor={this.closeEditor}/>
-      <ImageLinkEditor/>
+      <ImageLinkEditor showing={false}/>
     </>;
   }
 }

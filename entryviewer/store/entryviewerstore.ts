@@ -1,21 +1,28 @@
 export interface EntryViewerStore
 {
     entries:HistoryEntryDict
+    imageEditMode:boolean
     dispatch:(action:StoreAction)=>void
 }
 
 var store:EntryViewerStore;
 
-// ACTIONS
+// --- ACTIONS ---
 interface ReplaceEntriesAction
 {
     type:"replaceEntries"
     entries:HistoryEntryDict
 }
 
-type StoreAction=ReplaceEntriesAction;
+interface ChangeImageModeAction
+{
+    type:"changeImageMode"
+    mode:boolean
+}
 
-// ACCESS FUNCTIONS
+type StoreAction=ReplaceEntriesAction|ChangeImageModeAction;
+
+// --- ACCESS FUNCTIONS ---
 // update the store by syncing with local storage
 export function updateEntriesFromStorage():void
 {
@@ -47,7 +54,15 @@ export function updateEntry(entry:HistoryEntry):void
     });
 }
 
-// REDUCERS
+export function setImageEditMode(newmode:boolean):void
+{
+    store.dispatch({
+        type:"changeImageMode",
+        mode:newmode
+    });
+}
+
+// --- STORE REDUCERS ---
 function entriesReduce(entries:HistoryEntryDict,act:StoreAction):HistoryEntryDict
 {
     if (act.type=="replaceEntries")
@@ -58,13 +73,25 @@ function entriesReduce(entries:HistoryEntryDict,act:StoreAction):HistoryEntryDic
     return entries;
 }
 
-// STORE DEFINITION
+function imageEditModeReduce(currentMode:boolean,act:StoreAction):boolean
+{
+    if (act.type=="changeImageMode")
+    {
+        return act.mode;
+    }
+
+    return currentMode;
+}
+
+// --- STORE DEFINITION ---
 store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
     return {
-        entries:entriesReduce(state.entries,act)
+        entries:entriesReduce(state.entries,act),
+        imageEditMode:imageEditModeReduce(state.imageEditMode,act)
     };
 },{
-    entries:{}
+    entries:{},
+    imageEditMode:false
 } as EntryViewerStore);
 
 export default store;

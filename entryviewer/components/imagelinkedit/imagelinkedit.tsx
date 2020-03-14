@@ -1,11 +1,15 @@
 import "./imagelinkedit.less";
 
-/* ImageLinkEditor() */
+/* ImageLinkEditor(bool showing) */
 export default class ImageLinkEditor extends React.PureComponent
 {
+  props:{
+    showing:boolean
+  }
+
   render()
   {
-    return <div className="image-link-editor">
+    return <div className="image-link-editor" style={{display:this.props.showing?"":"none"}}>
       <ImageLinkEditRow/>
       <ImageLinkEditRow/>
       <ImageLinkEditRow/>
