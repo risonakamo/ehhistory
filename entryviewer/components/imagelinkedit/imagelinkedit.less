@@ -1,0 +1,31 @@
+@import (reference) "../../../shared/colours.less";
+
+.image-link-editor
+{
+    &:extend(.brown-bordered-window);
+    width: 600px;
+    min-height: 300px;
+
+    // CHANGE LATER FOR REAL POSITIONING
+    position: fixed;
+    top: 10vh;
+    left: 20vw;
+
+    .image-link-edit-row
+    {
+        .split-side
+        {
+            display: inline-block;
+            width: 45%;
+            font-size: 17px;
+            word-break: break-all;
+        }
+
+        .arrow-point
+        {
+            display: inline-block;
+            width: 10%;
+            text-align: center;
+        }
+    }
+}
