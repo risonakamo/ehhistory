@@ -61,9 +61,14 @@ class Entry extends React.PureComponent
     var typeelement=createTypeElement(this.props.entrydata.type);
     var datestring=moment(this.props.entrydata.date).format("YYYY/MM/DD HH:mm");
 
+    // --- image element stuff ---
+    var noImageClass=this.props.entrydata.image?"":"no-image";
+    var imageElement=createThumbnailElement(this.props.entrydata.image);
+    // --- END ---
+
     return <div className="entry-row">
       <div className="image-contain">
-        <div className="image-box no-image" onClick={this.imageClick}></div>
+        <div className={`image-box ${noImageClass}`} onClick={this.imageClick}>{imageElement}</div>
         <div className="edit-zone">
           <div className="edit-button edit-button" onClick={this.editButtonClick}><img src="../imgs/triangle-white.svg"/></div>
           <div className="edit-button delete-button"><img src="../imgs/close-salmon.svg"/></div>
@@ -116,6 +121,63 @@ function historyEntryDictToArray(entries:HistoryEntryDict):HistoryEntry[]
   });
 
   return entriesArray;
+}
+
+/* AutoResizingImage(string image) */
+class AutoResizingImage extends React.PureComponent
+{
+  props:{
+    image:string //the image link
+  }
+
+  state:{
+    tall:boolean
+  }
+
+  theimage:ReactRef<any>
+
+  constructor(props:any)
+  {
+    super(props);
+
+    this.state={
+      tall:false
+    };
+
+    this.theimage=React.createRef();
+  }
+
+  componentDidMount()
+  {
+    this.resizeSelf();
+  }
+
+  // attempt to auto fit self
+  resizeSelf()
+  {
+    if (this.theimage.current.width>this.theimage.current.height)
+    {
+      this.setState({tall:true});
+    }
+  }
+
+  render()
+  {
+    var tallClass=this.state.tall?"tall":"";
+
+    return <img src={this.props.image} ref={this.theimage} className={tallClass}/>;
+  }
+}
+
+// given an image string, return an image element with proper fit classes
+function createThumbnailElement(image:string)
+{
+  if (!image)
+  {
+    return null;
+  }
+
+  return <AutoResizingImage image={image}/>;
 }
 
 export default ReactRedux.connect((storestate:EntryViewerStore)=>{

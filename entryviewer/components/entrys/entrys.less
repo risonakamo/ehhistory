@@ -25,14 +25,29 @@
 
         .image-box
         {
+            display: flex;
             width: 150px;
             height: 150px;
             box-sizing: border-box;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
 
             &.no-image
             {
                 border: 1px dotted fade(@off-white-yellow,50%);
                 cursor: pointer;
+            }
+
+            img
+            {
+                width: 100%;
+
+                &.tall
+                {
+                    width: initial;
+                    height: 100%;
+                }
             }
         }
 
