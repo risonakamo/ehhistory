@@ -37,12 +37,23 @@ class Entry extends React.PureComponent
   {
     super(props);
     this.editButtonClick=this.editButtonClick.bind(this);
+    this.imageClick=this.imageClick.bind(this);
   }
 
   // activate load editor
   editButtonClick()
   {
     this.props.loadEditor(this.props.entrydata);
+  }
+
+  // image box click handler
+  imageClick()
+  {
+    if (!this.props.entrydata.image)
+    {
+      this.editButtonClick();
+      return;
+    }
   }
 
   render()
@@ -52,7 +63,7 @@ class Entry extends React.PureComponent
 
     return <div className="entry-row">
       <div className="image-contain">
-        <div className="image-box no-image"></div>
+        <div className="image-box no-image" onClick={this.imageClick}></div>
         <div className="edit-zone">
           <div className="edit-button edit-button" onClick={this.editButtonClick}><img src="../imgs/triangle-white.svg"/></div>
           <div className="edit-button delete-button"><img src="../imgs/close-salmon.svg"/></div>
