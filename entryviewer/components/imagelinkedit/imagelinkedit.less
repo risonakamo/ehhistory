@@ -36,14 +36,41 @@
             align-items: center;
         }
 
-        .edit-zone
+        .edit-contain
         {
-            outline: none;
+            position: relative;
 
-            &::selection
+            .edit-zone
             {
-                background-color: @dark-brown;
-                color: @off-white-yellow;
+                outline: none;
+
+                &::selection
+                {
+                    background-color: @dark-brown;
+                    color: @off-white-yellow;
+                }
+            }
+
+            .bracket-border
+            {
+                position: absolute;
+                height: 100%;
+                width: 5px;
+                top: 0;
+                border: 1px solid @dark-brown;
+                box-sizing: border-box;
+
+                &.left
+                {
+                    left: 0;
+                    border-right: none;
+                }
+
+                &.right
+                {
+                    right: 0;
+                    border-left: none;
+                }
             }
         }
     }
