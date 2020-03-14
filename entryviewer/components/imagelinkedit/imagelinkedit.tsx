@@ -1,15 +1,19 @@
 import "./imagelinkedit.less";
 
+/* ImageLinkEditor() */
 export default class ImageLinkEditor extends React.PureComponent
 {
   render()
   {
     return <div className="image-link-editor">
       <ImageLinkEditRow/>
+      <ImageLinkEditRow/>
+      <ImageLinkEditRow/>
     </div>;
   }
 }
 
+/* ImageLinkEditRow() */
 class ImageLinkEditRow extends React.PureComponent
 {
   render()
