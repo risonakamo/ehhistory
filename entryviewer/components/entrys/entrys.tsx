@@ -2,12 +2,13 @@ import {EntryViewerStore,updateEntriesFromStorage} from "../../store/entryviewer
 
 import "./entrys.less";
 
-/* Entrys(function loadEditor, store-HistoryEntryDict entries) */
+/* Entrys(function loadEditor, STORE-HistoryEntryDict entries, STORE-bool imageEditEnabled) */
 class Entrys extends React.PureComponent
 {
   props:{
     loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
-    entries:HistoryEntryDict
+    entries:HistoryEntryDict //all the entries
+    imageEditEnabled:boolean //if image edit is enabled
   }
 
   componentDidMount()
@@ -19,18 +20,24 @@ class Entrys extends React.PureComponent
   {
     return <div className="entrys">
       {historyEntryDictToArray(this.props.entries).map((x:HistoryEntry,i:number)=>{
-        return <Entry entrydata={x} key={i} loadEditor={this.props.loadEditor}/>;
+        return <Entry entrydata={x} key={i} loadEditor={this.props.loadEditor}
+          imageEditEnabled={this.props.imageEditEnabled}/>;
       })}
     </div>;
   }
 }
 
-/* Entry(HistoryEntry entrydata, function loadEditor) */
+/* Entry(HistoryEntry entrydata, function loadEditor, bool imageEditEnabled) */
 class Entry extends React.PureComponent
 {
   props:{
     entrydata:HistoryEntry //the entry data object for this element
     loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
+    imageEditEnabled:boolean
+  }
+
+  state:{
+    editSelected:boolean
   }
 
   constructor(props:any)
@@ -38,6 +45,10 @@ class Entry extends React.PureComponent
     super(props);
     this.editButtonClick=this.editButtonClick.bind(this);
     this.imageClick=this.imageClick.bind(this);
+
+    this.state={
+      editSelected:false
+    };
   }
 
   // activate load editor
@@ -49,6 +60,12 @@ class Entry extends React.PureComponent
   // image box click handler
   imageClick()
   {
+    if (this.props.imageEditEnabled)
+    {
+      this.setState({editSelected:!this.state.editSelected});
+      return;
+    }
+
     if (!this.props.entrydata.image)
     {
       this.editButtonClick();
@@ -64,11 +81,15 @@ class Entry extends React.PureComponent
     // --- image element stuff ---
     var noImageClass=this.props.entrydata.image?"":"no-image";
     var imageElement=createThumbnailElement(this.props.entrydata.image);
+    var imageEditEnabledClass=this.props.imageEditEnabled?"image-edit":"";
     // --- END ---
 
     return <div className="entry-row">
       <div className="image-contain">
-        <div className={`image-box ${noImageClass}`} onClick={this.imageClick}>{imageElement}</div>
+        <div className={`image-box ${noImageClass} ${imageEditEnabledClass}`} onClick={this.imageClick}>
+          <div className="image-selected" style={{display:this.state.editSelected?"":"none"}}>2</div>
+          {imageElement}
+        </div>
         <div className="edit-zone">
           <div className="edit-button edit-button" onClick={this.editButtonClick}><img src="../imgs/triangle-white.svg"/></div>
           <div className="edit-button delete-button"><img src="../imgs/close-salmon.svg"/></div>
@@ -182,6 +203,7 @@ function createThumbnailElement(image:string)
 
 export default ReactRedux.connect((storestate:EntryViewerStore)=>{
   return {
-    entries:storestate.entries
+    entries:storestate.entries,
+    imageEditEnabled:storestate.imageEditMode
   };
 })(Entrys);

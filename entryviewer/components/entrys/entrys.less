@@ -39,15 +39,34 @@
                 cursor: pointer;
             }
 
+            &.image-edit
+            {
+                cursor: pointer;
+            }
+
             img
             {
                 width: 100%;
+                -webkit-user-drag: none;
 
                 &.tall
                 {
                     width: initial;
                     height: 100%;
                 }
+            }
+
+            .image-selected
+            {
+                display: flex;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: @off-white-yellow;
+                font-size: 20px;
+                color: @dark-brown;
+                justify-content: center;
+                align-items: center;
             }
         }
 
