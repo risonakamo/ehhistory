@@ -13,19 +13,38 @@
 
     .image-link-edit-row
     {
+        display: flex;
+
         .split-side
         {
             display: inline-block;
             width: 45%;
             font-size: 17px;
             word-break: break-all;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            padding: 0 8px 0 8px;
+            box-sizing: border-box;
         }
 
         .arrow-point
         {
-            display: inline-block;
+            display: inline-flex;
             width: 10%;
             text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .edit-zone
+        {
+            outline: none;
+
+            &::selection
+            {
+                background-color: @dark-brown;
+                color: @off-white-yellow;
+            }
         }
     }
 }
