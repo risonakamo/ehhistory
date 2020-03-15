@@ -16,11 +16,11 @@ class ImageLinkEditor extends React.Component
     return <div className="image-link-editor" style={{display:this.props.showing?"":"none"}}>
       <div className="buttons">
         <div className="left side">
-          <ConfirmationButton/>
+          <ConfirmationButton type="open"/>
         </div>
         <div className="right side">
-          <ConfirmationButton/>
-          <ConfirmationButton cancel={true}/>
+          <ConfirmationButton type="confirm"/>
+          <ConfirmationButton type="cancel"/>
         </div>
       </div>
       <div className="edit-rows">

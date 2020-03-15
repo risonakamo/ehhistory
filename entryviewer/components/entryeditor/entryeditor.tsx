@@ -117,8 +117,8 @@ export default class EntryEditor extends React.Component
       </div>
 
       <div className="editor-row button-row">
-        <ConfirmationButton onClick={this.submitChangedEntry}/>
-        <ConfirmationButton cancel={true} onClick={this.props.closeEditor}/>
+        <ConfirmationButton type="confirm" onClick={this.submitChangedEntry}/>
+        <ConfirmationButton type="cancel" onClick={this.props.closeEditor}/>
       </div>
     </div>;
   }
@@ -165,31 +165,20 @@ class TypeChoice extends React.PureComponent
   }
 }
 
-/* ConfirmationButton(bool cancel, function onClick) */
+/* ConfirmationButton(function onClick, string type) */
 export class ConfirmationButton extends React.PureComponent
 {
   props:{
-    cancel:boolean //make the button appear as a cancel button
     onClick:()=>void
+    type:string //type of icon to use
   }
 
   render()
   {
-    var cancelClass=this.props.cancel?"cancel":"";
-
-    var iconLink;
-    if (!this.props.cancel)
-    {
-      iconLink="../imgs/checkmark-white.svg";
-    }
-
-    else
-    {
-      iconLink="../imgs/close-white.svg";
-    }
+    var cancelClass=this.props.type=="cancel"?"cancel":"";
 
     return <div className={`confirmation-button ${cancelClass}`} onClick={this.props.onClick}>
-      <img src={iconLink}/>
+      {createConfirmationButtonIcon(this.props.type)}
     </div>;
   }
 }
@@ -205,4 +194,29 @@ function createTypeChoices(currentChoice:EntryType,typeChosen:(type:EntryType)=>
   return _allTypeChoices.map((x:EntryType)=>{
     return <TypeChoice type={x} selected={x==currentChoice} typeChosen={typeChosen} key={x}/>;
   });
+}
+
+// return an image element for the confirmation button based on a certain string name
+function createConfirmationButtonIcon(icon:string):HTMLElement
+{
+  var iconname;
+  switch (icon)
+  {
+    case "confirm":
+      iconname="checkmark-white";
+      break;
+
+    case "cancel":
+      iconname="close-white";
+      break;
+
+    case "open":
+      iconname="enter-white";
+      break;
+
+    default:
+      iconname="unknown";
+  }
+
+  return <img src={`../imgs/${iconname}.svg`}/>;
 }
