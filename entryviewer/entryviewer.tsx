@@ -16,6 +16,7 @@ class EntryViewerMain extends React.Component
     currentEditEntry:HistoryEntry
     editorShown:boolean
     imageEditorShown:boolean
+    cloakEnabled:boolean
   }
 
   constructor(props:any)
@@ -36,7 +37,8 @@ class EntryViewerMain extends React.Component
         date:""
       },
       editorShown:false,
-      imageEditorShown:false
+      imageEditorShown:false,
+      cloakEnabled:false
     };
   }
 
@@ -48,6 +50,7 @@ class EntryViewerMain extends React.Component
       entry.image="";
     }
 
+    this.toggleCloak();
     this.setState({
       currentEditEntry:entry,
       editorShown:true
@@ -57,25 +60,26 @@ class EntryViewerMain extends React.Component
   // close the editor without changes
   closeEditor():void
   {
+    this.toggleCloak(false);
     this.setState({editorShown:false});
   }
 
   // toggle the image editor or set it to the given value
   toggleImageEditor(editorOn?:boolean):void
   {
-    if (editorOn==undefined)
-    {
-      this.setState({imageEditorShown:!this.state.imageEditorShown});
-      return
-    }
+    this.setState({imageEditorShown:editorOn==undefined?!this.state.imageEditorShown:editorOn});
+  }
 
-    this.setState({imageEditorShown:editorOn});
+  // enable/disable or set the cloak
+  toggleCloak(cloakOn?:boolean):void
+  {
+    this.setState({cloakEnabled:cloakOn==undefined?!this.state.cloakEnabled:cloakOn});
   }
 
   render()
   {
     return <>
-      <div className="content-window">
+      <div className={`content-window ${this.state.cloakEnabled?"cloaked":""}`}>
         <div className="content">
           <EditorBar toggleImageEditor={this.toggleImageEditor}/>
           <Entrys loadEditor={this.loadEditor}/>
@@ -84,7 +88,7 @@ class EntryViewerMain extends React.Component
           <ImageLinkEditor showing={this.state.imageEditorShown}/>
         </div>
       </div>
-      <div className="menu-cloak" style={{display:"none"}}></div>
+      <div className="menu-cloak" style={{display:this.state.cloakEnabled?"":"none"}}></div>
     </>;
   }
 }
