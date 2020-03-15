@@ -15,6 +15,7 @@ class EntryViewerMain extends React.Component
   state:{
     currentEditEntry:HistoryEntry
     editorShown:boolean
+    imageEditorShown:boolean
   }
 
   constructor(props:any)
@@ -22,6 +23,7 @@ class EntryViewerMain extends React.Component
     super(props);
     this.loadEditor=this.loadEditor.bind(this);
     this.closeEditor=this.closeEditor.bind(this);
+    this.toggleImageEditor=this.toggleImageEditor.bind(this);
 
     this.state={
       currentEditEntry:{
@@ -33,7 +35,8 @@ class EntryViewerMain extends React.Component
         link:"",
         date:""
       },
-      editorShown:false
+      editorShown:false,
+      imageEditorShown:false
     };
   }
 
@@ -57,14 +60,26 @@ class EntryViewerMain extends React.Component
     this.setState({editorShown:false});
   }
 
+  // toggle the image editor or set it to the given value
+  toggleImageEditor(editorOn?:boolean):void
+  {
+    if (editorOn==undefined)
+    {
+      this.setState({imageEditorShown:!this.state.imageEditorShown});
+      return
+    }
+
+    this.setState({imageEditorShown:editorOn});
+  }
+
   render()
   {
     return <>
-      <EditorBar/>
+      <EditorBar toggleImageEditor={this.toggleImageEditor}/>
       <Entrys loadEditor={this.loadEditor}/>
       <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
         closeEditor={this.closeEditor}/>
-      <ImageLinkEditor showing={false}/>
+      <ImageLinkEditor showing={this.state.imageEditorShown}/>
     </>;
   }
 }
