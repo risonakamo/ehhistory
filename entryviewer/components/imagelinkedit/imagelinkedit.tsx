@@ -1,3 +1,4 @@
+import {ConfirmationButton} from "../entryeditor/entryeditor";
 import {EntryViewerStore} from "../../store/entryviewerstore";
 
 import "./imagelinkedit.less";
@@ -13,7 +14,18 @@ class ImageLinkEditor extends React.Component
   render()
   {
     return <div className="image-link-editor" style={{display:this.props.showing?"":"none"}}>
-      {createEditRows(Object.values(this.props.editEntries))}
+      <div className="buttons">
+        <div className="left side">
+          <ConfirmationButton/>
+        </div>
+        <div className="right side">
+          <ConfirmationButton/>
+          <ConfirmationButton cancel={true}/>
+        </div>
+      </div>
+      <div className="edit-rows">
+        {createEditRows(Object.values(this.props.editEntries))}
+      </div>
     </div>;
   }
 }
@@ -44,8 +56,8 @@ class ImageLinkEditRow extends React.PureComponent
 // given array of entries, return image link edits for them
 function createEditRows(entries:HistoryEntry[]):ImageLinkEditRow[]
 {
-  return entries.map((x:HistoryEntry,i:number)=>{
-    return <ImageLinkEditRow editEntry={x} key={i}/>;
+  return entries.map((x:HistoryEntry)=>{
+    return <ImageLinkEditRow editEntry={x} key={x.id}/>;
   });
 }
 

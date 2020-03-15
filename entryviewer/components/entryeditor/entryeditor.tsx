@@ -166,7 +166,7 @@ class TypeChoice extends React.PureComponent
 }
 
 /* ConfirmationButton(bool cancel, function onClick) */
-class ConfirmationButton extends React.PureComponent
+export class ConfirmationButton extends React.PureComponent
 {
   props:{
     cancel:boolean //make the button appear as a cancel button
