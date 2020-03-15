@@ -3,13 +3,15 @@
 .image-link-editor
 {
     &:extend(.brown-bordered-window);
-    width: 600px;
-    min-height: 300px;
-
-    // CHANGE LATER FOR REAL POSITIONING
     position: fixed;
-    top: 10vh;
-    left: 20vw;
+    width: 80%;
+    min-height: 300px;
+    max-height: 80%;
+    top: 10%;
+    left: 50%;
+    margin-left: -40%;
+    z-index: 5;
+    overflow: auto;
 
     .image-link-edit-row
     {
@@ -43,6 +45,7 @@
 
             .edit-zone
             {
+                height: 100%;
                 outline: none;
 
                 &::selection

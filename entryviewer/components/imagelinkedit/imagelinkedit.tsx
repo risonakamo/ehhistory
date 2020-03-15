@@ -13,21 +13,23 @@ class ImageLinkEditor extends React.Component
   render()
   {
     return <div className="image-link-editor" style={{display:this.props.showing?"":"none"}}>
-      <ImageLinkEditRow/>
-      <ImageLinkEditRow/>
-      <ImageLinkEditRow/>
+      {createEditRows(Object.values(this.props.editEntries))}
     </div>;
   }
 }
 
-/* ImageLinkEditRow() */
+/* ImageLinkEditRow(HistoryEntry editEntry) */
 class ImageLinkEditRow extends React.PureComponent
 {
+  props:{
+    editEntry:HistoryEntry
+  }
+
   render()
   {
     return <div className="image-link-edit-row">
       <div className="link-zone split-side">
-        <a href="https://nhentai.net/g/297846/" target="_blank">https://nhentai.net/g/297846/</a>
+        <a href={this.props.editEntry.link} target="_blank">{truncateString(this.props.editEntry.link)}</a>
       </div>
       <div className="arrow-point">-></div>
       <div className="split-side edit-contain">
@@ -37,6 +39,25 @@ class ImageLinkEditRow extends React.PureComponent
       </div>
     </div>;
   }
+}
+
+// given array of entries, return image link edits for them
+function createEditRows(entries:HistoryEntry[]):ImageLinkEditRow[]
+{
+  return entries.map((x:HistoryEntry,i:number)=>{
+    return <ImageLinkEditRow editEntry={x} key={i}/>;
+  });
+}
+
+// given a string, truncate it with "..." if it is longer than some size
+function truncateString(input:string,maxlength:number=90):string
+{
+  if (input.length<=maxlength)
+  {
+    return input;
+  }
+
+  return input.slice(0,90)+"...";
 }
 
 export default ReactRedux.connect((storestate:EntryViewerStore)=>{

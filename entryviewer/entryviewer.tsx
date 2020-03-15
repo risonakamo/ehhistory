@@ -67,6 +67,7 @@ class EntryViewerMain extends React.Component
   // toggle the image editor or set it to the given value
   toggleImageEditor(editorOn?:boolean):void
   {
+    this.toggleCloak(editorOn);
     this.setState({imageEditorShown:editorOn==undefined?!this.state.imageEditorShown:editorOn});
   }
 
