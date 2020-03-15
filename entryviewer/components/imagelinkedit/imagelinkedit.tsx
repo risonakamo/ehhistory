@@ -1,14 +1,28 @@
 import {ConfirmationButton} from "../entryeditor/entryeditor";
-import {EntryViewerStore} from "../../store/entryviewerstore";
+import {EntryViewerStore,setImageEditMode} from "../../store/entryviewerstore";
 
 import "./imagelinkedit.less";
 
-/* ImageLinkEditor(bool showing, STORE-HistoryEntryDict editEntries) */
+/* ImageLinkEditor(bool showing, function parentCloseEditor, STORE-HistoryEntryDict editEntries) */
 class ImageLinkEditor extends React.Component
 {
   props:{
     showing:boolean
     editEntries:HistoryEntryDict //the entries currently being edited
+    parentCloseEditor:(editOn:boolean)=>void //parent function to close the editor
+  }
+
+  constructor(props:any)
+  {
+    super(props);
+    this.closeEditor=this.closeEditor.bind(this);
+  }
+
+  // close the editor without saving anything
+  closeEditor():void
+  {
+    this.props.parentCloseEditor(false);
+    setImageEditMode(false);
   }
 
   render()
@@ -20,7 +34,7 @@ class ImageLinkEditor extends React.Component
         </div>
         <div className="right side">
           <ConfirmationButton type="confirm"/>
-          <ConfirmationButton type="cancel"/>
+          <ConfirmationButton type="cancel" onClick={this.closeEditor}/>
         </div>
       </div>
       <div className="edit-rows">

@@ -86,7 +86,7 @@ class EntryViewerMain extends React.Component
           <Entrys loadEditor={this.loadEditor}/>
           <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
             closeEditor={this.closeEditor}/>
-          <ImageLinkEditor showing={this.state.imageEditorShown}/>
+          <ImageLinkEditor showing={this.state.imageEditorShown} parentCloseEditor={this.toggleImageEditor}/>
         </div>
       </div>
       <div className="menu-cloak" style={{display:this.state.cloakEnabled?"":"none"}}></div>
