@@ -42,3 +42,8 @@ interface ReactRef<T>
 {
     current:T
 }
+
+interface ReactProps
+{
+    key?:any
+}

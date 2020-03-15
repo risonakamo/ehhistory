@@ -28,19 +28,24 @@ class Entrys extends React.PureComponent
 }
 
 /* Entry(HistoryEntry entrydata, function loadEditor, bool imageEditEnabled) */
-class Entry extends React.PureComponent
+interface EntryProps extends ReactProps
 {
-  props:{
-    entrydata:HistoryEntry //the entry data object for this element
-    loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
-    imageEditEnabled:boolean
-  }
+  entrydata:HistoryEntry //the entry data object for this element
+  loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
+  imageEditEnabled:boolean
+}
 
-  state:{
-    editSelected:boolean
-  }
+interface EntryState
+{
+  editSelected:boolean //currently selected for edit
+}
 
-  constructor(props:any)
+class Entry extends React.Component
+{
+  props:EntryProps
+  state:EntryState
+
+  constructor(props:EntryProps)
   {
     super(props);
     this.editButtonClick=this.editButtonClick.bind(this);
@@ -49,6 +54,30 @@ class Entry extends React.PureComponent
     this.state={
       editSelected:false
     };
+  }
+
+  shouldComponentUpdate(newprops:EntryProps,newstate:EntryState)
+  {
+    // always render when state has changed
+    if (this.state!=newstate)
+    {
+      return true;
+    }
+
+    // always render when props have changed
+    if (this.props!=newprops)
+    {
+      // if propse had image edit enabled and is switching to image edit enabled,
+      // force edit selected mode to be disabled
+      if (this.props.imageEditEnabled && !newprops.imageEditEnabled)
+      {
+        this.setState({editSelected:false});
+      }
+
+      return true;
+    }
+
+    return false;
   }
 
   // activate load editor
