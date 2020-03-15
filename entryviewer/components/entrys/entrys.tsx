@@ -11,7 +11,7 @@ class Entrys extends React.PureComponent
     imageEditEnabled:boolean //if image edit is enabled
   }
 
-  componentDidMount()
+  componentDidMount():void
   {
     updateEntriesFromStorage();
   }
@@ -56,7 +56,7 @@ class Entry extends React.Component
     };
   }
 
-  shouldComponentUpdate(newprops:EntryProps,newstate:EntryState)
+  shouldComponentUpdate(newprops:EntryProps,newstate:EntryState):boolean
   {
     // always render when state has changed
     if (this.state!=newstate)
@@ -81,13 +81,13 @@ class Entry extends React.Component
   }
 
   // activate load editor
-  editButtonClick()
+  editButtonClick():void
   {
     this.props.loadEditor(this.props.entrydata);
   }
 
   // image box click handler
-  imageClick()
+  imageClick():void
   {
     if (this.props.imageEditEnabled)
     {
@@ -116,7 +116,9 @@ class Entry extends React.Component
     return <div className="entry-row">
       <div className="image-contain">
         <div className={`image-box ${noImageClass} ${imageEditEnabledClass}`} onClick={this.imageClick}>
-          <div className="image-selected" style={{display:this.state.editSelected?"":"none"}}>2</div>
+          <div className="image-selected" style={{display:this.state.editSelected?"":"none"}}>
+            <img src="../imgs/checkbox-dark.svg"/>
+          </div>
           {imageElement}
         </div>
         <div className="edit-zone">
@@ -137,7 +139,7 @@ class Entry extends React.Component
 }
 
 // return a span element for an input type string
-function createTypeElement(type:EntryType)
+function createTypeElement(type:EntryType):HTMLElement
 {
   switch (type)
   {
@@ -220,7 +222,7 @@ class AutoResizingImage extends React.PureComponent
 }
 
 // given an image string, return an image element with proper fit classes
-function createThumbnailElement(image:string)
+function createThumbnailElement(image:string):AutoResizingImage|null
 {
   if (!image)
   {
