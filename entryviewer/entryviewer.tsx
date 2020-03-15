@@ -75,11 +75,16 @@ class EntryViewerMain extends React.Component
   render()
   {
     return <>
-      <EditorBar toggleImageEditor={this.toggleImageEditor}/>
-      <Entrys loadEditor={this.loadEditor}/>
-      <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
-        closeEditor={this.closeEditor}/>
-      <ImageLinkEditor showing={this.state.imageEditorShown}/>
+      <div className="content-window">
+        <div className="content">
+          <EditorBar toggleImageEditor={this.toggleImageEditor}/>
+          <Entrys loadEditor={this.loadEditor}/>
+          <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
+            closeEditor={this.closeEditor}/>
+          <ImageLinkEditor showing={this.state.imageEditorShown}/>
+        </div>
+      </div>
+      <div className="menu-cloak" style={{display:"none"}}></div>
     </>;
   }
 }

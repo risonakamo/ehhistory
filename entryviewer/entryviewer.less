@@ -7,6 +7,7 @@ body
     font-family: @default-fonts;
     background-color: @dark-brown;
     color: @off-white-yellow;
+    margin: 0;
 }
 
 h1
@@ -33,6 +34,41 @@ a
     {
         opacity: .8;
     }
+}
+
+html,body,.main,.content-window
+{
+    width: 100%;
+    height: 100%;
+}
+
+.main
+{
+    .content-window
+    {
+        overflow: auto;
+
+        .content
+        {
+            margin: 10px;
+        }
+
+        &.cloaked
+        {
+            overflow: hidden;
+        }
+    }
+}
+
+.menu-cloak
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: @dark-brown-fade;
 }
 
 .type-tag
