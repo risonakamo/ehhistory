@@ -1,4 +1,4 @@
-import {EntryViewerStore,updateEntriesFromStorage} from "../../store/entryviewerstore";
+import {EntryViewerStore,updateEntriesFromStorage,toggleAddImageEditEntry} from "../../store/entryviewerstore";
 
 import "./entrys.less";
 
@@ -92,6 +92,7 @@ class Entry extends React.Component
     if (this.props.imageEditEnabled)
     {
       this.setState({editSelected:!this.state.editSelected});
+      toggleAddImageEditEntry(this.props.entrydata);
       return;
     }
 

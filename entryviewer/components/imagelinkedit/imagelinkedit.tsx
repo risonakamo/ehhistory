@@ -1,10 +1,13 @@
+import {EntryViewerStore} from "../../store/entryviewerstore";
+
 import "./imagelinkedit.less";
 
-/* ImageLinkEditor(bool showing) */
-export default class ImageLinkEditor extends React.PureComponent
+/* ImageLinkEditor(bool showing, STORE-HistoryEntryDict editEntries) */
+class ImageLinkEditor extends React.Component
 {
   props:{
     showing:boolean
+    editEntries:HistoryEntryDict //the entries currently being edited
   }
 
   render()
@@ -35,3 +38,9 @@ class ImageLinkEditRow extends React.PureComponent
     </div>;
   }
 }
+
+export default ReactRedux.connect((storestate:EntryViewerStore)=>{
+  return {
+    editEntries:storestate.currentImageEditEntries
+  };
+})(ImageLinkEditor);

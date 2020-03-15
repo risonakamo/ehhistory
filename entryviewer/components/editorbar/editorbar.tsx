@@ -28,6 +28,7 @@ class EditorBar extends React.PureComponent
 
     return <div className="editor-bar">
       <a href="" onClick={this.tempImageModeToggle}>{imageEditText}</a>
+      <a href="" style={{display:this.props.imageEditMode?"":"none"}}>edit selected images</a>
     </div>;
   }
 }
