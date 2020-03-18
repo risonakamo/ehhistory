@@ -59,12 +59,24 @@
             .edit-zone
             {
                 height: 100%;
+                width: 100%;
                 outline: none;
+                resize: none;
 
                 &::selection
                 {
                     background-color: @dark-brown;
                     color: @off-white-yellow;
+                }
+
+                &.overlay-area
+                {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    padding: 0 8px 0 8px;
+                    overflow: hidden;
+                    box-sizing: border-box;
                 }
             }
 

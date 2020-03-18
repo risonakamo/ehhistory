@@ -72,7 +72,8 @@ class ImageLinkEditRow extends React.PureComponent
       </div>
       <div className="arrow-point">-></div>
       <div className="split-side edit-contain">
-        <div className="edit-zone" contentEditable={true}>{this.props.editLink}</div>
+        <div className="edit-zone">{this.props.editLink}</div>
+        <textarea className="edit-zone input-inherit overlay-area"/>
         <div className="bracket-border left"></div>
         <div className="bracket-border right"></div>
       </div>
