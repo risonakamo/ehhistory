@@ -12,10 +12,22 @@ class ImageLinkEditor extends React.Component
     parentCloseEditor:(editOn:boolean)=>void //parent function to close the editor
   }
 
+  state:{
+    // the string in the textboxes of all currently being edited
+    // image links, keyed by id
+    newLinks:{
+      [id:number]:string
+    }
+  }
+
   constructor(props:any)
   {
     super(props);
     this.closeEditor=this.closeEditor.bind(this);
+
+    this.state={
+      newLinks:{}
+    };
   }
 
   // close the editor without saving anything
@@ -44,11 +56,12 @@ class ImageLinkEditor extends React.Component
   }
 }
 
-/* ImageLinkEditRow(HistoryEntry editEntry) */
+/* ImageLinkEditRow(HistoryEntry editEntry, string editLink) */
 class ImageLinkEditRow extends React.PureComponent
 {
   props:{
     editEntry:HistoryEntry
+    editLink:string //the text of the link being edited
   }
 
   render()
@@ -59,7 +72,7 @@ class ImageLinkEditRow extends React.PureComponent
       </div>
       <div className="arrow-point">-></div>
       <div className="split-side edit-contain">
-        <div className="edit-zone" contentEditable={true}></div>
+        <div className="edit-zone" contentEditable={true}>{this.props.editLink}</div>
         <div className="bracket-border left"></div>
         <div className="bracket-border right"></div>
       </div>
@@ -71,7 +84,7 @@ class ImageLinkEditRow extends React.PureComponent
 function createEditRows(entries:HistoryEntry[]):ImageLinkEditRow[]
 {
   return entries.map((x:HistoryEntry)=>{
-    return <ImageLinkEditRow editEntry={x} key={x.id}/>;
+    return <ImageLinkEditRow editEntry={x} key={x.id} editLink="a"/>;
   });
 }
 
