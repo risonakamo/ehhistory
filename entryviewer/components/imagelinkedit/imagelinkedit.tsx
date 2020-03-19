@@ -29,6 +29,7 @@ class ImageLinkEditor extends React.Component
     super(props);
     this.closeEditor=this.closeEditor.bind(this);
     this.linkChangedHandler=this.linkChangedHandler.bind(this);
+    this.linkChangedMultiple=this.linkChangedMultiple.bind(this);
 
     this.state={
       newLinks:{}
@@ -58,7 +59,29 @@ class ImageLinkEditor extends React.Component
   // goes up in numeric order
   linkChangedMultiple(newlinks:string[],startId:number):void
   {
-    console.log("new links",newlinks);
+    var currentNewLinkIndex=0;
+    var newimagelinkupdate=getOrderedNumberKeys(this.props.editEntries).reduce((r:ImageLinkEdits,x:string)=>{
+      if (parseInt(x)<startId)
+      {
+        return r;
+      }
+
+      // out of new links to add, dont do anything else
+      if (currentNewLinkIndex>=newlinks.length)
+      {
+        return r;
+      }
+
+      r[x as any as number]=newlinks[currentNewLinkIndex++].trim();
+      return r;
+    },{});
+
+    this.setState({
+      newLinks:{
+        ...this.state.newLinks,
+        ...newimagelinkupdate
+      }
+    });
   }
 
   render()
@@ -139,7 +162,7 @@ function createEditRows(
   multiLinkChangeHandler:(links:string[],id:number)=>void
 ):ImageLinkEditRow[]
 {
-  return Object.keys(entries).sort().map((x:string)=>{
+  return getOrderedNumberKeys(entries).map((x:string)=>{
     var entry:HistoryEntry=entries[x as any as number];
 
     return <ImageLinkEditRow editEntry={entry} key={entry.id} editLink={currentImageLinks[entry.id] || ""}
@@ -156,6 +179,19 @@ function truncateString(input:string,maxlength:number=90):string
   }
 
   return input.slice(0,90)+"...";
+}
+
+// given an object, return an array of the keys of the object, in sorted order.
+// the object's keys must be numbers.
+function getOrderedNumberKeys(object:Object):string[]
+{
+  return Object.keys(object).sort(numberKeySort);
+}
+
+// sort function for keys that are numbers but are strings (because they are keys)
+function numberKeySort(a:string,b:string):number
+{
+  return parseInt(a)-parseInt(b);
 }
 
 export default ReactRedux.connect((storestate:EntryViewerStore)=>{
