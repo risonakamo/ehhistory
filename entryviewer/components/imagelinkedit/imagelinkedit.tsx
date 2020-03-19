@@ -40,6 +40,7 @@ class ImageLinkEditor extends React.Component
   {
     this.props.parentCloseEditor(false);
     setImageEditMode(false);
+    this.setState({newLinks:{}});
   }
 
   // handle link text change
@@ -102,7 +103,7 @@ class ImageLinkEditRow extends React.PureComponent
       </div>
       <div className="arrow-point">-></div>
       <div className="split-side edit-contain">
-        <div className="edit-zone">{this.props.editLink}</div>
+        <div className="edit-zone underlay-area">{this.props.editLink}</div>
         <textarea className="edit-zone input-inherit overlay-area" onChange={this.imageLinkEditHandler}
           value={this.props.editLink}/>
         <div className="bracket-border left"></div>
