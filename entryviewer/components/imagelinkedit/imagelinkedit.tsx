@@ -30,6 +30,7 @@ class ImageLinkEditor extends React.Component
     this.closeEditor=this.closeEditor.bind(this);
     this.linkChangedHandler=this.linkChangedHandler.bind(this);
     this.linkChangedMultiple=this.linkChangedMultiple.bind(this);
+    this.openAllLinksHandler=this.openAllLinksHandler.bind(this);
 
     this.state={
       newLinks:{}
@@ -84,12 +85,27 @@ class ImageLinkEditor extends React.Component
     });
   }
 
+  // click event for open all links button, opens all links
+  openAllLinksHandler()
+  {
+    var entryKeys:string[]=getOrderedNumberKeys(this.props.editEntries);
+
+    for (var x=0;x<entryKeys.length;x++)
+    {
+      var entry=this.props.editEntries[entryKeys[x] as any as number];
+      chrome.tabs.create({
+        url:entry.link,
+        active:false
+      });
+    }
+  }
+
   render()
   {
     return <div className="image-link-editor" style={{display:this.props.showing?"":"none"}}>
       <div className="buttons">
         <div className="left side">
-          <ConfirmationButton type="open"/>
+          <ConfirmationButton type="open" onClick={this.openAllLinksHandler}/>
         </div>
         <div className="right side">
           <ConfirmationButton type="confirm"/>
