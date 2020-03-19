@@ -74,7 +74,7 @@ class ImageLinkEditor extends React.Component
         </div>
       </div>
       <div className="edit-rows">
-        {createEditRows(Object.values(this.props.editEntries),this.linkChangedHandler,this.state.newLinks,
+        {createEditRows(this.props.editEntries,this.linkChangedHandler,this.state.newLinks,
           this.linkChangedMultiple)}
       </div>
     </div>;
@@ -133,14 +133,16 @@ class ImageLinkEditRow extends React.PureComponent
 
 // given array of entries, return image link edits for them
 function createEditRows(
-  entries:HistoryEntry[],
+  entries:HistoryEntryDict,
   linkChangeHandler:(newlink:string,id:number)=>void,
   currentImageLinks:ImageLinkEdits,
   multiLinkChangeHandler:(links:string[],id:number)=>void
 ):ImageLinkEditRow[]
 {
-  return entries.map((x:HistoryEntry)=>{
-    return <ImageLinkEditRow editEntry={x} key={x.id} editLink={currentImageLinks[x.id] || ""}
+  return Object.keys(entries).sort().map((x:string)=>{
+    var entry:HistoryEntry=entries[x as any as number];
+
+    return <ImageLinkEditRow editEntry={entry} key={entry.id} editLink={currentImageLinks[entry.id] || ""}
       linkEdited={linkChangeHandler} linkEditedMultiple={multiLinkChangeHandler}/>;
   });
 }
