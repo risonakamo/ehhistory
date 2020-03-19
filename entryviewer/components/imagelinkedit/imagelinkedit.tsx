@@ -44,7 +44,7 @@ class ImageLinkEditor extends React.Component
   }
 
   // handle link text change
-  linkChangedHandler(newlink:string,id:number)
+  linkChangedHandler(newlink:string,id:number):void
   {
     this.setState({
       newLinks:{
@@ -52,6 +52,13 @@ class ImageLinkEditor extends React.Component
         [id]:newlink
       }
     });
+  }
+
+  // handle multiple links changing. updates starting from the current id and
+  // goes up in numeric order
+  linkChangedMultiple(newlinks:string[],startId:number):void
+  {
+    console.log("new links",newlinks);
   }
 
   render()
@@ -67,13 +74,14 @@ class ImageLinkEditor extends React.Component
         </div>
       </div>
       <div className="edit-rows">
-        {createEditRows(Object.values(this.props.editEntries),this.linkChangedHandler,this.state.newLinks)}
+        {createEditRows(Object.values(this.props.editEntries),this.linkChangedHandler,this.state.newLinks,
+          this.linkChangedMultiple)}
       </div>
     </div>;
   }
 }
 
-/* ImageLinkEditRow(HistoryEntry editEntry, string editLink, function linkEdited) */
+/* ImageLinkEditRow(HistoryEntry editEntry, string editLink, function linkEdited, function linkEditedMultiple) */
 class ImageLinkEditRow extends React.PureComponent
 {
   props:{
@@ -81,18 +89,28 @@ class ImageLinkEditRow extends React.PureComponent
     editLink:string //the text of the link being edited
     linkEdited:(value:string,id:number)=>void //callback function when image link text is edited,
                                               //returns the new value and the id of this history entry
+    linkEditedMultiple:(links:string[],id:number)=>void //multiple links edited callback
   }
 
   constructor(props:any)
   {
     super(props);
     this.imageLinkEditHandler=this.imageLinkEditHandler.bind(this);
+    this.imageLinkPasteHandler=this.imageLinkPasteHandler.bind(this);
   }
 
   // handle link text area change
-  imageLinkEditHandler(e:any)
+  imageLinkEditHandler(e:any):void
   {
     this.props.linkEdited(e.target.value,this.props.editEntry.id);
+  }
+
+  // handle paste
+  imageLinkPasteHandler(e:any):void
+  {
+    e.preventDefault();
+    var pasteData=e.clipboardData.getData("text").split("\n");
+    this.props.linkEditedMultiple(pasteData,this.props.editEntry.id);
   }
 
   render()
@@ -105,7 +123,7 @@ class ImageLinkEditRow extends React.PureComponent
       <div className="split-side edit-contain">
         <div className="edit-zone underlay-area">{this.props.editLink}</div>
         <textarea className="edit-zone input-inherit overlay-area" onChange={this.imageLinkEditHandler}
-          value={this.props.editLink}/>
+          value={this.props.editLink} onPaste={this.imageLinkPasteHandler}/>
         <div className="bracket-border left"></div>
         <div className="bracket-border right"></div>
       </div>
@@ -117,12 +135,13 @@ class ImageLinkEditRow extends React.PureComponent
 function createEditRows(
   entries:HistoryEntry[],
   linkChangeHandler:(newlink:string,id:number)=>void,
-  currentImageLinks:ImageLinkEdits
+  currentImageLinks:ImageLinkEdits,
+  multiLinkChangeHandler:(links:string[],id:number)=>void
 ):ImageLinkEditRow[]
 {
   return entries.map((x:HistoryEntry)=>{
     return <ImageLinkEditRow editEntry={x} key={x.id} editLink={currentImageLinks[x.id] || ""}
-      linkEdited={linkChangeHandler}/>;
+      linkEdited={linkChangeHandler} linkEditedMultiple={multiLinkChangeHandler}/>;
   });
 }
 
