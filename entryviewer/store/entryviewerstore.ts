@@ -11,18 +11,22 @@ export interface EntryViewerStore
 var store:EntryViewerStore;
 
 // --- ACTIONS ---
+// completely replace the history entries with the given one
 interface ReplaceEntriesAction
 {
     type:"replaceEntries"
     entries:HistoryEntryDict
 }
 
+// switch the image mode to the given mode
 interface ChangeImageModeAction
 {
     type:"changeImageMode"
     mode:boolean
 }
 
+// add the given entry to the current edited entries, or remove it
+// if it is already there
 interface ToggleAddEditEntry
 {
     type:"toggleAddEditEntry"
@@ -53,6 +57,27 @@ export function updateEntry(entry:HistoryEntry):void
         var entries=storage.entries || {};
 
         entries[entry.id]=entry;
+
+        chrome.storage.local.set({entries});
+
+        store.dispatch({
+            type:"replaceEntries",
+            entries
+        });
+    });
+}
+
+// given an array of history entries, update them in the main history entry
+// dict and in the storage
+export function updateEntries(updateEntries:HistoryEntry[]):void
+{
+    chrome.storage.local.get("entries",(storage:LocalStorage)=>{
+        var entries:HistoryEntryDict=storage.entries || {};
+
+        entries=updateEntries.reduce((r:HistoryEntryDict,x:HistoryEntry)=>{
+            r[x.id]=x;
+            return r;
+        },entries);
 
         chrome.storage.local.set({entries});
 

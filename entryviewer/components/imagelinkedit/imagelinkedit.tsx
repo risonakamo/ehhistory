@@ -1,5 +1,5 @@
 import {ConfirmationButton} from "../entryeditor/entryeditor";
-import {EntryViewerStore,setImageEditMode} from "../../store/entryviewerstore";
+import {EntryViewerStore,setImageEditMode,updateEntries} from "../../store/entryviewerstore";
 
 import "./imagelinkedit.less";
 
@@ -31,6 +31,7 @@ class ImageLinkEditor extends React.Component
     this.linkChangedHandler=this.linkChangedHandler.bind(this);
     this.linkChangedMultiple=this.linkChangedMultiple.bind(this);
     this.openAllLinksHandler=this.openAllLinksHandler.bind(this);
+    this.applyImageEdits=this.applyImageEdits.bind(this);
 
     this.state={
       newLinks:{}
@@ -100,6 +101,20 @@ class ImageLinkEditor extends React.Component
     }
   }
 
+  // submit edits to storage
+  applyImageEdits():void
+  {
+    var changedEntries:HistoryEntryDict=_.mapValues(this.props.editEntries,(x:HistoryEntry,i:number)=>{
+      return {
+        ...x,
+        image:this.state.newLinks[i] || ""
+      };
+    });
+
+    updateEntries(Object.values(changedEntries));
+    this.closeEditor();
+  }
+
   render()
   {
     return <div className="image-link-editor" style={{display:this.props.showing?"":"none"}}>
@@ -108,7 +123,7 @@ class ImageLinkEditor extends React.Component
           <ConfirmationButton type="open" onClick={this.openAllLinksHandler}/>
         </div>
         <div className="right side">
-          <ConfirmationButton type="confirm"/>
+          <ConfirmationButton type="confirm" onClick={this.applyImageEdits}/>
           <ConfirmationButton type="cancel" onClick={this.closeEditor}/>
         </div>
       </div>
