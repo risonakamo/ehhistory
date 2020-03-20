@@ -7,7 +7,8 @@ module.exports={
     mode:"development",
     entry:{
         popup:"./popup/popup.tsx",
-        entryviewer:"./entryviewer/entryviewer.tsx"
+        entryviewer:"./entryviewer/entryviewer.tsx",
+        exportimport:"./exportimport/exportimport-index.tsx"
     },
     output:{
         path:`${__dirname}/build`,
