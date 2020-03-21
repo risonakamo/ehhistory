@@ -13,6 +13,7 @@ class ExportImportMain extends React.Component
   constructor(props:any)
   {
     super(props);
+    this.loadEditEntries=this.loadEditEntries.bind(this);
 
     this.state={
       editEntries:{}
@@ -29,7 +30,7 @@ class ExportImportMain extends React.Component
   {
     return <>
       <div className="import-export-link-hold">
-        <ImportExportBox/>
+        <ImportExportBox importedHistoryEntries={this.loadEditEntries}/>
       </div>
       <EntryDiff entrys={this.state.editEntries}/>
     </>;

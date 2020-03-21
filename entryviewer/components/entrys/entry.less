@@ -1,0 +1,163 @@
+@import (reference) "../../../shared/colours.less";
+
+.entry-row
+{
+    width: 800px;
+    font-size: 0;
+    margin: 10px 0 20px 0;
+
+    &>div
+    {
+        vertical-align: top;
+    }
+
+    .image-contain
+    {
+        position: relative;
+        display: inline-block;
+        width: 150px;
+
+        .image-box
+        {
+            display: flex;
+            width: 150px;
+            height: 150px;
+            box-sizing: border-box;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+
+            &.no-image
+            {
+                border: 1px dotted fade(@off-white-yellow,50%);
+                cursor: pointer;
+            }
+
+            &.image-edit
+            {
+                cursor: pointer;
+            }
+
+            img
+            {
+                width: 100%;
+                -webkit-user-drag: none;
+
+                &.tall
+                {
+                    width: initial;
+                    height: 100%;
+                }
+            }
+
+            .image-selected
+            {
+                display: flex;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: @off-white-yellow;
+                font-size: 20px;
+                color: @dark-brown;
+                justify-content: center;
+                align-items: center;
+
+                img
+                {
+                    width: 30px;
+                }
+            }
+        }
+
+        .edit-zone
+        {
+            position: absolute;
+            width: 45px;
+            height: 148px;
+            top: 1px;
+            left: -45px;
+
+            .edit-button
+            {
+                cursor: pointer;
+                border-right: 2px solid;
+                opacity: 0;
+                user-select: none;
+                transition: opacity .15s;
+
+                &:hover
+                {
+                    opacity: 1;
+                }
+
+                img
+                {
+                    -webkit-user-drag: none;
+                }
+
+                &.edit-button
+                {
+                    height: 70%;
+                    border-color: @off-white-yellow;
+
+                    img
+                    {
+                        width: 26px;
+                        margin: 39px 0 0 8px;
+                    }
+                }
+
+                &.delete-button
+                {
+                    height: 30%;
+                    border-color: @cancel-salmon;
+
+                    img
+                    {
+                        width: 40px;
+                        margin: 3px 0 0 1px;
+                    }
+                }
+            }
+        }
+    }
+
+    .content-contain
+    {
+        display: inline-flex;
+        width: 650px;
+        min-height: 150px;
+        padding-left: 20px;
+        box-sizing: border-box;
+        align-items: center;
+
+        .content-inner
+        {
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            line-height: 1.35;
+
+            .groupname
+            {
+                margin-bottom: 13px;
+                opacity: .9;
+            }
+
+            .tags
+            {
+                margin-bottom: 7px;
+                color: fade(@off-white-yellow,70%);
+
+                .type1test
+                {
+                    color: #e89c18;
+                }
+            }
+
+            .date
+            {
+                opacity: .2;
+            }
+        }
+    }
+}

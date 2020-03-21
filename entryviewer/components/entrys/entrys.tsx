@@ -1,4 +1,5 @@
 import {EntryViewerStore,updateEntriesFromStorage,toggleAddImageEditEntry} from "../../store/entryviewerstore";
+import Entry from "./entry";
 
 import "./entrys.less";
 
@@ -21,134 +22,11 @@ class Entrys extends React.PureComponent
     return <div className="entrys">
       {historyEntryDictToArray(this.props.entries).map((x:HistoryEntry,i:number)=>{
         return <Entry entrydata={x} key={i} loadEditor={this.props.loadEditor}
-          imageEditEnabled={this.props.imageEditEnabled}/>;
+          imageEditEnabled={this.props.imageEditEnabled}
+          toggleAddImageEditEntry={toggleAddImageEditEntry}/>;
       })}
     </div>;
   }
-}
-
-/* Entry(HistoryEntry entrydata, function loadEditor, bool imageEditEnabled) */
-interface EntryProps extends ReactProps
-{
-  entrydata:HistoryEntry //the entry data object for this element
-  loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
-  imageEditEnabled:boolean
-}
-
-interface EntryState
-{
-  editSelected:boolean //currently selected for edit
-}
-
-export class Entry extends React.Component
-{
-  props:EntryProps
-  state:EntryState
-
-  constructor(props:EntryProps)
-  {
-    super(props);
-    this.editButtonClick=this.editButtonClick.bind(this);
-    this.imageClick=this.imageClick.bind(this);
-
-    this.state={
-      editSelected:false
-    };
-  }
-
-  shouldComponentUpdate(newprops:EntryProps,newstate:EntryState):boolean
-  {
-    // always render when state has changed
-    if (this.state!=newstate)
-    {
-      return true;
-    }
-
-    // always render when props have changed
-    if (this.props!=newprops)
-    {
-      // if propse had image edit enabled and is switching to image edit enabled,
-      // force edit selected mode to be disabled
-      if (this.props.imageEditEnabled && !newprops.imageEditEnabled)
-      {
-        this.setState({editSelected:false});
-      }
-
-      return true;
-    }
-
-    return false;
-  }
-
-  // activate load editor
-  editButtonClick():void
-  {
-    this.props.loadEditor(this.props.entrydata);
-  }
-
-  // image box click handler
-  imageClick():void
-  {
-    if (this.props.imageEditEnabled)
-    {
-      this.setState({editSelected:!this.state.editSelected});
-      toggleAddImageEditEntry(this.props.entrydata);
-      return;
-    }
-
-    if (!this.props.entrydata.image)
-    {
-      this.editButtonClick();
-      return;
-    }
-  }
-
-  render()
-  {
-    var typeelement=createTypeElement(this.props.entrydata.type);
-    var datestring=moment(this.props.entrydata.date).format("YYYY/MM/DD HH:mm");
-
-    // --- image element stuff ---
-    var noImageClass=this.props.entrydata.image?"":"no-image";
-    var imageElement=createThumbnailElement(this.props.entrydata.image);
-    var imageEditEnabledClass=this.props.imageEditEnabled?"image-edit":"";
-    // --- END ---
-
-    return <div className="entry-row">
-      <div className="image-contain">
-        <div className={`image-box ${noImageClass} ${imageEditEnabledClass}`} onClick={this.imageClick}>
-          <div className="image-selected" style={{display:this.state.editSelected?"":"none"}}>
-            <img src="../imgs/checkbox-dark.svg"/>
-          </div>
-          {imageElement}
-        </div>
-        <div className="edit-zone">
-          <div className="edit-button edit-button" onClick={this.editButtonClick}><img src="../imgs/triangle-white.svg"/></div>
-          <div className="edit-button delete-button"><img src="../imgs/close-salmon.svg"/></div>
-        </div>
-      </div>
-      <div className="content-contain">
-        <div className="content-inner">
-          <h1><a href={this.props.entrydata.link}>{this.props.entrydata.name}</a></h1>
-          <p className="groupname">{this.props.entrydata.group} (1)</p>
-          <p className="tags">{typeelement} TAG1 TAG2 TAG3</p>
-          <p className="date">{datestring}</p>
-        </div>
-      </div>
-    </div>;
-  }
-}
-
-// return a span element for an input type string
-function createTypeElement(type:EntryType):HTMLElement
-{
-  switch (type)
-  {
-    case "NHENTAI":
-      return <span className="type-tag nhentai">NHENTAI</span>;
-  }
-
-  return <span className="type-tag other">OTHER</span>;
 }
 
 // converts a history entry dict to date sorted array for render
@@ -174,63 +52,6 @@ function historyEntryDictToArray(entries:HistoryEntryDict):HistoryEntry[]
   });
 
   return entriesArray;
-}
-
-/* AutoResizingImage(string image) */
-class AutoResizingImage extends React.PureComponent
-{
-  props:{
-    image:string //the image link
-  }
-
-  state:{
-    tall:boolean
-  }
-
-  theimage:ReactRef<any>
-
-  constructor(props:any)
-  {
-    super(props);
-
-    this.state={
-      tall:false
-    };
-
-    this.theimage=React.createRef();
-  }
-
-  componentDidMount()
-  {
-    this.resizeSelf();
-  }
-
-  // attempt to auto fit self
-  resizeSelf()
-  {
-    if (this.theimage.current.width>this.theimage.current.height)
-    {
-      this.setState({tall:true});
-    }
-  }
-
-  render()
-  {
-    var tallClass=this.state.tall?"tall":"";
-
-    return <img src={this.props.image} ref={this.theimage} className={tallClass}/>;
-  }
-}
-
-// given an image string, return an image element with proper fit classes
-function createThumbnailElement(image:string):AutoResizingImage|null
-{
-  if (!image)
-  {
-    return null;
-  }
-
-  return <AutoResizingImage image={image}/>;
 }
 
 export default ReactRedux.connect((storestate:EntryViewerStore)=>{

@@ -1,15 +1,21 @@
 import "./importexportbox.less";
 
-/* ImportExportBox() */
+/* ImportExportBox(function importedHistoryEntries) */
+interface ImportExportBoxProps
+{
+  importedHistoryEntries:(entries:HistoryEntryDict)=>void //function to call when imported history entries are ready
+}
+
 export default class ImportExportBox extends React.Component
 {
+  props:ImportExportBoxProps
   state:{
     importButtonEnabled:boolean
   }
 
   fileInput:ReactRef<any>
 
-  constructor(props:any)
+  constructor(props:ImportExportBoxProps)
   {
     super(props);
     this.recievedFile=this.recievedFile.bind(this);
@@ -55,7 +61,7 @@ export default class ImportExportBox extends React.Component
 
     var data=await readJsonFromFileInput(this.fileInput.current.files[0]);
 
-    console.log(ensureHistoryEntryDict(data));
+    this.props.importedHistoryEntries(ensureHistoryEntryDict(data));
   }
 
   render()
