@@ -50,7 +50,7 @@ function fixMissingIds()
 }
 
 // call this function to attach storage functions to dom window
-export function attachStorageFunctions()
+export default function attachStorageFunctions()
 {
     (window as any).showAll=showAll;
     (window as any).clearAll=clearAll;

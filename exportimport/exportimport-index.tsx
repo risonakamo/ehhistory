@@ -1,4 +1,5 @@
 import ImportExportBox from "./components/importexportbox/importexportbox";
+import attachStorageFunctions from "../shared/storagefunctions";
 
 import "./exportimport-index.less";
 
@@ -17,6 +18,7 @@ class ExportImportMain extends React.Component
 function main()
 {
   ReactDOM.render(<ExportImportMain/>,document.querySelector(".main"));
+  attachStorageFunctions();
 }
 
 window.onload=main;

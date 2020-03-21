@@ -1,6 +1,6 @@
 import Entrys from "./components/entrys/entrys";
 import store from "./store/entryviewerstore";
-import {attachStorageFunctions} from "../shared/storagefunctions";
+import attachStorageFunctions from "../shared/storagefunctions";
 import ImageLinkEditor from "./components/imagelinkedit/imagelinkedit";
 import EditorBar from "./components/editorbar/editorbar";
 

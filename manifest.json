@@ -9,6 +9,7 @@
     "permissions":[
         "tabs",
         "storage",
+        "downloads",
         "https://nhentai.net/g/*"
     ],
 
