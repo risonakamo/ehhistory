@@ -53,7 +53,9 @@ export default class ImportExportBox extends React.Component
       return;
     }
 
-    console.log(await readJsonFromFileInput(this.fileInput.current.files[0]));
+    var data=await readJsonFromFileInput(this.fileInput.current.files[0]);
+
+    console.log(ensureHistoryEntryDict(data));
   }
 
   render()
@@ -82,4 +84,28 @@ function readJsonFromFileInput(fileobject:File):Promise<Object>
 
     reader.readAsText(fileobject);
   });
+}
+
+// given a data object, check if it is a history entry dict, if it is,
+// return itself. otherwise return empty object.
+function ensureHistoryEntryDict(data:Object):HistoryEntryDict
+{
+  var allHistoryEntries:boolean=_.every(data,(x:any):boolean=>{
+    var isEntry=x.name!=undefined && x.group!=undefined && x.type!=undefined
+      && x.link!=undefined && x.date!=undefined;
+
+    if (isEntry && x.image==undefined)
+    {
+      x.image="";
+    }
+
+    return isEntry;
+  });
+
+  if (allHistoryEntries)
+  {
+    return data as HistoryEntryDict;
+  }
+
+  return {};
 }

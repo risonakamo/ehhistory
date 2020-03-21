@@ -40,7 +40,7 @@ interface EntryState
   editSelected:boolean //currently selected for edit
 }
 
-class Entry extends React.Component
+export class Entry extends React.Component
 {
   props:EntryProps
   state:EntryState
