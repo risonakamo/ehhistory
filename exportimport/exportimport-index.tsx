@@ -1,3 +1,5 @@
+import ImportExportBox from "./components/importexportbox/importexportbox";
+
 import "./exportimport-index.less";
 
 class ExportImportMain extends React.Component
@@ -5,8 +7,9 @@ class ExportImportMain extends React.Component
   render()
   {
     return <>
-      <p>import <input type="file"/></p>
-      <p><a href="">export</a></p>
+      <div className="import-export-link-hold">
+        <ImportExportBox/>
+      </div>
     </>;
   }
 }
