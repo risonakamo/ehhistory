@@ -39,3 +39,5 @@ interface PageParseResultWithType extends PageParseResult
     type:EntryType
     url:string
 }
+
+type EntryDiffMode="ADD"|"UNADDED";

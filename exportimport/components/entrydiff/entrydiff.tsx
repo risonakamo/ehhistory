@@ -25,7 +25,7 @@ export default class EntryDiff extends React.Component
     return <div className="entry-diff">
       {historyEntryDictToArray(this.props.entrys).map((x:HistoryEntry,i:number)=>{
         return <Entry entrydata={x} loadEditor={this.voidLoader} imageEditEnabled={false} key={i}
-          toggleAddImageEditEntry={this.voidLoader} diffMode={true}/>;
+          toggleAddImageEditEntry={this.voidLoader} diffMode={"ADD"}/>;
       })}
     </div>;
   }

@@ -9,7 +9,7 @@ interface EntryProps extends ReactProps
   imageEditEnabled:boolean
   toggleAddImageEditEntry:(entry:HistoryEntry)=>void //function to call to add entry as an entry being edited
 
-  diffMode?:boolean //diff mode entry cannot be edited
+  diffMode?:EntryDiffMode //set the entry into a diff mode.
 }
 
 interface EntryState
@@ -89,10 +89,14 @@ export default class Entry extends React.Component
     var noImageClass=this.props.entrydata.image?"":"no-image";
     var imageElement=createThumbnailElement(this.props.entrydata.image);
     var imageEditEnabledClass=this.props.imageEditEnabled?"image-edit":"";
-    var diffModeImageClass=this.props.diffMode?"diff-mode":"";
     // --- END ---
 
-    return <div className="entry-row">
+    // --- diffmode modifications ---
+    var diffModeImageClass=this.props.diffMode?"diff-mode":"";
+    var mainDiffModeClass=this.props.diffMode || "";
+    // --- END ---
+
+    return <div className={`entry-row ${mainDiffModeClass}`}>
       <div className="image-contain">
         <div className={`image-box ${noImageClass} ${imageEditEnabledClass} ${diffModeImageClass}`}
           onClick={this.imageClick}
