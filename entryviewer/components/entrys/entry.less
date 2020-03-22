@@ -24,12 +24,12 @@
 
     &.ADD
     {
-        background-color: fade(@diff-green,12%);
+        background-color: @faded-diff-green;
     }
 
     &.UNADDED
     {
-        background-color: fade(@diff-red,25%);
+        background-color: @faded-diff-red;
     }
 
     .image-contain
@@ -191,10 +191,28 @@
         {
             @diff-button-width: 150px;
 
+            display: flex;
             position: absolute;
             width: @diff-button-width;
             height: 100%;
             right: -@diff-button-width;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-drag: none;
+
+            &:hover
+            {
+                background-color: @faded-diff-green;
+            }
+
+            img
+            {
+                width: 40px;
+                user-select: none;
+                -webkit-user-drag: none;
+            }
         }
     }
 }
