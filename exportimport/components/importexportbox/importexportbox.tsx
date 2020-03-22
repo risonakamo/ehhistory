@@ -1,9 +1,10 @@
 import "./importexportbox.less";
 
-/* ImportExportBox(function importedHistoryEntries) */
+/* ImportExportBox(function importedHistoryEntries, function finalImport) */
 interface ImportExportBoxProps
 {
   importedHistoryEntries:(entries:HistoryEntryDict)=>void //function to call when imported history entries are ready
+  finalImport:()=>void //final import is triggered
 }
 
 export default class ImportExportBox extends React.Component
@@ -11,6 +12,8 @@ export default class ImportExportBox extends React.Component
   props:ImportExportBoxProps
   state:{
     importButtonEnabled:boolean
+    finalImport:boolean
+    finalImportDone:boolean
   }
 
   fileInput:ReactRef<any>
@@ -23,7 +26,9 @@ export default class ImportExportBox extends React.Component
     this.loadImportFile=this.loadImportFile.bind(this);
 
     this.state={
-      importButtonEnabled:false
+      importButtonEnabled:false,
+      finalImport:false,
+      finalImportDone:false
     };
 
     this.fileInput=React.createRef();
@@ -50,6 +55,9 @@ export default class ImportExportBox extends React.Component
     this.setState({importButtonEnabled:true});
   }
 
+  // perform files to load the imported file, ends up calling callback function
+  // the the imported data. if in final import mode, calls the final import
+  // function
   async loadImportFile(e:Event):Promise<void>
   {
     e.preventDefault();
@@ -59,16 +67,42 @@ export default class ImportExportBox extends React.Component
       return;
     }
 
+    if (this.state.finalImport)
+    {
+      this.props.finalImport();
+      this.setState({importButtonEnabled:false,finalImportDone:true});
+      return;
+    }
+
     var data=await readJsonFromFileInput(this.fileInput.current.files[0]);
 
     this.props.importedHistoryEntries(ensureHistoryEntryDict(data));
+    this.setState({finalImport:true});
+  }
+
+  // return the text of the import button based on current states
+  getImportButtonText():string
+  {
+    if (this.state.finalImportDone)
+    {
+      return "imported";
+    }
+
+    if (this.state.finalImport)
+    {
+      return "final import";
+    }
+
+    return "import";
   }
 
   render()
   {
     return <div className="import-export-links">
       <p>
-        <a className="import-link" href={this.state.importButtonEnabled?"":null} onClick={this.loadImportFile}>import</a>
+        <a className="import-link" href={this.state.importButtonEnabled?"":null} onClick={this.loadImportFile}>
+          {this.getImportButtonText()}
+        </a>
         <input type="file" onChange={this.recievedFile} ref={this.fileInput}/>
       </p>
       <p>
