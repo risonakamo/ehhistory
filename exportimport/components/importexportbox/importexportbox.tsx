@@ -38,7 +38,7 @@ export default class ImportExportBox extends React.Component
       var entries=storage.entries || {};
 
       chrome.downloads.download({
-        url:"data:application/json;base64,"+btoa(JSON.stringify(entries)),
+        url:"data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(entries)))),
         filename:"entries.json"
       });
     });
