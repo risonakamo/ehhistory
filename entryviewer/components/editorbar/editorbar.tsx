@@ -35,6 +35,7 @@ class EditorBar extends React.PureComponent
     var imageEditText=this.props.imageEditMode?"disable image edit mode":"image edit mode";
 
     return <div className="editor-bar">
+      <a href="../exportimport/exportimport.html">export import page</a>
       <a href="" onClick={this.tempImageModeToggle}>{imageEditText}</a>
       <a href="" style={{display:this.props.imageEditMode?"":"none"}} onClick={this.openImageEditorClick}>
         edit selected images

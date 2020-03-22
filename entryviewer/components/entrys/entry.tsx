@@ -1,12 +1,15 @@
 import "./entry.less";
 
-/* Entry(HistoryEntry entrydata, function loadEditor, bool imageEditEnabled, function toggleAddImageEditEntry) */
+/* Entry(HistoryEntry entrydata, function loadEditor, bool imageEditEnabled, function toggleAddImageEditEntry,
+    bool diffMode) */
 interface EntryProps extends ReactProps
 {
   entrydata:HistoryEntry //the entry data object for this element
   loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
   imageEditEnabled:boolean
   toggleAddImageEditEntry:(entry:HistoryEntry)=>void //function to call to add entry as an entry being edited
+
+  diffMode?:boolean //diff mode entry cannot be edited
 }
 
 interface EntryState
@@ -86,17 +89,20 @@ export default class Entry extends React.Component
     var noImageClass=this.props.entrydata.image?"":"no-image";
     var imageElement=createThumbnailElement(this.props.entrydata.image);
     var imageEditEnabledClass=this.props.imageEditEnabled?"image-edit":"";
+    var diffModeImageClass=this.props.diffMode?"diff-mode":"";
     // --- END ---
 
     return <div className="entry-row">
       <div className="image-contain">
-        <div className={`image-box ${noImageClass} ${imageEditEnabledClass}`} onClick={this.imageClick}>
+        <div className={`image-box ${noImageClass} ${imageEditEnabledClass} ${diffModeImageClass}`}
+          onClick={this.imageClick}
+        >
           <div className="image-selected" style={{display:this.state.editSelected?"":"none"}}>
             <img src="../imgs/checkbox-dark.svg"/>
           </div>
           {imageElement}
         </div>
-        <div className="edit-zone">
+        <div className="edit-zone" style={{display:this.props.diffMode?"none":""}}>
           <div className="edit-button edit-button" onClick={this.editButtonClick}><img src="../imgs/triangle-white.svg"/></div>
           <div className="edit-button delete-button"><img src="../imgs/close-salmon.svg"/></div>
         </div>
