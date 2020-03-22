@@ -151,6 +151,7 @@
     .content-contain
     {
         display: inline-flex;
+        position: relative;
         width: 650px;
         min-height: 150px;
         padding-left: 20px;
@@ -184,6 +185,16 @@
             {
                 opacity: .2;
             }
+        }
+
+        .diff-mode-edit
+        {
+            @diff-button-width: 150px;
+
+            position: absolute;
+            width: @diff-button-width;
+            height: 100%;
+            right: -@diff-button-width;
         }
     }
 }

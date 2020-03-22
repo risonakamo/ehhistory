@@ -118,6 +118,9 @@ export default class Entry extends React.Component
           <p className="tags">{typeelement} TAG1 TAG2 TAG3</p>
           <p className="date">{datestring}</p>
         </div>
+        <div className="diff-mode-edit" style={{display:this.props.diffMode?"":"none"}}>
+          <img src="../imgs/close-salmon.svg"/>
+        </div>
       </div>
     </div>;
   }
