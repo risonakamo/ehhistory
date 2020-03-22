@@ -137,7 +137,7 @@ export default class Entry extends React.Component
           <p className="date">{datestring}</p>
         </div>
         <div className="diff-mode-edit" style={{display:this.props.diffMode?"":"none"}} onClick={this.toggleDiffMode}>
-          <img src="../imgs/close-salmon.svg"/>
+          <img src={diffModeImage(this.props.diffMode)}/>
         </div>
       </div>
     </div>;
@@ -165,6 +165,18 @@ function createThumbnailElement(image:string):AutoResizingImage|null
   }
 
   return <AutoResizingImage image={image}/>;
+}
+
+// return url from diff mode icon image
+function diffModeImage(mode?:EntryDiffMode):string
+{
+  switch (mode)
+  {
+    case "UNADDED":
+      return "../imgs/addicon-green.svg";
+  }
+
+  return "../imgs/close-salmon.svg";
 }
 
 /* AutoResizingImage(string image) */
