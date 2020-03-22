@@ -1,7 +1,7 @@
 import "./entry.less";
 
 /* Entry(HistoryEntry entrydata, function loadEditor, bool imageEditEnabled, function toggleAddImageEditEntry,
-    bool diffMode) */
+    bool? diffMode, function? diffModeChanged) */
 interface EntryProps extends ReactProps
 {
   entrydata:HistoryEntry //the entry data object for this element
@@ -10,6 +10,8 @@ interface EntryProps extends ReactProps
   toggleAddImageEditEntry:(entry:HistoryEntry)=>void //function to call to add entry as an entry being edited
 
   diffMode?:EntryDiffMode //set the entry into a diff mode.
+  diffModeChanged?:(newMode:EntryDiffMode,id:number)=>void //function called when diffmode is changed, returns the new diffmode.
+                                                           //only required if diffMode is set
 }
 
 interface EntryState
@@ -27,6 +29,7 @@ export default class Entry extends React.Component
     super(props);
     this.editButtonClick=this.editButtonClick.bind(this);
     this.imageClick=this.imageClick.bind(this);
+    this.toggleDiffMode=this.toggleDiffMode.bind(this);
 
     this.state={
       editSelected:false
@@ -80,6 +83,21 @@ export default class Entry extends React.Component
     }
   }
 
+  // switch the diff mode based on the current diffmode
+  toggleDiffMode():void
+  {
+    switch (this.props.diffMode)
+    {
+      case "ADD":
+        this.props.diffModeChanged("UNADDED",this.props.entrydata.id);
+        break;
+
+      case "UNADDED":
+        this.props.diffModeChanged("ADD",this.props.entrydata.id);
+        break;
+    }
+  }
+
   render()
   {
     var typeelement=createTypeElement(this.props.entrydata.type);
@@ -118,7 +136,7 @@ export default class Entry extends React.Component
           <p className="tags">{typeelement} TAG1 TAG2 TAG3</p>
           <p className="date">{datestring}</p>
         </div>
-        <div className="diff-mode-edit" style={{display:this.props.diffMode?"":"none"}}>
+        <div className="diff-mode-edit" style={{display:this.props.diffMode?"":"none"}} onClick={this.toggleDiffMode}>
           <img src="../imgs/close-salmon.svg"/>
         </div>
       </div>
