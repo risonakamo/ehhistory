@@ -5,6 +5,8 @@
     width: 800px;
     font-size: 0;
     margin: 10px 0 20px 0;
+    background-color: var(--main-background-colour);
+    --main-background-colour: transparent;
 
     a
     {
@@ -24,12 +26,12 @@
 
     &.ADD
     {
-        background-color: @faded-diff-green;
+        --main-background-colour: @faded-diff-green;
     }
 
     &.UNADDED
     {
-        background-color: @faded-diff-red;
+        --main-background-colour: @faded-diff-red;
     }
 
     .image-contain
@@ -204,7 +206,7 @@
 
             &:hover
             {
-                background-color: @faded-diff-green;
+                background-color: var(--main-background-colour);
             }
 
             img
