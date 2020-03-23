@@ -76,8 +76,8 @@ export default class ImportExportBox extends React.Component
 
     var data=await readJsonFromFileInput(this.fileInput.current.files[0]);
 
-    this.props.importedHistoryEntries(ensureHistoryEntryDict(data));
     this.setState({finalImport:true});
+    this.props.importedHistoryEntries(await filterMatchingLinks(ensureHistoryEntryDict(data)));
   }
 
   // return the text of the import button based on current states
@@ -148,4 +148,26 @@ function ensureHistoryEntryDict(data:Object):HistoryEntryDict
   }
 
   return {};
+}
+
+// given history entries, filter out the ones that are already present in the storage,
+// based on link (if they have the same link they are filtered out). returns a promise
+// with an array of the remaining history entries.
+function filterMatchingLinks(entries:HistoryEntryDict):Promise<HistoryEntry[]>
+{
+  return new Promise((resolve)=>{
+    chrome.storage.local.get("entries",(storage:LocalStorage)=>{
+      var storageEntries:HistoryEntryDict=storage.entries || {};
+
+      var storageLinks:Set<string>=new Set(_.map(storageEntries,(x:HistoryEntry)=>{
+        return x.link;
+      }));
+
+      var filteredEntries:HistoryEntry[]=_.filter(entries,(x:HistoryEntry):boolean=>{
+        return !storageLinks.has(x.link);
+      });
+
+      resolve(filteredEntries);
+    });
+  });
 }
