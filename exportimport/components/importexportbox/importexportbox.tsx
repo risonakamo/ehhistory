@@ -103,7 +103,8 @@ export default class ImportExportBox extends React.Component
         <a className="import-link" href={this.state.importButtonEnabled?"":null} onClick={this.loadImportFile}>
           {this.getImportButtonText()}
         </a>
-        <input type="file" onChange={this.recievedFile} ref={this.fileInput}/>
+        <input type="file" onChange={this.recievedFile} ref={this.fileInput}
+          style={{display:this.state.finalImport?"none":""}}/>
       </p>
       <p>
         <a href="google.com" onClick={this.exportEntries}>export</a>
