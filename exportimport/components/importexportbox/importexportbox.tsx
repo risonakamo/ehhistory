@@ -154,7 +154,7 @@ function ensureHistoryEntryDict(data:Object):HistoryEntryDict
 // given history entries, filter out the ones that are already present in the storage,
 // based on link (if they have the same link they are filtered out). returns a promise
 // with an array of the remaining history entries.
-function filterMatchingLinks(entries:HistoryEntryDict):Promise<HistoryEntry[]>
+function filterMatchingLinks(entries:HistoryEntryDict):Promise<HistoryEntryDict>
 {
   return new Promise((resolve)=>{
     chrome.storage.local.get("entries",(storage:LocalStorage)=>{
@@ -164,11 +164,9 @@ function filterMatchingLinks(entries:HistoryEntryDict):Promise<HistoryEntry[]>
         return x.link;
       }));
 
-      var filteredEntries:HistoryEntry[]=_.filter(entries,(x:HistoryEntry):boolean=>{
+      resolve(_.pickBy(entries,(x:HistoryEntry)=>{
         return !storageLinks.has(x.link);
-      });
-
-      resolve(filteredEntries);
+      }));
     });
   });
 }

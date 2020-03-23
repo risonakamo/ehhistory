@@ -7,6 +7,7 @@ import "./entrydiff.less";
 interface EntryDiffProps
 {
   entrys:HistoryEntryDict //the entries to be diffed
+  ref:ReactRef<EntryDiff>
 }
 
 export default class EntryDiff extends React.Component
@@ -42,6 +43,26 @@ export default class EntryDiff extends React.Component
         ...this.state.currentDiffModes,
         [id]:newMode
       }
+    });
+  }
+
+  // PUBLIC upload to storage
+  uploadEntries():void
+  {
+    var filteredEntries:HistoryEntryDict=_.pickBy(this.props.entrys,(x:HistoryEntry)=>{
+      return this.state.currentDiffModes[x.id]!="UNADDED";
+    });
+
+    chrome.storage.local.get(["entries","maxId"],(storage:LocalStorage)=>{
+      var storageEntries:HistoryEntryDict=storage.entries || {};
+      var storageMaxId:number=storage.maxId || 0;
+
+      for (var x in filteredEntries)
+      {
+        storageEntries[++storageMaxId]=filteredEntries[x];
+      }
+
+      chrome.storage.local.set({entries:storageEntries,maxId:storageMaxId});
     });
   }
 

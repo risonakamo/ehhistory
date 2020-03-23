@@ -10,6 +10,8 @@ class ExportImportMain extends React.Component
     editEntries:HistoryEntryDict
   }
 
+  entryDiff:ReactRef<EntryDiff>
+
   constructor(props:any)
   {
     super(props);
@@ -19,6 +21,8 @@ class ExportImportMain extends React.Component
     this.state={
       editEntries:{}
     };
+
+    this.entryDiff=React.createRef();
   }
 
   // replace the entries being currently edited with new ones
@@ -27,9 +31,10 @@ class ExportImportMain extends React.Component
     this.setState({editEntries:newEntries});
   }
 
+  // final import to upload to storage
   finalImport():void
   {
-    console.log(this.state.editEntries);
+    this.entryDiff.current.uploadEntries();
   }
 
   render()
@@ -38,7 +43,7 @@ class ExportImportMain extends React.Component
       <div className="import-export-link-hold">
         <ImportExportBox importedHistoryEntries={this.loadEditEntries} finalImport={this.finalImport}/>
       </div>
-      <EntryDiff entrys={this.state.editEntries}/>
+      <EntryDiff entrys={this.state.editEntries} ref={this.entryDiff}/>
     </>;
   }
 }
