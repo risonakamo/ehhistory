@@ -58,3 +58,36 @@
     background-color: fade(@dark-back-purple,50%);
     border-bottom: 1px solid fade(@off-white-yellow,60%);
 }
+
+.tag-editor .tag-edit-button
+{
+    display: inline-flex;
+    width: 80px;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    user-select: none;
+    opacity: .8;
+
+    &:hover
+    {
+        background-color: fade(@off-white-yellow,10%);
+    }
+
+    &:active
+    {
+        opacity: 1;
+    }
+
+    img
+    {
+        width: 35px;
+    }
+
+    p
+    {
+        font-size: 12px;
+    }
+}
