@@ -39,7 +39,7 @@ class EntryViewerMain extends React.Component
       },
       editorShown:false,
       imageEditorShown:false,
-      cloakEnabled:false
+      cloakEnabled:true
     };
   }
 

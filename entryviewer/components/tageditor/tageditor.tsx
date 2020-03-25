@@ -11,12 +11,14 @@ export default class TagEditor extends React.Component
   }
 }
 
+/* TagEditorTag() */
 class TagEditorTag extends React.Component
 {
   render()
   {
     return <div className="editor-tag">
-
+      <p className="name">Something</p>
+      <p>12</p>
     </div>;
   }
 }
