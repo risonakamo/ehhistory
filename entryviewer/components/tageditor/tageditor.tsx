@@ -5,6 +5,12 @@ type TagEditorButtonType="done"|"cancel"|"filter"|"delete";
 /* TagEditor() */
 export default class TagEditor extends React.Component
 {
+  // TEMP
+  gotNewTag(newtag:string):void
+  {
+    console.log("new tag",newtag);
+  }
+
   render()
   {
     return <div className="tag-editor">
@@ -16,7 +22,7 @@ export default class TagEditor extends React.Component
           <TagEditorButton type="delete" text="Delete"/>
         </div>
 
-        <TagEditorInput/>
+        <TagEditorInput newTag={this.gotNewTag}/>
       </div>
       <div className="tags-hold">
         <TagEditorTag/>
@@ -37,12 +43,51 @@ class TagEditorTag extends React.Component
   }
 }
 
-/* TagEditorInput() */
+/* TagEditorInput(function newTag) */
 class TagEditorInput extends React.Component
 {
+  props:{
+    newTag:(newtag:string)=>void //function called when new tag has been submitted. new tag is given.
+  }
+  state:{
+    currentValue:string
+  }
+
+  constructor(props:any)
+  {
+    super(props);
+    this.inputHandler=this.inputHandler.bind(this);
+    this.keyHandler=this.keyHandler.bind(this);
+
+    this.state={
+      currentValue:""
+    };
+  }
+
+  // handle inputs
+  inputHandler(e:any):void
+  {
+    this.setState({currentValue:e.target.value});
+  }
+
+  // handle key inputs
+  keyHandler(e:any):void
+  {
+    if (e.key=="Enter")
+    {
+      if (this.state.currentValue.trim().length)
+      {
+        this.props.newTag(this.state.currentValue.trim());
+      }
+
+      this.setState({currentValue:""});
+    }
+  }
+
   render()
   {
-    return <input placeholder="new tag" type="text" className="tag-editor-input input-inherit"/>;
+    return <input placeholder="new tag" type="text" className="tag-editor-input input-inherit"
+      onChange={this.inputHandler} value={this.state.currentValue} onKeyPress={this.keyHandler}/>;
   }
 }
 
