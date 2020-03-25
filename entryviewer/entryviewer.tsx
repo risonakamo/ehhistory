@@ -3,6 +3,7 @@ import store from "./store/entryviewerstore";
 import attachStorageFunctions from "../shared/storagefunctions";
 import ImageLinkEditor from "./components/imagelinkedit/imagelinkedit";
 import EditorBar from "./components/editorbar/editorbar";
+import TagEditor from "./components/tageditor/tageditor";
 
 // TEMPORARY
 import EntryEditor from "./components/entryeditor/entryeditor";
@@ -87,6 +88,7 @@ class EntryViewerMain extends React.Component
           <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
             closeEditor={this.closeEditor}/>
           <ImageLinkEditor showing={this.state.imageEditorShown} parentCloseEditor={this.toggleImageEditor}/>
+          <TagEditor/>
         </div>
       </div>
       <div className="menu-cloak" style={{display:this.state.cloakEnabled?"":"none"}}></div>
