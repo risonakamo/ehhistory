@@ -62,7 +62,8 @@ export default class PopupMain extends React.Component
         type:this.state.currentType,
         link:this.currentUrl,
         image:"",
-        date:new Date().toISOString()
+        date:new Date().toISOString(),
+        tags:[]
       };
 
       chrome.storage.local.set(storageResult,()=>{

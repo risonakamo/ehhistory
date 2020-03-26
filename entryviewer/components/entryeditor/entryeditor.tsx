@@ -35,7 +35,8 @@ export default class EntryEditor extends React.Component
         type:"OTHER",
         image:"",
         link:"",
-        date:""
+        date:"",
+        tags:[]
       }
     };
   }

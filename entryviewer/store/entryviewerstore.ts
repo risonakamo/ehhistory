@@ -5,6 +5,8 @@ export interface EntryViewerStore
     imageEditMode:boolean //whether image edit mode is enabled
     currentImageEditEntries:HistoryEntryDict //dict of entries about to be edited by image editor
 
+    tagCounts:TagCounts
+
     dispatch:(action:StoreAction)=>void
 }
 
@@ -160,17 +162,29 @@ function imageEditEntriesReduce(editEntries:HistoryEntryDict,act:StoreAction):Hi
     return editEntries;
 }
 
+function tagCountsReduce(tagsCounts:TagCounts,act:StoreAction):TagCounts
+{
+    if (act.type=="replaceEntries")
+    {
+
+    }
+
+    return tagsCounts;
+}
+
 // --- STORE DEFINITION ---
 store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
     return {
         entries:entriesReduce(state.entries,act),
         imageEditMode:imageEditModeReduce(state.imageEditMode,act),
-        currentImageEditEntries:imageEditEntriesReduce(state.currentImageEditEntries,act)
+        currentImageEditEntries:imageEditEntriesReduce(state.currentImageEditEntries,act),
+        tagCounts:tagCountsReduce(state.tagCounts,act)
     };
 },{
     entries:{},
     imageEditMode:false,
-    currentImageEditEntries:{}
+    currentImageEditEntries:{},
+    tagCounts:{}
 } as EntryViewerStore);
 
 export default store;

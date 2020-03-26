@@ -13,6 +13,8 @@ interface HistoryEntry
     link:string
 
     date:DateString
+
+    tags:string[]
 }
 
 // the local storage
@@ -41,3 +43,8 @@ interface PageParseResultWithType extends PageParseResult
 }
 
 type EntryDiffMode="ADD"|"UNADDED";
+
+interface TagCounts
+{
+    [tagname:string]:number
+}

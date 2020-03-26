@@ -40,7 +40,8 @@ class EntryViewerMain extends React.Component
         type:"OTHER",
         image:"",
         link:"",
-        date:""
+        date:"",
+        tags:[]
       },
 
       tagEditEntry:null,

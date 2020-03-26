@@ -72,7 +72,8 @@ export default class EntryDiff extends React.Component
       {historyEntryDictToArray(this.props.entrys).map((x:HistoryEntry,i:number)=>{
         var diffMode=this.state.currentDiffModes[x.id] || "ADD";
         return <Entry entrydata={x} loadEditor={this.voidLoader} imageEditEnabled={false} key={i}
-          toggleAddImageEditEntry={this.voidLoader} diffMode={diffMode} diffModeChanged={this.updateDiffMode}/>;
+          toggleAddImageEditEntry={this.voidLoader} diffMode={diffMode} diffModeChanged={this.updateDiffMode}
+          loadTagEditor={this.voidLoader}/>;
       })}
     </div>;
   }
