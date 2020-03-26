@@ -2,18 +2,36 @@ import "./tageditor.less";
 
 type TagEditorButtonType="done"|"cancel"|"filter"|"delete";
 
+interface TagEditorProps
+{
+  enabled:boolean //editor is enabled or not
+  editEntry:HistoryEntry //the history entry being edited currently
+}
+
 /* TagEditor(bool enabled, HistoryEntry editEntry) */
 export default class TagEditor extends React.Component
 {
-  props:{
-    enabled:boolean
-    editEntry:HistoryEntry
+  props:TagEditorProps
+
+  state:{
+    newTags:string[] //array of newly added tags by the input
   }
 
-  // TEMP
+  constructor(props:TagEditorProps)
+  {
+    super(props);
+    this.gotNewTag=this.gotNewTag.bind(this);
+
+    this.state={
+      newTags:[]
+    };
+  }
+
   gotNewTag(newtag:string):void
   {
-    console.log("new tag",newtag);
+    this.setState({
+      newTags:[...this.state.newTags,newtag]
+    });
   }
 
   render()
@@ -30,20 +48,25 @@ export default class TagEditor extends React.Component
         <TagEditorInput newTag={this.gotNewTag}/>
       </div>
       <div className="tags-hold">
-        <TagEditorTag/>
+        {createTags(this.state.newTags)}
       </div>
     </div>;
   }
 }
 
-/* TagEditorTag() */
+/* TagEditorTag(string name, int count) */
 class TagEditorTag extends React.Component
 {
+  props:{
+    name:string
+    count:number
+  }
+
   render()
   {
     return <div className="editor-tag">
-      <p className="name">Something</p>
-      <p>12</p>
+      <p className="name">{this.props.name}</p>
+      <p>{this.props.count}</p>
     </div>;
   }
 }
@@ -137,4 +160,13 @@ function resolveTagButtonImage(type:TagEditorButtonType):string
   }
 
   return `../imgs/${resolveImg}`;
+}
+
+// NOT DONE
+// given string array of tags, return Tag elements in some order
+function createTags(tags:string[]):TagEditorTag[]
+{
+  return _.map(tags,(x:string)=>{
+    return <TagEditorTag name={x} count={0}/>
+  });
 }
