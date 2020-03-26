@@ -15,6 +15,10 @@ class EntryViewerMain extends React.Component
 {
   state:{
     currentEditEntry:HistoryEntry
+
+    tagEditEntry:HistoryEntry
+    tagEditShow:boolean
+
     editorShown:boolean
     imageEditorShown:boolean
     cloakEnabled:boolean
@@ -26,6 +30,7 @@ class EntryViewerMain extends React.Component
     this.loadEditor=this.loadEditor.bind(this);
     this.closeEditor=this.closeEditor.bind(this);
     this.toggleImageEditor=this.toggleImageEditor.bind(this);
+    this.loadTagEditor=this.loadTagEditor.bind(this);
 
     this.state={
       currentEditEntry:{
@@ -37,9 +42,13 @@ class EntryViewerMain extends React.Component
         link:"",
         date:""
       },
+
+      tagEditEntry:null,
+      tagEditShow:false,
+
       editorShown:false,
       imageEditorShown:false,
-      cloakEnabled:true
+      cloakEnabled:false
     };
   }
 
@@ -78,17 +87,27 @@ class EntryViewerMain extends React.Component
     this.setState({cloakEnabled:cloakOn==undefined?!this.state.cloakEnabled:cloakOn});
   }
 
+  // load the tag editor
+  loadTagEditor(entry:HistoryEntry):void
+  {
+    this.setState({
+      cloakEnabled:true,
+      tagEditShow:true,
+      tagEditEntry:entry
+    });
+  }
+
   render()
   {
     return <>
       <div className={`content-window ${this.state.cloakEnabled?"cloaked":""}`}>
         <div className="content">
           <EditorBar toggleImageEditor={this.toggleImageEditor}/>
-          <Entrys loadEditor={this.loadEditor}/>
+          <Entrys loadEditor={this.loadEditor} loadTagEditor={this.loadTagEditor}/>
           <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
             closeEditor={this.closeEditor}/>
           <ImageLinkEditor showing={this.state.imageEditorShown} parentCloseEditor={this.toggleImageEditor}/>
-          <TagEditor/>
+          <TagEditor enabled={this.state.tagEditShow} editEntry={this.state.tagEditEntry}/>
         </div>
       </div>
       <div className="menu-cloak" style={{display:this.state.cloakEnabled?"":"none"}}></div>

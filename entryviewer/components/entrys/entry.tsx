@@ -1,11 +1,12 @@
 import "./entry.less";
 
 /* Entry(HistoryEntry entrydata, function loadEditor, bool imageEditEnabled, function toggleAddImageEditEntry,
-    bool? diffMode, function? diffModeChanged) */
+    bool? diffMode, function? diffModeChanged, function loadTagEditor) */
 interface EntryProps extends ReactProps
 {
   entrydata:HistoryEntry //the entry data object for this element
   loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
+  loadTagEditor:(entry:HistoryEntry)=>void //called when tag button clicked. returns this entry.
   imageEditEnabled:boolean
   toggleAddImageEditEntry:(entry:HistoryEntry)=>void //function to call to add entry as an entry being edited
 
@@ -30,6 +31,7 @@ export default class Entry extends React.Component
     this.editButtonClick=this.editButtonClick.bind(this);
     this.imageClick=this.imageClick.bind(this);
     this.toggleDiffMode=this.toggleDiffMode.bind(this);
+    this.tagButtonClick=this.tagButtonClick.bind(this);
 
     this.state={
       editSelected:false
@@ -98,6 +100,12 @@ export default class Entry extends React.Component
     }
   }
 
+  // handle click on tag button
+  tagButtonClick():void
+  {
+    this.props.loadTagEditor(this.props.entrydata);
+  }
+
   render()
   {
     var typeelement=createTypeElement(this.props.entrydata.type);
@@ -126,7 +134,7 @@ export default class Entry extends React.Component
         </div>
         <div className="edit-zone" style={{display:this.props.diffMode?"none":""}}>
           <div className="edit-button edit-button" onClick={this.editButtonClick}><img src="../imgs/triangle-white.svg"/></div>
-          <div className="edit-button delete-button"><img src="../imgs/close-salmon.svg"/></div>
+          <div className="edit-button delete-button" onClick={this.tagButtonClick}><img src="../imgs/close-salmon.svg"/></div>
         </div>
       </div>
       <div className="content-contain">

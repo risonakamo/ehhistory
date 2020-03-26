@@ -2,9 +2,14 @@ import "./tageditor.less";
 
 type TagEditorButtonType="done"|"cancel"|"filter"|"delete";
 
-/* TagEditor() */
+/* TagEditor(bool enabled, HistoryEntry editEntry) */
 export default class TagEditor extends React.Component
 {
+  props:{
+    enabled:boolean
+    editEntry:HistoryEntry
+  }
+
   // TEMP
   gotNewTag(newtag:string):void
   {
@@ -13,7 +18,7 @@ export default class TagEditor extends React.Component
 
   render()
   {
-    return <div className="tag-editor">
+    return <div className="tag-editor" style={{display:this.props.enabled?"":"none"}}>
       <div className="controls-zone">
         <div className="button-zone">
           <TagEditorButton type="done" text="Done"/>
