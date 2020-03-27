@@ -75,7 +75,7 @@ export default class TagEditor extends React.Component
   createTags(tagstate:TagState):TagEditorTag[]
   {
     return _.map(tagstate,(x:boolean,i:string)=>{
-      return <TagEditorTag name={i} count={0} selected={x} selectedToggled={this.updateTag}/>
+      return <TagEditorTag name={i} count={0} selected={x} selectedToggled={this.updateTag} key={i}/>
     });
   }
 
@@ -127,6 +127,8 @@ interface TagEditorTagProps
   //function called when element is clicked, returns
   //the new selected state of the element and the tag name
   selectedToggled:(newSelected:boolean,name:string)=>void
+
+  key:any
 }
 
 /* TagEditorTag(string name, int count, selected bool, function selectedToggled) */
