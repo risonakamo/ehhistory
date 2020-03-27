@@ -2,15 +2,15 @@ import "./tageditor.less";
 
 type TagEditorButtonType="done"|"cancel"|"filter"|"delete";
 
+interface TagState
+{
+    [tagname:string]:boolean
+}
+
 interface TagEditorProps
 {
   enabled:boolean //editor is enabled or not
   editEntry:HistoryEntry //the history entry being edited currently
-}
-
-interface TagState
-{
-    [tagname:string]:boolean
 }
 
 /* TagEditor(bool enabled, HistoryEntry editEntry) */
@@ -26,6 +26,7 @@ export default class TagEditor extends React.Component
   {
     super(props);
     this.gotNewTag=this.gotNewTag.bind(this);
+    this.updateTag=this.updateTag.bind(this);
 
     this.state={
       newTags:{}
@@ -43,11 +44,23 @@ export default class TagEditor extends React.Component
     });
   }
 
+  // NEED TO IMPLEMENT FOR NON NEW TAGS
+  // update a tag's selected state
+  updateTag(newSelected:boolean,name:string):void
+  {
+    this.setState({
+      newTags:{
+        ...this.state.newTags,
+        [name]:newSelected
+      }
+    });
+  }
+
   // create tag elements
   createTags(tagstate:TagState):TagEditorTag[]
   {
     return _.map(tagstate,(x:boolean,i:string)=>{
-      return <TagEditorTag name={i} count={0} selected={x}/>
+      return <TagEditorTag name={i} count={0} selected={x} selectedToggled={this.updateTag}/>
     });
   }
 
@@ -71,18 +84,36 @@ export default class TagEditor extends React.Component
   }
 }
 
-/* TagEditorTag(string name, int count, selected bool) */
+interface TagEditorTagProps
+{
+  name:string
+  count:number
+  selected:boolean
+
+  //function called when element is clicked, returns
+  //the new selected state of the element and the tag name
+  selectedToggled:(newSelected:boolean,name:string)=>void
+}
+
+/* TagEditorTag(string name, int count, selected bool, function selectedToggled) */
 class TagEditorTag extends React.Component
 {
-  props:{
-    name:string
-    count:number
-    selected:boolean
+  props:TagEditorTagProps
+
+  constructor(props:TagEditorTagProps)
+  {
+    super(props);
+    this.clickHandler=this.clickHandler.bind(this);
+  }
+
+  clickHandler():void
+  {
+    this.props.selectedToggled(!this.props.selected,this.props.name);
   }
 
   render()
   {
-    return <div className={`editor-tag ${this.props.selected?"selected":""}`}>
+    return <div className={`editor-tag ${this.props.selected?"selected":""}`} onClick={this.clickHandler}>
       <p className="name">{this.props.name}</p>
       <p>{this.props.count}</p>
     </div>;
