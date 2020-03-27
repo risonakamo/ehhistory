@@ -11,15 +11,16 @@ interface TagEditorProps
 {
   enabled:boolean //editor is enabled or not
   editEntry:HistoryEntry //the history entry being edited currently
+  closeEditor:()=>void //called when close button is pressed
 }
 
-/* TagEditor(bool enabled, HistoryEntry editEntry) */
+/* TagEditor(bool enabled, HistoryEntry editEntry, function closeEditor) */
 export default class TagEditor extends React.Component
 {
   props:TagEditorProps
 
   state:{
-    newTags:TagState //array of newly added tags by the input
+    currentTags:TagState //array of newly added tags by the input
   }
 
   constructor(props:TagEditorProps)
@@ -29,7 +30,7 @@ export default class TagEditor extends React.Component
     this.updateTag=this.updateTag.bind(this);
 
     this.state={
-      newTags:{}
+      currentTags:{}
     };
   }
 
@@ -37,8 +38,8 @@ export default class TagEditor extends React.Component
   gotNewTag(newtag:string):void
   {
     this.setState({
-      newTags:{
-        ...this.state.newTags,
+      currentTags:{
+        ...this.state.currentTags,
         [newtag]:true
       }
     });
@@ -49,8 +50,8 @@ export default class TagEditor extends React.Component
   updateTag(newSelected:boolean,name:string):void
   {
     this.setState({
-      newTags:{
-        ...this.state.newTags,
+      currentTags:{
+        ...this.state.currentTags,
         [name]:newSelected
       }
     });
@@ -70,7 +71,7 @@ export default class TagEditor extends React.Component
       <div className="controls-zone">
         <div className="button-zone">
           <TagEditorButton type="done" text="Done"/>
-          <TagEditorButton type="cancel" text="Cancel"/>
+          <TagEditorButton type="cancel" text="Cancel" onClick={this.props.closeEditor}/>
           <TagEditorButton type="filter" text="AZ"/>
           <TagEditorButton type="delete" text="Delete"/>
         </div>
@@ -78,7 +79,7 @@ export default class TagEditor extends React.Component
         <TagEditorInput newTag={this.gotNewTag}/>
       </div>
       <div className="tags-hold">
-        {this.createTags(this.state.newTags)}
+        {this.createTags(this.state.currentTags)}
       </div>
     </div>;
   }
@@ -168,17 +169,18 @@ class TagEditorInput extends React.Component
   }
 }
 
-/* TagEditorButton(TagEditorButtonType type, string text) */
+/* TagEditorButton(TagEditorButtonType type, string text, function onClick) */
 class TagEditorButton extends React.Component
 {
   props:{
     type:TagEditorButtonType //the icon type
     text:string //the text to display under it
+    onClick:(e?:Event)=>void //button is clicked
   }
 
   render()
   {
-    return <div className="tag-edit-button">
+    return <div className="tag-edit-button" onClick={this.props.onClick}>
       <img src={resolveTagButtonImage(this.props.type)}/>
       <p>{this.props.text}</p>
     </div>;

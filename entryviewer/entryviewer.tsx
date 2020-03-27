@@ -31,6 +31,7 @@ class EntryViewerMain extends React.Component
     this.closeEditor=this.closeEditor.bind(this);
     this.toggleImageEditor=this.toggleImageEditor.bind(this);
     this.loadTagEditor=this.loadTagEditor.bind(this);
+    this.closeTagEditor=this.closeTagEditor.bind(this);
 
     this.state={
       currentEditEntry:{
@@ -98,6 +99,14 @@ class EntryViewerMain extends React.Component
     });
   }
 
+  closeTagEditor():void
+  {
+    this.setState({
+      tagEditShow:false,
+      cloakEnabled:false
+    });
+  }
+
   render()
   {
     return <>
@@ -108,7 +117,7 @@ class EntryViewerMain extends React.Component
           <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
             closeEditor={this.closeEditor}/>
           <ImageLinkEditor showing={this.state.imageEditorShown} parentCloseEditor={this.toggleImageEditor}/>
-          <TagEditor enabled={this.state.tagEditShow} editEntry={this.state.tagEditEntry}/>
+          <TagEditor enabled={this.state.tagEditShow} editEntry={this.state.tagEditEntry} closeEditor={this.closeTagEditor}/>
         </div>
       </div>
       <div className="menu-cloak" style={{display:this.state.cloakEnabled?"":"none"}}></div>
