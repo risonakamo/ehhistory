@@ -14,24 +14,38 @@ interface TagEditorProps
   closeEditor:()=>void //called when close button is pressed
 }
 
+interface TagEditorState
+{
+  currentTags:TagState //array of newly added tags by the input
+}
+
 /* TagEditor(bool enabled, HistoryEntry editEntry, function closeEditor) */
 export default class TagEditor extends React.Component
 {
   props:TagEditorProps
-
-  state:{
-    currentTags:TagState //array of newly added tags by the input
-  }
+  state:TagEditorState
 
   constructor(props:TagEditorProps)
   {
     super(props);
     this.gotNewTag=this.gotNewTag.bind(this);
     this.updateTag=this.updateTag.bind(this);
+    this.closeEditor=this.closeEditor.bind(this);
 
     this.state={
       currentTags:{}
     };
+  }
+
+  shouldComponentUpdate(newprops:TagEditorProps,newstate:TagEditorState):boolean
+  {
+    if (this.props.editEntry!=newprops.editEntry)
+    {
+      this.overrideCurrentTags(newprops.editEntry.tags);
+      return false;
+    }
+
+    return true;
   }
 
   // add a new tag to the new tags section
@@ -65,13 +79,32 @@ export default class TagEditor extends React.Component
     });
   }
 
+  // when loading a new history entry, override all the current tags with the new incoming
+  // tags
+  overrideCurrentTags(newtags:string[]):void
+  {
+    this.setState({
+      currentTags:_.reduce(newtags,(r:TagState,x:string):TagState=>{
+        r[x]=true;
+        return r;
+      },{})
+    });
+  }
+
+  // close editor action
+  closeEditor():void
+  {
+    this.setState({currentTags:{}});
+    this.props.closeEditor();
+  }
+
   render()
   {
     return <div className="tag-editor" style={{display:this.props.enabled?"":"none"}}>
       <div className="controls-zone">
         <div className="button-zone">
           <TagEditorButton type="done" text="Done"/>
-          <TagEditorButton type="cancel" text="Cancel" onClick={this.props.closeEditor}/>
+          <TagEditorButton type="cancel" text="Cancel" onClick={this.closeEditor}/>
           <TagEditorButton type="filter" text="AZ"/>
           <TagEditorButton type="delete" text="Delete"/>
         </div>
