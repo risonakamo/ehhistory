@@ -1,3 +1,5 @@
+import {updateEntry} from "../../store/entryviewerstore";
+
 import "./tageditor.less";
 
 type TagEditorButtonType="done"|"cancel"|"filter"|"delete";
@@ -31,6 +33,7 @@ export default class TagEditor extends React.Component
     this.gotNewTag=this.gotNewTag.bind(this);
     this.updateTag=this.updateTag.bind(this);
     this.closeEditor=this.closeEditor.bind(this);
+    this.submitTags=this.submitTags.bind(this);
 
     this.state={
       currentTags:{}
@@ -59,7 +62,7 @@ export default class TagEditor extends React.Component
     });
   }
 
-  // NEED TO IMPLEMENT FOR NON NEW TAGS
+  // NEED TO IMPLEMENT FOR NON CURRENT TAGS
   // update a tag's selected state
   updateTag(newSelected:boolean,name:string):void
   {
@@ -98,12 +101,35 @@ export default class TagEditor extends React.Component
     this.props.closeEditor();
   }
 
+  // submit tags action
+  submitTags():void
+  {
+    updateEntry({
+      ...this.props.editEntry,
+      tags:this.getSelectedTags()
+    });
+
+    this.closeEditor();
+  }
+
+  // NEED TO IMPLEMENT FOR NON CURRENT TAGS
+  // return string array of all tags that have been selected
+  getSelectedTags():string[]
+  {
+    return _.filter(_.map(this.state.currentTags,(x:boolean,i:string):string|undefined=>{
+      if (x)
+      {
+        return i;
+      }
+    }));
+  }
+
   render()
   {
     return <div className="tag-editor" style={{display:this.props.enabled?"":"none"}}>
       <div className="controls-zone">
         <div className="button-zone">
-          <TagEditorButton type="done" text="Done"/>
+          <TagEditorButton type="done" text="Done" onClick={this.submitTags}/>
           <TagEditorButton type="cancel" text="Cancel" onClick={this.closeEditor}/>
           <TagEditorButton type="filter" text="AZ"/>
           <TagEditorButton type="delete" text="Delete"/>
