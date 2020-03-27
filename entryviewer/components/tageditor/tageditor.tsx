@@ -8,13 +8,18 @@ interface TagEditorProps
   editEntry:HistoryEntry //the history entry being edited currently
 }
 
+interface TagState
+{
+    [tagname:string]:boolean
+}
+
 /* TagEditor(bool enabled, HistoryEntry editEntry) */
 export default class TagEditor extends React.Component
 {
   props:TagEditorProps
 
   state:{
-    newTags:string[] //array of newly added tags by the input
+    newTags:TagState //array of newly added tags by the input
   }
 
   constructor(props:TagEditorProps)
@@ -23,14 +28,26 @@ export default class TagEditor extends React.Component
     this.gotNewTag=this.gotNewTag.bind(this);
 
     this.state={
-      newTags:[]
+      newTags:{}
     };
   }
 
+  // add a new tag to the new tags section
   gotNewTag(newtag:string):void
   {
     this.setState({
-      newTags:[...this.state.newTags,newtag]
+      newTags:{
+        ...this.state.newTags,
+        [newtag]:true
+      }
+    });
+  }
+
+  // create tag elements
+  createTags(tagstate:TagState):TagEditorTag[]
+  {
+    return _.map(tagstate,(x:boolean,i:string)=>{
+      return <TagEditorTag name={i} count={0} selected={x}/>
     });
   }
 
@@ -48,23 +65,24 @@ export default class TagEditor extends React.Component
         <TagEditorInput newTag={this.gotNewTag}/>
       </div>
       <div className="tags-hold">
-        {createTags(this.state.newTags)}
+        {this.createTags(this.state.newTags)}
       </div>
     </div>;
   }
 }
 
-/* TagEditorTag(string name, int count) */
+/* TagEditorTag(string name, int count, selected bool) */
 class TagEditorTag extends React.Component
 {
   props:{
     name:string
     count:number
+    selected:boolean
   }
 
   render()
   {
-    return <div className="editor-tag">
+    return <div className={`editor-tag ${this.props.selected?"selected":""}`}>
       <p className="name">{this.props.name}</p>
       <p>{this.props.count}</p>
     </div>;
@@ -160,13 +178,4 @@ function resolveTagButtonImage(type:TagEditorButtonType):string
   }
 
   return `../imgs/${resolveImg}`;
-}
-
-// NOT DONE
-// given string array of tags, return Tag elements in some order
-function createTags(tags:string[]):TagEditorTag[]
-{
-  return _.map(tags,(x:string)=>{
-    return <TagEditorTag name={x} count={0}/>
-  });
 }
