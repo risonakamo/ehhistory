@@ -62,5 +62,12 @@ module.exports={
         extensions:[".tsx",".ts",".jsx",".js"]
     },
 
-    devtool:"cheap-module-source-map"
+    devtool:"cheap-module-source-map",
+
+    stats:{
+        entrypoints:false,
+        modules:false,
+        chunks:false,
+        assets:false
+    }
 };
