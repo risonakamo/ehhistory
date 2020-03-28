@@ -122,6 +122,14 @@ export default class Entry extends React.Component
     var mainDiffModeClass=this.props.diffMode || "";
     // --- END ---
 
+    // --- tags string ---
+    var tagsString="";
+    if (this.props.entrydata.tags)
+    {
+      tagsString=this.props.entrydata.tags.join(" ");
+    }
+    // --- END ---
+
     return <div className={`entry-row ${mainDiffModeClass}`}>
       <div className="image-contain">
         <div className={`image-box ${noImageClass} ${imageEditEnabledClass} ${diffModeImageClass}`}
@@ -134,14 +142,14 @@ export default class Entry extends React.Component
         </div>
         <div className="edit-zone" style={{display:this.props.diffMode?"none":""}}>
           <div className="edit-button edit-button" onClick={this.editButtonClick}><img src="../imgs/triangle-white.svg"/></div>
-          <div className="edit-button delete-button" onClick={this.tagButtonClick}><img src="../imgs/close-salmon.svg"/></div>
+          <div className="edit-button tag-button" onClick={this.tagButtonClick}><img src="../imgs/square-white.svg"/></div>
         </div>
       </div>
       <div className="content-contain">
         <div className="content-inner">
           <h1><a href={this.props.entrydata.link}>{this.props.entrydata.name}</a></h1>
           <p className="groupname">{this.props.entrydata.group} (1)</p>
-          <p className="tags">{typeelement} TAG1 TAG2 TAG3</p>
+          <p className="tags">{typeelement} {tagsString}</p>
           <p className="date">{datestring}</p>
         </div>
         <div className="diff-mode-edit" style={{display:this.props.diffMode?"":"none"}} onClick={this.toggleDiffMode}>
