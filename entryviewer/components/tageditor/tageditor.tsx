@@ -14,6 +14,8 @@ interface TagEditorProps
   enabled:boolean //editor is enabled or not
   editEntry:HistoryEntry //the history entry being edited currently
   closeEditor:()=>void //called when close button is pressed
+
+  ref:ReactRef<TagEditor>
 }
 
 interface TagEditorState
@@ -38,17 +40,6 @@ export default class TagEditor extends React.Component
     this.state={
       currentTags:{}
     };
-  }
-
-  shouldComponentUpdate(newprops:TagEditorProps,newstate:TagEditorState):boolean
-  {
-    if (this.props.editEntry!=newprops.editEntry)
-    {
-      this.overrideCurrentTags(newprops.editEntry.tags);
-      return false;
-    }
-
-    return true;
   }
 
   // add a new tag to the new tags section
@@ -92,6 +83,13 @@ export default class TagEditor extends React.Component
         return r;
       },{})
     });
+  }
+
+  // PUBLIC
+  // perform override of current tags with current history entry loaded
+  public loadEntry():void
+  {
+    this.overrideCurrentTags(this.props.editEntry.tags);
   }
 
   // close editor action

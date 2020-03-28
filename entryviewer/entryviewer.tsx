@@ -24,6 +24,8 @@ class EntryViewerMain extends React.Component
     cloakEnabled:boolean
   }
 
+  thetageditor:ReactRef<TagEditor>
+
   constructor(props:any)
   {
     super(props);
@@ -52,6 +54,8 @@ class EntryViewerMain extends React.Component
       imageEditorShown:false,
       cloakEnabled:false
     };
+
+    this.thetageditor=React.createRef();
   }
 
   // load the editor with a history entry
@@ -96,9 +100,12 @@ class EntryViewerMain extends React.Component
       cloakEnabled:true,
       tagEditShow:true,
       tagEditEntry:entry
+    },()=>{
+      this.thetageditor.current.loadEntry();
     });
   }
 
+  // close the tag editor
   closeTagEditor():void
   {
     this.setState({
@@ -117,7 +124,8 @@ class EntryViewerMain extends React.Component
           <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
             closeEditor={this.closeEditor}/>
           <ImageLinkEditor showing={this.state.imageEditorShown} parentCloseEditor={this.toggleImageEditor}/>
-          <TagEditor enabled={this.state.tagEditShow} editEntry={this.state.tagEditEntry} closeEditor={this.closeTagEditor}/>
+          <TagEditor enabled={this.state.tagEditShow} editEntry={this.state.tagEditEntry} closeEditor={this.closeTagEditor}
+            ref={this.thetageditor}/>
         </div>
       </div>
       <div className="menu-cloak" style={{display:this.state.cloakEnabled?"":"none"}}></div>

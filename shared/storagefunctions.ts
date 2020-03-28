@@ -49,6 +49,25 @@ function fixMissingIds()
     });
 }
 
+// reset all ids
+function resyncIds()
+{
+    chrome.storage.local.get("entries",(storage:LocalStorage)=>{
+        var entries:HistoryEntryDict=storage.entries || {};
+
+        var newId=0;
+        var newEntries:HistoryEntryDict={};
+        for (var x in entries)
+        {
+            ++newId;
+            newEntries[newId]=entries[x];
+            newEntries[newId].id=newId;
+        }
+
+        chrome.storage.local.set({entries:newEntries,maxId:++newId});
+    });
+}
+
 // call this function to attach storage functions to dom window
 export default function attachStorageFunctions()
 {
@@ -56,4 +75,5 @@ export default function attachStorageFunctions()
     (window as any).clearAll=clearAll;
     (window as any).convertStorageArrayToDict=convertStorageArrayToDict;
     (window as any).fixMissingIds=fixMissingIds;
+    (window as any).resyncIds=resyncIds;
 }
