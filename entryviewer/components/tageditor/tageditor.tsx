@@ -15,7 +15,7 @@ interface TagEditorProps
   editEntry:HistoryEntry //the history entry being edited currently
   closeEditor:()=>void //called when close button is pressed
 
-  ref:ReactRef<TagEditor>
+  ref?:ReactRef<TagEditor>
 }
 
 interface TagEditorState
@@ -29,6 +29,8 @@ export default class TagEditor extends React.Component
   props:TagEditorProps
   state:TagEditorState
 
+  tageditorinput:ReactRef<TagEditorInput>
+
   constructor(props:TagEditorProps)
   {
     super(props);
@@ -40,6 +42,8 @@ export default class TagEditor extends React.Component
     this.state={
       currentTags:{}
     };
+
+    this.tageditorinput=React.createRef();
   }
 
   // add a new tag to the new tags section
@@ -96,6 +100,7 @@ export default class TagEditor extends React.Component
   closeEditor():void
   {
     this.setState({currentTags:{}});
+    this.tageditorinput.current.clearInput();
     this.props.closeEditor();
   }
 
@@ -133,7 +138,7 @@ export default class TagEditor extends React.Component
           <TagEditorButton type="delete" text="Delete"/>
         </div>
 
-        <TagEditorInput newTag={this.gotNewTag}/>
+        <TagEditorInput newTag={this.gotNewTag} ref={this.tageditorinput}/>
       </div>
       <div className="tags-hold">
         {this.createTags(this.state.currentTags)}
@@ -185,6 +190,7 @@ class TagEditorInput extends React.Component
 {
   props:{
     newTag:(newtag:string)=>void //function called when new tag has been submitted. new tag is given.
+    ref?:ReactRef<TagEditorInput>
   }
   state:{
     currentValue:string
@@ -219,6 +225,12 @@ class TagEditorInput extends React.Component
 
       this.setState({currentValue:""});
     }
+  }
+
+  // clear the input
+  public clearInput():void
+  {
+    this.setState({currentValue:""});
   }
 
   render()
