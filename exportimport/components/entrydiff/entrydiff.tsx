@@ -59,7 +59,11 @@ export default class EntryDiff extends React.Component
 
       for (var x in filteredEntries)
       {
-        storageEntries[++storageMaxId]=filteredEntries[x];
+        ++storageMaxId;
+        storageEntries[storageMaxId]={
+          ...filteredEntries[x],
+          id:storageMaxId
+        };
       }
 
       chrome.storage.local.set({entries:storageEntries,maxId:storageMaxId});
