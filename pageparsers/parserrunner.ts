@@ -55,11 +55,19 @@ function getTargetParser(url:string):TargetParser
     switch (type)
     {
         case "NHENTAI":
-        parser="pageparsers/nhparser.js";
+        parser="nhparser";
         break;
 
         case "IMGUR":
-        parser="pageparsers/imgurparser.js";
+        parser="imgurparser";
+        break;
+
+        case "HITOMI":
+        parser="hitomiparser";
+        break;
+
+        case "DLSITE":
+        parser="dlparser";
         break;
 
         default:
@@ -68,7 +76,7 @@ function getTargetParser(url:string):TargetParser
 
     return {
         type,
-        parser
+        parser:`pageparsers/${parser}.js`
     };
 }
 
@@ -80,9 +88,19 @@ function getUrlType(url:string):EntryType
         return "NHENTAI";
     }
 
-    else if (url.search(/imgur.com\/a\//)>=0)
+    else if (url.search(/imgur.com\/a/)>=0)
     {
         return "IMGUR";
+    }
+
+    else if (url.search(/hitomi.la\/doujinshi/)>=0)
+    {
+        return "HITOMI";
+    }
+
+    else if (url.search(/dlsite.com\/maniax\/work/)>=0)
+    {
+        return "DLSITE";
     }
 
     return "OTHER";

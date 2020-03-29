@@ -11,7 +11,9 @@
         "storage",
         "downloads",
         "https://nhentai.net/g/*",
-        "https://imgur.com/a/*"
+        "https://imgur.com/a/*",
+        "https://hitomi.la/doujinshi/*",
+        "https://www.dlsite.com/maniax/work/*"
     ],
 
     "browser_action":{
