@@ -163,13 +163,7 @@ export default class Entry extends React.Component
 // return a span element for an input type string
 function createTypeElement(type:EntryType):HTMLElement
 {
-  switch (type)
-  {
-    case "NHENTAI":
-      return <span className="type-tag nhentai">NHENTAI</span>;
-  }
-
-  return <span className="type-tag other">OTHER</span>;
+  return <span className={`type-tag ${type}`}>{type}</span>;
 }
 
 // given an image string, return an image element with proper fit classes

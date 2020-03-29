@@ -186,7 +186,13 @@ export class ConfirmationButton extends React.PureComponent
 
 const _allTypeChoices:EntryType[]=[
   "NHENTAI",
-  "OTHER"
+  "OTHER",
+  "SANKAKU",
+  "IMGUR",
+  "DLSITE",
+  "HITOMI",
+  "PIXIV",
+  "EXHENTAI"
 ];
 
 // return array of type choices, with the current choice set as selected
