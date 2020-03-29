@@ -4,7 +4,7 @@
     "short_name":"ehhistory",
     "description":"EH history",
     "version":"0.0.0",
-    "homepage_url":"https://github.com/risonakamo",
+    "homepage_url":"https://github.com/risonakamo/ehhistory",
 
     "permissions":[
         "tabs",
