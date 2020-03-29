@@ -1,4 +1,4 @@
-import {updateEntry} from "../../store/entryviewerstore";
+import {EntryViewerStore,updateEntry} from "../../store/entryviewerstore";
 
 import "./tageditor.less";
 
@@ -14,6 +14,7 @@ interface TagEditorProps
   enabled:boolean //editor is enabled or not
   editEntry:HistoryEntry //the history entry being edited currently
   closeEditor:()=>void //called when close button is pressed
+  allTags:TagCounts //all tags from the store
 
   ref?:ReactRef<TagEditor>
 }
@@ -23,8 +24,8 @@ interface TagEditorState
   currentTags:TagState //array of newly added tags by the input
 }
 
-/* TagEditor(bool enabled, HistoryEntry editEntry, function closeEditor) */
-export default class TagEditor extends React.Component
+/* TagEditor(bool enabled, HistoryEntry editEntry, function closeEditor, STORE-TagCounts allTags) */
+class TagEditor extends React.Component
 {
   props:TagEditorProps
   state:TagEditorState
@@ -283,3 +284,9 @@ function resolveTagButtonImage(type:TagEditorButtonType):string
 
   return `../imgs/${resolveImg}`;
 }
+
+export default ReactRedux.connect((storestate:EntryViewerStore)=>{
+  return {
+    allTags:storestate.tagCounts
+  }
+},null,null,{forwardRef:true})(TagEditor);

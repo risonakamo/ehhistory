@@ -24,7 +24,7 @@ class EntryViewerMain extends React.Component
     cloakEnabled:boolean
   }
 
-  thetageditor:ReactRef<TagEditor>
+  thetageditor:ReactRef<typeof TagEditor>
 
   constructor(props:any)
   {

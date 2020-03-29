@@ -166,11 +166,9 @@ function tagCountsReduce(tagsCounts:TagCounts,act:StoreAction):TagCounts
 {
     if (act.type=="replaceEntries")
     {
-        var res=_.countBy(_.flatMap(act.entries,(x:HistoryEntry):string[]=>{
+        return _.countBy(_.flatMap(act.entries,(x:HistoryEntry):string[]=>{
             return x.tags || [];
         }));
-
-        console.log("tag count",res);
     }
 
     return tagsCounts;
