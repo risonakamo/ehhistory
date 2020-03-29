@@ -21,7 +21,8 @@ interface TagEditorProps
 
 interface TagEditorState
 {
-  currentTags:TagState //array of newly added tags by the input
+  currentTags:TagState //tag state of tags already in the entry and newly added tags
+  otherTags:TagState //tag state of other tags
 }
 
 /* TagEditor(bool enabled, HistoryEntry editEntry, function closeEditor, STORE-TagCounts allTags) */
@@ -41,7 +42,8 @@ class TagEditor extends React.Component
     this.submitTags=this.submitTags.bind(this);
 
     this.state={
-      currentTags:{}
+      currentTags:{},
+      otherTags:{}
     };
 
     this.tageditorinput=React.createRef();
@@ -82,11 +84,14 @@ class TagEditor extends React.Component
   // tags
   overrideCurrentTags(newtags:string[]):void
   {
+    var currentTags=_.reduce(newtags,(r:TagState,x:string):TagState=>{
+      r[x]=true;
+      return r;
+    },{});
+
     this.setState({
-      currentTags:_.reduce(newtags,(r:TagState,x:string):TagState=>{
-        r[x]=true;
-        return r;
-      },{})
+      currentTags,
+      otherTags:this.filterFromAllTags(currentTags)
     });
   }
 
@@ -128,6 +133,16 @@ class TagEditor extends React.Component
     }));
   }
 
+  // return a tag state from the alltags, removing any tags that count as newtags
+  filterFromAllTags(newtags:TagState):TagState
+  {
+    var filteredAllTags:TagCounts=_.omit(this.props.allTags,Object.keys(newtags));
+
+    return _.mapValues(filteredAllTags,()=>{
+      return false;
+    });
+  }
+
   render()
   {
     return <div className="tag-editor" style={{display:this.props.enabled?"":"none"}}>
@@ -140,6 +155,9 @@ class TagEditor extends React.Component
         </div>
 
         <TagEditorInput newTag={this.gotNewTag} ref={this.tageditorinput}/>
+      </div>
+      <div className="tags-hold">
+        {this.createTags(this.state.currentTags)}
       </div>
       <div className="tags-hold">
         {this.createTags(this.state.currentTags)}
