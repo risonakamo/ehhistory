@@ -10,7 +10,8 @@
         "tabs",
         "storage",
         "downloads",
-        "https://nhentai.net/g/*"
+        "https://nhentai.net/g/*",
+        "https://imgur.com/a/*"
     ],
 
     "browser_action":{
