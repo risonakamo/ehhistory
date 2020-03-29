@@ -60,23 +60,29 @@ class TagEditor extends React.Component
     });
   }
 
-  // NEED TO IMPLEMENT FOR NON CURRENT TAGS
   // update a tag's selected state
-  updateTag(newSelected:boolean,name:string):void
+  // give other tags to update in othertags instead of current tags
+  updateTag(newSelected:boolean,name:string,otherTags?:boolean):void
   {
+    var tagSection:keyof TagEditorState=otherTags?"otherTags":"currentTags";
+
     this.setState({
-      currentTags:{
-        ...this.state.currentTags,
+      [tagSection]:{
+        ...this.state[tagSection],
         [name]:newSelected
       }
     });
   }
 
   // create tag elements
-  createTags(tagstate:TagState):TagEditorTag[]
+  createTags(tagstate:TagState,otherTags?:boolean):TagEditorTag[]
   {
+    var updatetag=(newSelected:boolean,name:string)=>{
+      this.updateTag(newSelected,name,otherTags);
+    };
+
     return _.map(tagstate,(x:boolean,i:string)=>{
-      return <TagEditorTag name={i} count={0} selected={x} selectedToggled={this.updateTag} key={i}/>
+      return <TagEditorTag name={i} count={0} selected={x} selectedToggled={updatetag} key={i}/>
     });
   }
 
@@ -121,11 +127,15 @@ class TagEditor extends React.Component
     this.closeEditor();
   }
 
-  // NEED TO IMPLEMENT FOR NON CURRENT TAGS
   // return string array of all tags that have been selected
   getSelectedTags():string[]
   {
-    return _.filter(_.map(this.state.currentTags,(x:boolean,i:string):string|undefined=>{
+    var combinedTags:TagState={
+      ...this.state.currentTags,
+      ...this.state.otherTags
+    };
+
+    return _.filter(_.map(combinedTags,(x:boolean,i:string):string|undefined=>{
       if (x)
       {
         return i;
@@ -160,7 +170,7 @@ class TagEditor extends React.Component
         {this.createTags(this.state.currentTags)}
       </div>
       <div className="tags-hold">
-        {this.createTags(this.state.currentTags)}
+        {this.createTags(this.state.otherTags,true)}
       </div>
     </div>;
   }
