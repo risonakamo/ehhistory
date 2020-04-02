@@ -109,7 +109,31 @@
 
             img
             {
+                display: inline-block;
                 width: 20px;
+            }
+
+            .close-arrow
+            {
+                display: none;
+            }
+        }
+
+        &.delete-mode
+        {
+            opacity: 1;
+
+            .img-contain
+            {
+                width: 50px;
+                padding: 5px 20px 0 0;
+                margin-left: -5px;
+            }
+
+            .close-arrow
+            {
+                display: inline-block;
+                padding-right: 7px;
             }
         }
     }

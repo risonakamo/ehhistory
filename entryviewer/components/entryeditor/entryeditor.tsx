@@ -122,7 +122,7 @@ export default class EntryEditor extends React.Component
         <ConfirmationButton type="cancel" onClick={this.props.closeEditor}/>
         <div className="delete-button">
           <div className="img-contain">
-            {/* <img src="../imgs/triangle-left-filled-brown.svg"/> */}
+            <img className="close-arrow" src="../imgs/triangle-left-filled-brown.svg"/>
             <img src="../imgs/filled-close-circle-brown.svg"/>
           </div>
         </div>
