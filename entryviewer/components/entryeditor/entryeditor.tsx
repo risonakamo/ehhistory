@@ -12,6 +12,7 @@ interface EntryEditorProps
 interface EntryEditorState
 {
   currentEditEntry:HistoryEntry //state of current entry being edited
+  deleteMode:boolean
 }
 
 /* EntryEditor(bool shown, HistoryEntry loadEntry, function closeEditor) */
@@ -26,6 +27,8 @@ export default class EntryEditor extends React.Component
     this.entryEditChange=this.entryEditChange.bind(this);
     this.submitChangedEntry=this.submitChangedEntry.bind(this);
     this.typeChangedHandler=this.typeChangedHandler.bind(this);
+    this.deleteButton=this.deleteButton.bind(this);
+    this.closeEditor=this.closeEditor.bind(this);
 
     this.state={
       currentEditEntry:{
@@ -37,7 +40,8 @@ export default class EntryEditor extends React.Component
         link:"",
         date:"",
         tags:[]
-      }
+      },
+      deleteMode:false //prepare for deletion
     };
   }
 
@@ -83,12 +87,44 @@ export default class EntryEditor extends React.Component
   // submit the current edited entry to the storage
   submitChangedEntry()
   {
+    if (this.state.deleteMode)
+    {
+      this.deleteAction();
+      return;
+    }
+
     updateEntry(this.state.currentEditEntry);
     this.props.closeEditor();
   }
 
+  // handle clicking the delete button
+  deleteButton():void
+  {
+    this.setState({deleteMode:!this.state.deleteMode});
+  }
+
+  //handle close editor button
+  closeEditor():void
+  {
+    if (this.state.deleteMode)
+    {
+      this.deleteButton();
+      return;
+    }
+
+    this.props.closeEditor();
+  }
+
+  // delete this entry
+  deleteAction():void
+  {
+    this.setState({deleteMode:false});
+  }
+
   render()
   {
+    var deleteButtonDMode=this.state.deleteMode?"delete-mode":"";
+
     return <div className="entry-editor" style={{display:this.props.shown?"":"none"}}>
       <div className="editor-row name-row">
         <div className="field-name">NAME</div>
@@ -118,9 +154,9 @@ export default class EntryEditor extends React.Component
       </div>
 
       <div className="editor-row button-row">
-        <ConfirmationButton type="confirm" onClick={this.submitChangedEntry}/>
-        <ConfirmationButton type="cancel" onClick={this.props.closeEditor}/>
-        <div className="delete-button">
+        <ConfirmationButton type="confirm" onClick={this.submitChangedEntry} redMode={this.state.deleteMode}/>
+        <ConfirmationButton type="cancel" onClick={this.closeEditor} redMode={this.state.deleteMode}/>
+        <div className={`delete-button ${deleteButtonDMode}`} onClick={this.deleteButton}>
           <div className="img-contain">
             <img className="close-arrow" src="../imgs/triangle-left-filled-brown.svg"/>
             <img src="../imgs/filled-close-circle-brown.svg"/>
