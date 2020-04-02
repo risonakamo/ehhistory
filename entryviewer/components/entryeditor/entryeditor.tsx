@@ -1,4 +1,4 @@
-import {updateEntry} from "../../store/entryviewerstore";
+import {updateEntry,removeEntry} from "../../store/entryviewerstore";
 
 import "./entryeditor.less";
 
@@ -118,7 +118,9 @@ export default class EntryEditor extends React.Component
   // delete this entry
   deleteAction():void
   {
+    removeEntry(this.props.loadEntry);
     this.setState({deleteMode:false});
+    this.props.closeEditor();
   }
 
   render()

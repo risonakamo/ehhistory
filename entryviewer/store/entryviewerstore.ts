@@ -109,6 +109,23 @@ export function toggleAddImageEditEntry(entry:HistoryEntry):void
     });
 }
 
+// given an entry, remove it from the database
+export function removeEntry(entry:HistoryEntry):void
+{
+    chrome.storage.local.get("entries",(storage:LocalStorage)=>{
+        var entries=storage.entries || {};
+
+        delete entries[entry.id];
+
+        chrome.storage.local.set({entries});
+
+        store.dispatch({
+            type:"replaceEntries",
+            entries
+        });
+    });
+}
+
 // --- STORE REDUCERS ---
 function entriesReduce(entries:HistoryEntryDict,act:StoreAction):HistoryEntryDict
 {
