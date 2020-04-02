@@ -213,9 +213,10 @@
 {
     height: 30px;
     width: 80px;
-    background-color: @confirm-purple;
+    --main-colour: @confirm-purple;
+    background-color: var(--main-colour);
     border: 1px solid @off-white-yellow;
-    outline: 1px solid @confirm-purple;
+    outline: 1px solid var(--main-colour);
     box-sizing: border-box;
     margin: 0 8px 0 8px;
     text-align: center;
@@ -225,8 +226,7 @@
 
     &.cancel
     {
-        background-color: @cancel-salmon;
-        outline-color: @cancel-salmon;
+        --main-colour: @cancel-salmon;
 
         &:hover
         {
@@ -237,6 +237,17 @@
     &:hover
     {
         background-color: @confirm-purple-darker;
+    }
+
+    &.red-mode
+    {
+        --main-colour: @delete-red;
+
+        &:hover
+        {
+            background-color: @delete-red-dark;
+            outline-color: @delete-red-dark;
+        }
     }
 
     img

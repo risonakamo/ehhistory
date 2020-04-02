@@ -172,19 +172,21 @@ class TypeChoice extends React.PureComponent
   }
 }
 
-/* ConfirmationButton(function onClick, string type) */
+/* ConfirmationButton(function onClick, string type, bool redMode) */
 export class ConfirmationButton extends React.PureComponent
 {
   props:{
     onClick:()=>void
     type:string //type of icon to use
+    redMode?:boolean //have a red background
   }
 
   render()
   {
     var cancelClass=this.props.type=="cancel"?"cancel":"";
+    var redClass=this.props.redMode?"red-mode":"";
 
-    return <div className={`confirmation-button ${cancelClass}`} onClick={this.props.onClick}>
+    return <div className={`confirmation-button ${cancelClass} ${redClass}`} onClick={this.props.onClick}>
       {createConfirmationButtonIcon(this.props.type)}
     </div>;
   }
