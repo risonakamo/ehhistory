@@ -166,10 +166,14 @@ class TagEditor extends React.Component
 
         <TagEditorInput newTag={this.gotNewTag} ref={this.tageditorinput}/>
       </div>
+
       <div className="tags-hold">
+        <p className="tag-hold-title">Current Tags</p>
         {this.createTags(this.state.currentTags)}
       </div>
+
       <div className="tags-hold">
+        <p className="tag-hold-title">Other Tags</p>
         {this.createTags(this.state.otherTags,true)}
       </div>
     </div>;
