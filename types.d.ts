@@ -49,3 +49,8 @@ interface TagCounts
 {
     [tagname:string]:number
 }
+
+interface GroupCounts
+{
+    [groupname:string]:number
+}

@@ -6,6 +6,7 @@ export interface EntryViewerStore
     currentImageEditEntries:HistoryEntryDict //dict of entries about to be edited by image editor
 
     tagCounts:TagCounts
+    groupCounts:GroupCounts
 
     dispatch:(action:StoreAction)=>void
 }
@@ -191,19 +192,33 @@ function tagCountsReduce(tagsCounts:TagCounts,act:StoreAction):TagCounts
     return tagsCounts;
 }
 
+function groupCountsReduce(groupCounts:GroupCounts,act:StoreAction):GroupCounts
+{
+    if (act.type=="replaceEntries")
+    {
+        return _.countBy(act.entries,(x:HistoryEntry)=>{
+            return x.group;
+        });
+    }
+
+    return groupCounts;
+}
+
 // --- STORE DEFINITION ---
 store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
     return {
         entries:entriesReduce(state.entries,act),
         imageEditMode:imageEditModeReduce(state.imageEditMode,act),
         currentImageEditEntries:imageEditEntriesReduce(state.currentImageEditEntries,act),
-        tagCounts:tagCountsReduce(state.tagCounts,act)
+        tagCounts:tagCountsReduce(state.tagCounts,act),
+        groupCounts:groupCountsReduce(state.groupCounts,act)
     };
 },{
     entries:{},
     imageEditMode:false,
     currentImageEditEntries:{},
-    tagCounts:{}
+    tagCounts:{},
+    groupCounts:{}
 } as EntryViewerStore);
 
 export default store;
