@@ -77,7 +77,7 @@ export default class EntryDiff extends React.Component
         var diffMode=this.state.currentDiffModes[x.id] || "ADD";
         return <Entry entrydata={x} loadEditor={this.voidLoader} imageEditEnabled={false} key={i}
           toggleAddImageEditEntry={this.voidLoader} diffMode={diffMode} diffModeChanged={this.updateDiffMode}
-          loadTagEditor={this.voidLoader}/>;
+          loadTagEditor={this.voidLoader} groupCount={0}/>;
       })}
     </div>;
   }

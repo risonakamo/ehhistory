@@ -1,7 +1,5 @@
 import "./entry.less";
 
-/* Entry(HistoryEntry entrydata, function loadEditor, bool imageEditEnabled, function toggleAddImageEditEntry,
-    bool? diffMode, function? diffModeChanged, function loadTagEditor) */
 interface EntryProps extends ReactProps
 {
   entrydata:HistoryEntry //the entry data object for this element
@@ -9,6 +7,7 @@ interface EntryProps extends ReactProps
   loadTagEditor:(entry:HistoryEntry)=>void //called when tag button clicked. returns this entry.
   imageEditEnabled:boolean
   toggleAddImageEditEntry:(entry:HistoryEntry)=>void //function to call to add entry as an entry being edited
+  groupCount:number //number to put next to the group name
 
   diffMode?:EntryDiffMode //set the entry into a diff mode.
   diffModeChanged?:(newMode:EntryDiffMode,id:number)=>void //function called when diffmode is changed, returns the new diffmode.
@@ -20,6 +19,8 @@ interface EntryState
   editSelected:boolean //currently selected for edit
 }
 
+/* Entry(HistoryEntry entrydata, function loadEditor, bool imageEditEnabled, function toggleAddImageEditEntry,
+    bool? diffMode, function? diffModeChanged, function loadTagEditor, int groupCount) */
 export default class Entry extends React.Component
 {
   props:EntryProps
@@ -130,6 +131,10 @@ export default class Entry extends React.Component
     }
     // --- END ---
 
+    // --- group count ---
+    var groupCount=this.props.groupCount?`(${this.props.groupCount})`:"";
+    // --- END ---
+
     return <div className={`entry-row ${mainDiffModeClass}`}>
       <div className="image-contain">
         <div className={`image-box ${noImageClass} ${imageEditEnabledClass} ${diffModeImageClass}`}
@@ -148,7 +153,7 @@ export default class Entry extends React.Component
       <div className="content-contain">
         <div className="content-inner">
           <h1><a href={this.props.entrydata.link}>{this.props.entrydata.name}</a></h1>
-          <p className="groupname">{this.props.entrydata.group} (1)</p>
+          <p className="groupname">{this.props.entrydata.group} {groupCount}</p>
           <p className="tags">{typeelement} {tagsString}</p>
           <p className="date">{datestring}</p>
         </div>

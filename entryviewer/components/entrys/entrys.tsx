@@ -4,7 +4,7 @@ import Entry,{historyEntryDictToArray} from "./entry";
 import "./entrys.less";
 
 /* Entrys(function loadEditor, STORE-HistoryEntryDict entries, STORE-bool imageEditEnabled,
-    function loadTagEditor) */
+    function loadTagEditor, STORE-GroupCounts groupCounts) */
 class Entrys extends React.PureComponent
 {
   props:{
@@ -12,6 +12,7 @@ class Entrys extends React.PureComponent
     loadTagEditor:(entry:HistoryEntry)=>void
     entries:HistoryEntryDict //all the entries
     imageEditEnabled:boolean //if image edit is enabled
+    groupCounts:GroupCounts
   }
 
   componentDidMount():void
@@ -26,7 +27,8 @@ class Entrys extends React.PureComponent
         return <Entry entrydata={x} key={i} loadEditor={this.props.loadEditor}
           imageEditEnabled={this.props.imageEditEnabled}
           toggleAddImageEditEntry={toggleAddImageEditEntry}
-          loadTagEditor={this.props.loadTagEditor}/>;
+          loadTagEditor={this.props.loadTagEditor}
+          groupCount={this.props.groupCounts[x.group]}/>;
       })}
     </div>;
   }
@@ -35,6 +37,7 @@ class Entrys extends React.PureComponent
 export default ReactRedux.connect((storestate:EntryViewerStore)=>{
   return {
     entries:storestate.entries,
-    imageEditEnabled:storestate.imageEditMode
+    imageEditEnabled:storestate.imageEditMode,
+    groupCounts:storestate.groupCounts
   };
 })(Entrys);
