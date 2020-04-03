@@ -82,7 +82,7 @@ class TagEditor extends React.Component
     };
 
     return _.map(tagstate,(x:boolean,i:string)=>{
-      return <TagEditorTag name={i} count={0} selected={x} selectedToggled={updatetag} key={i}/>
+      return <TagEditorTag name={i} count={this.props.allTags[i]} selected={x} selectedToggled={updatetag} key={i}/>
     });
   }
 
@@ -209,7 +209,7 @@ class TagEditorTag extends React.Component
   {
     return <div className={`editor-tag ${this.props.selected?"selected":""}`} onClick={this.clickHandler}>
       <p className="name">{this.props.name}</p>
-      <p>{this.props.count}</p>
+      <p className="count">{this.props.count}</p>
     </div>;
   }
 }
