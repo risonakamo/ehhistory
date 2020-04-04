@@ -253,7 +253,7 @@ class TagEditorInput extends React.Component
     {
       if (this.state.currentValue.trim().length)
       {
-        this.props.newTag(this.state.currentValue.trim());
+        this.props.newTag(spaceToUnderscores(this.state.currentValue.trim()));
       }
 
       this.setState({currentValue:""});
@@ -315,6 +315,12 @@ function resolveTagButtonImage(type:TagEditorButtonType):string
   }
 
   return `../imgs/${resolveImg}`;
+}
+
+// given string, replace all spaces with single underscores
+function spaceToUnderscores(input:string):string
+{
+  return input.replace(/\s+/g,"_");
 }
 
 export default ReactRedux.connect((storestate:EntryViewerStore)=>{
