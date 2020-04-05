@@ -1,3 +1,5 @@
+import filterEntries from "./entrydictfilter";
+
 export interface EntryViewerStore
 {
     entries:HistoryEntryDict //all the loaded entries
@@ -130,14 +132,14 @@ export function removeEntry(entry:HistoryEntry):void
 }
 
 // --- STORE REDUCERS ---
-function entriesReduce(entries:HistoryEntryDict,act:StoreAction):HistoryEntryDict
+function entriesReduce(entries:HistoryEntryDict,entryQuery:EntryQuery,act:StoreAction):HistoryEntryDict
 {
     if (act.type=="replaceEntries")
     {
-        return act.entries;
+        return filterEntries(act.entries,entryQuery);
     }
 
-    return entries;
+    return filterEntries(entries,entryQuery);
 }
 
 function imageEditModeReduce(currentMode:boolean,act:StoreAction):boolean
@@ -214,7 +216,7 @@ function entryQueryReduce(entryQuery:EntryQuery,act:StoreAction):EntryQuery
 // --- STORE DEFINITION ---
 store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
     return {
-        entries:entriesReduce(state.entries,act),
+        entries:entriesReduce(state.entries,state.entryQuery,act),
         imageEditMode:imageEditModeReduce(state.imageEditMode,act),
         currentImageEditEntries:imageEditEntriesReduce(state.currentImageEditEntries,act),
         tagCounts:tagCountsReduce(state.tagCounts,act),
