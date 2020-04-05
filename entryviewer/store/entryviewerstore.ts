@@ -40,7 +40,13 @@ interface ToggleAddEditEntry
     entry:HistoryEntry
 }
 
-type StoreAction=ReplaceEntriesAction|ChangeImageModeAction|ToggleAddEditEntry;
+interface ReplaceQuery
+{
+    type:"replaceQuery"
+    query:EntryQuery
+}
+
+type StoreAction=ReplaceEntriesAction|ChangeImageModeAction|ToggleAddEditEntry|ReplaceQuery;
 
 // --- ACCESS FUNCTIONS ---
 // update the store by syncing with local storage
@@ -131,12 +137,26 @@ export function removeEntry(entry:HistoryEntry):void
     });
 }
 
+// replace the current entry query with the given query
+export function updateQuery(query:EntryQuery):void
+{
+    store.dispatch({
+        type:"replaceQuery",
+        query
+    });
+}
+
 // --- STORE REDUCERS ---
 function entriesReduce(entries:HistoryEntryDict,entryQuery:EntryQuery,act:StoreAction):HistoryEntryDict
 {
     if (act.type=="replaceEntries")
     {
         return filterEntries(act.entries,entryQuery);
+    }
+
+    else if (act.type=="replaceQuery")
+    {
+        return filterEntries(entries,act.query);
     }
 
     return filterEntries(entries,entryQuery);
@@ -210,6 +230,11 @@ function groupCountsReduce(groupCounts:GroupCounts,act:StoreAction):GroupCounts
 
 function entryQueryReduce(entryQuery:EntryQuery,act:StoreAction):EntryQuery
 {
+    if (act.type=="replaceQuery")
+    {
+        return act.query;
+    }
+
     return entryQuery;
 }
 
