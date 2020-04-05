@@ -17,12 +17,21 @@ class ButtonSideBar extends React.Component
   {
     super(props);
     this.triggerImageEditMode=this.triggerImageEditMode.bind(this);
+    this.openExportPage=this.openExportPage.bind(this);
   }
 
   // toggle image edit mode
   triggerImageEditMode():void
   {
     setImageEditMode(!this.props.imageEditMode);
+  }
+
+  openExportPage():void
+  {
+    chrome.tabs.create({
+      url:"../exportimport/exportimport.html",
+      active:true
+    });
   }
 
   render()
@@ -44,7 +53,8 @@ class ButtonSideBar extends React.Component
 
     return <div className="button-side-bar">
       <div className="float-bar">
-        <ButtonSideBarButton imglink="../imgs/download-white.svg" hidden={exportHide}/>
+        <ButtonSideBarButton imglink="../imgs/download-white.svg" hidden={exportHide}
+          onClick={this.openExportPage}/>
         <ButtonSideBarButton imglink="../imgs/images-white.svg" onClick={this.triggerImageEditMode}
           unclickable={imageButtonUnclickable}/>
         <ButtonSideBarButton imglink="../imgs/shuffle-white.svg" hidden={shuffleHide}/>
