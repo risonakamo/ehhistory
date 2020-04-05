@@ -1,35 +1,28 @@
+import {EntryViewerStore,setImageEditMode} from "../../store/entryviewerstore";
+
 import "./buttonsidebar.less";
 
 interface ButtonSideBarProps
 {
-
-}
-
-interface ButtonSideBarState
-{
   imageEditMode:boolean
+  toggleImageEditor:(editorOn?:boolean)=>void //callback function to toggle the image editor
 }
 
-/* ButtonSideBar() */
-export default class ButtonSideBar extends React.Component
+/* ButtonSideBar(STORE-bool imageEditMode, function toggleImageEditor) */
+class ButtonSideBar extends React.Component
 {
   props:ButtonSideBarProps
-  state:ButtonSideBarState
 
   constructor(props:ButtonSideBarProps)
   {
     super(props);
     this.triggerImageEditMode=this.triggerImageEditMode.bind(this);
-
-    this.state={
-      imageEditMode:false
-    };
   }
 
   // toggle image edit mode
   triggerImageEditMode():void
   {
-    this.setState({imageEditMode:!this.state.imageEditMode});
+    setImageEditMode(!this.props.imageEditMode);
   }
 
   render()
@@ -40,7 +33,7 @@ export default class ButtonSideBar extends React.Component
     var imageButtonUnclickable=false;
 
     // --- image edit mode ---
-    if (this.state.imageEditMode)
+    if (this.props.imageEditMode)
     {
       shuffleHide=true;
       confirmButtonsHide=false;
@@ -55,8 +48,10 @@ export default class ButtonSideBar extends React.Component
         <ButtonSideBarButton imglink="../imgs/images-white.svg" onClick={this.triggerImageEditMode}
           unclickable={imageButtonUnclickable}/>
         <ButtonSideBarButton imglink="../imgs/shuffle-white.svg" hidden={shuffleHide}/>
-        <ButtonSideBarButton imglink="../imgs/checkmark-white.svg" hidden={confirmButtonsHide}/>
-        <ButtonSideBarButton imglink="../imgs/close-salmon.svg" hidden={confirmButtonsHide}/>
+        <ButtonSideBarButton imglink="../imgs/checkmark-white.svg" hidden={confirmButtonsHide}
+          onClick={this.props.toggleImageEditor}/>
+        <ButtonSideBarButton imglink="../imgs/close-salmon.svg" hidden={confirmButtonsHide}
+          onClick={this.triggerImageEditMode}/>
       </div>
     </div>;
   }
@@ -102,3 +97,9 @@ class ButtonSideBarButton extends React.PureComponent
     );
   }
 }
+
+export default ReactRedux.connect((storestate:EntryViewerStore)=>{
+  return {
+    imageEditMode:storestate.imageEditMode
+  };
+})(ButtonSideBar);

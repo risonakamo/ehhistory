@@ -128,7 +128,7 @@ class EntryViewerMain extends React.Component
           <TagEditor enabled={this.state.tagEditShow} editEntry={this.state.tagEditEntry} closeEditor={this.closeTagEditor}
             ref={this.thetageditor}/>
         </div>
-        <ButtonSideBar/>
+        <ButtonSideBar toggleImageEditor={this.toggleImageEditor}/>
       </div>
       <div className="menu-cloak" style={{display:this.state.cloakEnabled?"":"none"}}></div>
     </>;
