@@ -4,6 +4,7 @@ import attachStorageFunctions from "../shared/storagefunctions";
 import ImageLinkEditor from "./components/imagelinkedit/imagelinkedit";
 import EditorBar from "./components/editorbar/editorbar";
 import TagEditor from "./components/tageditor/tageditor";
+import ButtonSideBar from "./components/buttonsidebar/buttonsidebar";
 
 // TEMPORARY
 import EntryEditor from "./components/entryeditor/entryeditor";
@@ -127,6 +128,7 @@ class EntryViewerMain extends React.Component
           <TagEditor enabled={this.state.tagEditShow} editEntry={this.state.tagEditEntry} closeEditor={this.closeTagEditor}
             ref={this.thetageditor}/>
         </div>
+        <ButtonSideBar/>
       </div>
       <div className="menu-cloak" style={{display:this.state.cloakEnabled?"":"none"}}></div>
     </>;
