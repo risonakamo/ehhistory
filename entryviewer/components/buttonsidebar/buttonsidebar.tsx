@@ -26,21 +26,37 @@ export default class ButtonSideBar extends React.Component
     };
   }
 
-  // enable image edit mode
+  // toggle image edit mode
   triggerImageEditMode():void
   {
-    this.setState({imageEditMode:true});
+    this.setState({imageEditMode:!this.state.imageEditMode});
   }
 
   render()
   {
+    var shuffleHide=false;
+    var confirmButtonsHide=true;
+    var exportHide=false;
+    var imageButtonUnclickable=false;
+
+    // --- image edit mode ---
+    if (this.state.imageEditMode)
+    {
+      shuffleHide=true;
+      confirmButtonsHide=false;
+      exportHide=true;
+      imageButtonUnclickable=true;
+    }
+    // --- END ---
+
     return <div className="button-side-bar">
       <div className="float-bar">
-        <ButtonSideBarButton imglink="../imgs/download-white.svg"/>
-        <ButtonSideBarButton imglink="../imgs/images-white.svg" onClick={this.triggerImageEditMode}/>
-        <ButtonSideBarButton imglink="../imgs/shuffle-white.svg"/>
-        <ButtonSideBarButton imglink="../imgs/checkmark-white.svg"/>
-        <ButtonSideBarButton imglink="../imgs/close-salmon.svg"/>
+        <ButtonSideBarButton imglink="../imgs/download-white.svg" hidden={exportHide}/>
+        <ButtonSideBarButton imglink="../imgs/images-white.svg" onClick={this.triggerImageEditMode}
+          unclickable={imageButtonUnclickable}/>
+        <ButtonSideBarButton imglink="../imgs/shuffle-white.svg" hidden={shuffleHide}/>
+        <ButtonSideBarButton imglink="../imgs/checkmark-white.svg" hidden={confirmButtonsHide}/>
+        <ButtonSideBarButton imglink="../imgs/close-salmon.svg" hidden={confirmButtonsHide}/>
       </div>
     </div>;
   }
@@ -51,9 +67,10 @@ interface ButtonSideBarButtonProps
   imglink?:string
   onClick?:()=>void
   unclickable?:boolean //makes the button not trigger clicks and have no hover animations
+  hidden?:boolean
 }
 
-/* ButtonSideBarButton(string imglink, function onClick, bool unclickable) */
+/* ButtonSideBarButton(string imglink, function onClick, bool unclickable, bool hidden) */
 class ButtonSideBarButton extends React.PureComponent
 {
   props:ButtonSideBarButtonProps
@@ -76,8 +93,12 @@ class ButtonSideBarButton extends React.PureComponent
   {
     var unclickableClass=this.props.unclickable?"unclickable":"";
 
-    return <div className={`button-side-bar-button ${unclickableClass}`} onClick={this.clickAction}>
-      <img src={this.props.imglink}/>
-    </div>;
+    return (
+      <div className={`button-side-bar-button ${unclickableClass}`} onClick={this.clickAction}
+        style={{display:this.props.hidden?"none":""}}
+      >
+        <img src={this.props.imglink}/>
+      </div>
+    );
   }
 }
