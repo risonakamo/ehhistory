@@ -2,7 +2,6 @@ import Entrys from "./components/entrys/entrys";
 import store from "./store/entryviewerstore";
 import attachStorageFunctions from "../shared/storagefunctions";
 import ImageLinkEditor from "./components/imagelinkedit/imagelinkedit";
-import EditorBar from "./components/editorbar/editorbar";
 import TagEditor from "./components/tageditor/tageditor";
 import ButtonSideBar from "./components/buttonsidebar/buttonsidebar";
 
@@ -120,7 +119,6 @@ class EntryViewerMain extends React.Component
     return <>
       <div className={`content-window ${this.state.cloakEnabled?"cloaked":""}`}>
         <div className="content">
-          <EditorBar toggleImageEditor={this.toggleImageEditor}/>
           <Entrys loadEditor={this.loadEditor} loadTagEditor={this.loadTagEditor}/>
           <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
             closeEditor={this.closeEditor}/>
