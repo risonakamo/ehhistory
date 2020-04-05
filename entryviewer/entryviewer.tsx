@@ -4,6 +4,7 @@ import attachStorageFunctions from "../shared/storagefunctions";
 import ImageLinkEditor from "./components/imagelinkedit/imagelinkedit";
 import TagEditor from "./components/tageditor/tageditor";
 import ButtonSideBar from "./components/buttonsidebar/buttonsidebar";
+import QueryBar from "./components/querybar/querybar";
 
 // TEMPORARY
 import EntryEditor from "./components/entryeditor/entryeditor";
@@ -119,6 +120,7 @@ class EntryViewerMain extends React.Component
     return <>
       <div className={`content-window ${this.state.cloakEnabled?"cloaked":""}`}>
         <div className="content">
+          <QueryBar/>
           <Entrys loadEditor={this.loadEditor} loadTagEditor={this.loadTagEditor}/>
           <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
             closeEditor={this.closeEditor}/>

@@ -1,10 +1,13 @@
 import "./tageditor-bar.less";
 
-/* TagEditorInput(function newTag) */
+/* TagEditorInput(function newTag?, string placeholder?, string className?) */
 export default class TagEditorInput extends React.Component
 {
   props:{
-    newTag:(newtag:string)=>void //function called when new tag has been submitted. new tag is given.
+    newTag?:(newtag:string)=>void //function called when new tag has been submitted. new tag is given.
+    placeholder?:string
+    className?:string
+
     ref?:ReactRef<TagEditorInput>
   }
   state:{
@@ -50,8 +53,11 @@ export default class TagEditorInput extends React.Component
 
   render()
   {
-    return <input placeholder="new tag" type="text" className="tag-editor-input input-inherit"
-      onChange={this.inputHandler} value={this.state.currentValue} onKeyPress={this.keyHandler}/>;
+    var extraClasses=this.props.className || "";
+
+    return <input placeholder={this.props.placeholder} type="text" value={this.state.currentValue}
+      className={`tag-editor-input input-inherit ${extraClasses}`}
+      onChange={this.inputHandler} onKeyPress={this.keyHandler}/>;
   }
 }
 

@@ -165,7 +165,7 @@ class TagEditor extends React.Component
           <TagEditorButton type="delete" text="Delete"/>
         </div>
 
-        <TagEditorInput newTag={this.gotNewTag} ref={this.tageditorinput}/>
+        <TagEditorInput newTag={this.gotNewTag} ref={this.tageditorinput} placeholder="new tag"/>
       </div>
 
       <div className="tags-hold">
