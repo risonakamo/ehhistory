@@ -54,3 +54,12 @@ interface GroupCounts
 {
     [groupname:string]:number
 }
+
+interface EntryQuery
+{
+    tags:string[]
+    subtractTags:string[]
+
+    group?:string
+    type?:EntryType
+}

@@ -8,6 +8,8 @@ export interface EntryViewerStore
     tagCounts:TagCounts
     groupCounts:GroupCounts
 
+    entryQuery:EntryQuery //state of query filters
+
     dispatch:(action:StoreAction)=>void
 }
 
@@ -204,6 +206,11 @@ function groupCountsReduce(groupCounts:GroupCounts,act:StoreAction):GroupCounts
     return groupCounts;
 }
 
+function entryQueryReduce(entryQuery:EntryQuery,act:StoreAction):EntryQuery
+{
+    return entryQuery;
+}
+
 // --- STORE DEFINITION ---
 store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
     return {
@@ -211,14 +218,21 @@ store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
         imageEditMode:imageEditModeReduce(state.imageEditMode,act),
         currentImageEditEntries:imageEditEntriesReduce(state.currentImageEditEntries,act),
         tagCounts:tagCountsReduce(state.tagCounts,act),
-        groupCounts:groupCountsReduce(state.groupCounts,act)
+        groupCounts:groupCountsReduce(state.groupCounts,act),
+        entryQuery:entryQueryReduce(state.entryQuery,act)
     };
 },{
     entries:{},
     imageEditMode:false,
     currentImageEditEntries:{},
     tagCounts:{},
-    groupCounts:{}
+    groupCounts:{},
+    entryQuery:{
+        tags:[],
+        subtractTags:[],
+        group:null,
+        type:null
+    }
 } as EntryViewerStore);
 
 export default store;
