@@ -16,6 +16,8 @@ interface HistoryEntry
     date:DateString
 
     tags:string[]
+
+    reference?:boolean
 }
 
 // the local storage
