@@ -88,12 +88,22 @@ export default class PopupMain extends React.Component
           <EntryRow name="Type" content={this.state.currentType} notEditable={true} ref={this.typeElement}/>
         </div>
         <div className="submit-zone">
-          <div className="submit-icon-hold bottom">
-            <img className="submit-plus" src="../imgs/addicon-brown.svg"/>
+          <div className="submit-section main-submit">
+            <div className="submit-icon-hold bottom">
+              <img className="submit-plus" src="../imgs/addicon-brown.svg"/>
+            </div>
+            <a className="submit-icon-hold top" href="" onClick={this.submitEntry}>
+              <img className="submit-plus" src="../imgs/addicon-white.svg"/>
+            </a>
           </div>
-          <a className="submit-icon-hold top" href="" onClick={this.submitEntry}>
-            <img className="submit-plus" src="../imgs/addicon-white.svg"/>
-          </a>
+          <div className="submit-section ref-submit">
+            <div className="submit-icon-hold bottom">
+              <img className="submit-plus" src="../imgs/addicon-brown.svg"/>
+            </div>
+            <a className="submit-icon-hold top" href="" onClick={this.submitEntry}>
+              <img className="submit-plus" src="../imgs/addicon-orangebrown.svg"/>
+            </a>
+          </div>
         </div>
       </div>
       <a className="entryviewer-link" onClick={this.openEntryViewer}>

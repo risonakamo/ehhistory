@@ -72,6 +72,27 @@ body
         width: 70px;
         cursor: pointer;
 
+        .submit-section
+        {
+            position: relative;
+            width: 100%;
+
+            &.main-submit
+            {
+                height: 70%;
+            }
+
+            &.ref-submit
+            {
+                height: 30%;
+
+                .submit-icon-hold.bottom
+                {
+                    background-color: @ref-orangebrown;
+                }
+            }
+        }
+
         .submit-icon-hold
         {
             position: absolute;
