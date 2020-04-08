@@ -19,6 +19,7 @@ export default class PopupMain extends React.Component
   {
     super(props);
     this.submitEntry=this.submitEntry.bind(this);
+    this.submitEntryReference=this.submitEntryReference.bind(this);
 
     this.state={
       currentName:"",
@@ -46,7 +47,7 @@ export default class PopupMain extends React.Component
   }
 
   // add entry to the storage
-  submitEntry(e:Event):void
+  submitEntry(e:Event,reference:boolean=false):void
   {
     e.preventDefault();
 
@@ -63,13 +64,20 @@ export default class PopupMain extends React.Component
         link:this.currentUrl,
         image:"",
         date:new Date().toISOString(),
-        tags:[]
+        tags:[],
+        reference
       };
 
       chrome.storage.local.set(storageResult,()=>{
         window.close();
       });
     });
+  }
+
+  // submit entry as reference entry
+  submitEntryReference(e:Event):void
+  {
+    this.submitEntry(e,true);
   }
 
   // open the entry viewer in a new tab
@@ -100,7 +108,7 @@ export default class PopupMain extends React.Component
             <div className="submit-icon-hold bottom">
               <img className="submit-plus" src="../imgs/addicon-brown.svg"/>
             </div>
-            <a className="submit-icon-hold top" href="" onClick={this.submitEntry}>
+            <a className="submit-icon-hold top" href="" onClick={this.submitEntryReference}>
               <img className="submit-plus" src="../imgs/addicon-orangebrown.svg"/>
             </a>
           </div>
