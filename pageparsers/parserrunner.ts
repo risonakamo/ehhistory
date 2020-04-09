@@ -54,6 +54,10 @@ function getTargetParser(url:string):TargetParser
 
     switch (type)
     {
+        case "SANKAKU":
+        parser="sanparser";
+        break;
+
         case "NHENTAI":
         parser="nhparser";
         break;
@@ -83,7 +87,12 @@ function getTargetParser(url:string):TargetParser
 // give a url to return a type
 function getUrlType(url:string):EntryType
 {
-    if (url.search(/nhentai\.net\/g/)>=0)
+    if (url.search(/chan\.sankakucomplex\.com\/\?tags/)>=0)
+    {
+        return "SANKAKU";
+    }
+
+    else if (url.search(/nhentai\.net\/g/)>=0)
     {
         return "NHENTAI";
     }
