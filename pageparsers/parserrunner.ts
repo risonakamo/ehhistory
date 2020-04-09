@@ -58,6 +58,10 @@ function getTargetParser(url:string):TargetParser
         parser="sanparser";
         break;
 
+        case "PIXIV":
+        parser="pixparser";
+        break;
+
         case "BETASANKAKU":
         parser="betasanparser";
         type="SANKAKU";
@@ -95,6 +99,11 @@ function getUrlType(url:string):EntryType
     if (url.search(/chan\.sankakucomplex\.com\/\?tags/)>=0)
     {
         return "SANKAKU";
+    }
+
+    else if (url.search(/pixiv\.net\/users/)>=0)
+    {
+        return "PIXIV";
     }
 
     else if (url.search(/beta\.sankakucomplex\.com\/\?tags/)>=0)

@@ -15,7 +15,8 @@
         "https://hitomi.la/doujinshi/*",
         "https://www.dlsite.com/maniax/work/*",
         "https://chan.sankakucomplex.com/?tags=*",
-        "https://beta.sankakucomplex.com/?tags=*"
+        "https://beta.sankakucomplex.com/?tags=*",
+        "https://www.pixiv.net/users/*"
     ],
 
     "browser_action":{
