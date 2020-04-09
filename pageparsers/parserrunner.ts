@@ -58,6 +58,11 @@ function getTargetParser(url:string):TargetParser
         parser="sanparser";
         break;
 
+        case "BETASANKAKU":
+        parser="betasanparser";
+        type="SANKAKU";
+        break;
+
         case "NHENTAI":
         parser="nhparser";
         break;
@@ -90,6 +95,11 @@ function getUrlType(url:string):EntryType
     if (url.search(/chan\.sankakucomplex\.com\/\?tags/)>=0)
     {
         return "SANKAKU";
+    }
+
+    else if (url.search(/beta\.sankakucomplex\.com\/\?tags/)>=0)
+    {
+        return "BETASANKAKU";
     }
 
     else if (url.search(/nhentai\.net\/g/)>=0)

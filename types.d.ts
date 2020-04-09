@@ -1,5 +1,5 @@
 type EntryType="NHENTAI"|"OTHER"|"SANKAKU"|"IMGUR"|"DLSITE"|"HITOMI"|
-    "PIXIV"|"EXHENTAI";
+    "PIXIV"|"EXHENTAI"|"BETASANKAKU";
 
 // a single history database entry
 interface HistoryEntry
