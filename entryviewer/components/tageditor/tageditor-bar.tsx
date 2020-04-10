@@ -1,12 +1,15 @@
 import "./tageditor-bar.less";
 
-/* TagEditorInput(function newTag?, string placeholder?, string className?) */
+/* TagEditorInput(function newTag?, string placeholder?, string className?, bool noSubmit?) */
 export default class TagEditorInput extends React.Component
 {
   props:{
     newTag?:(newtag:string)=>void //function called when new tag has been submitted. new tag is given.
     placeholder?:string
     className?:string
+    noSubmit?:boolean //when enabled, submitting with enter key will only call the newTag function but
+                      //not do anything else (normally it will clear and replace spaces with underscores
+                      //before emitting for event callback)
 
     ref?:ReactRef<TagEditorInput>
   }
@@ -36,6 +39,12 @@ export default class TagEditorInput extends React.Component
   {
     if (e.key=="Enter")
     {
+      if (this.props.noSubmit)
+      {
+        this.props.newTag(this.state.currentValue.trim());
+        return;
+      }
+
       if (this.state.currentValue.trim().length)
       {
         this.props.newTag(spaceToUnderscores(this.state.currentValue.trim()));

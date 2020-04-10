@@ -28,7 +28,7 @@ export default class QueryBar extends React.PureComponent
   {
     return <div className="query-bar">
       <TagEditorInput placeholder="filter ehhistory" className="query-bar-input"
-        newTag={this.submitQuery}/>
+        newTag={this.submitQuery} noSubmit={true}/>
     </div>;
   }
 }
