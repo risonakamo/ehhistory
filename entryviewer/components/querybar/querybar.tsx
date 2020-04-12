@@ -15,21 +15,32 @@ interface QueryBarProps
 
 }
 
+interface QueryBarState
+{
+  currentQuery:string
+}
+
 /* QueryBar() */
 export default class QueryBar extends React.PureComponent
 {
   props:QueryBarProps
+  state:QueryBarState
 
   constructor(props:QueryBarProps)
   {
     super(props);
     this.submitQuery=this.submitQuery.bind(this);
+
+    this.state={
+      currentQuery:""
+    };
   }
 
   // apply the query
   submitQuery(queryString:string):void
   {
     updateQuery(createEntryQuery(queryString));
+    this.setState({currentQuery:queryString});
   }
 
   render()
@@ -37,6 +48,10 @@ export default class QueryBar extends React.PureComponent
     return <div className="query-bar">
       <TagEditorInput placeholder="filter ehhistory" className="query-bar-input"
         newTag={this.submitQuery} noSubmit={true}/>
+      <div className="info-zone" style={{display:this.state.currentQuery.length?"":"none"}}>
+        <img src="../imgs/rightpointingarrow-white.svg"/>
+        <span>{this.state.currentQuery}</span>
+      </div>
     </div>;
   }
 }
