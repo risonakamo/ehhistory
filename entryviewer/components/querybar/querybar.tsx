@@ -15,6 +15,7 @@ interface QueryBarProps
 
 }
 
+/* QueryBar() */
 export default class QueryBar extends React.PureComponent
 {
   props:QueryBarProps
@@ -25,10 +26,10 @@ export default class QueryBar extends React.PureComponent
     this.submitQuery=this.submitQuery.bind(this);
   }
 
+  // apply the query
   submitQuery(queryString:string):void
   {
-    console.log("the query",queryString);
-    console.log("entry query",createEntryQuery(queryString));
+    updateQuery(createEntryQuery(queryString));
   }
 
   render()
@@ -41,8 +42,13 @@ export default class QueryBar extends React.PureComponent
 }
 
 // given query string, return entry query object
-function createEntryQuery(query:string):EntryQuery
+function createEntryQuery(query:string):EntryQuery|null
 {
+  if (!query.length)
+  {
+    return null;
+  }
+
   return _.reduce(query.split(" "),(r:EntryQuery,x:string):EntryQuery=>{
     var parsedQuery:SingleQuery=parseSingleQuery(x);
 

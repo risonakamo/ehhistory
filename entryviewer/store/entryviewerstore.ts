@@ -138,8 +138,18 @@ export function removeEntry(entry:HistoryEntry):void
 }
 
 // replace the current entry query with the given query
-export function updateQuery(query:EntryQuery):void
+export function updateQuery(query:EntryQuery|null):void
 {
+    if (!query)
+    {
+        query={
+            tags:[],
+            subtractTags:[],
+            group:null,
+            type:null
+        };
+    }
+
     store.dispatch({
         type:"replaceQuery",
         query
