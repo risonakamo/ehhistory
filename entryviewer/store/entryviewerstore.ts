@@ -154,6 +154,8 @@ export function updateQuery(query:EntryQuery|null):void
         type:"replaceQuery",
         query
     });
+
+    updateEntriesFromStorage();
 }
 
 // --- STORE REDUCERS ---
@@ -162,11 +164,6 @@ function entriesReduce(entries:HistoryEntryDict,entryQuery:EntryQuery,act:StoreA
     if (act.type=="replaceEntries")
     {
         return filterEntries(act.entries,entryQuery);
-    }
-
-    else if (act.type=="replaceQuery")
-    {
-        return filterEntries(entries,act.query);
     }
 
     return filterEntries(entries,entryQuery);
