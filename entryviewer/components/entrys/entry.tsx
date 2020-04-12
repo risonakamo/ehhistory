@@ -236,7 +236,7 @@ class AutoResizingImage extends React.PureComponent
   {
     var tallClass=this.state.tall?"tall":"";
 
-    return <img src={this.props.image} ref={this.theimage} className={tallClass}/>;
+    return <img src={this.props.image} ref={this.theimage} className={tallClass} loading="lazy"/>;
   }
 }
 
