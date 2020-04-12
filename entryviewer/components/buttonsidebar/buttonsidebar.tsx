@@ -40,6 +40,7 @@ class ButtonSideBar extends React.Component
     var confirmButtonsHide=true;
     var exportHide=false;
     var imageButtonUnclickable=false;
+    var refModeHide=false;
 
     // --- image edit mode ---
     if (this.props.imageEditMode)
@@ -48,6 +49,7 @@ class ButtonSideBar extends React.Component
       confirmButtonsHide=false;
       exportHide=true;
       imageButtonUnclickable=true;
+      refModeHide=true;
     }
     // --- END ---
 
@@ -58,6 +60,8 @@ class ButtonSideBar extends React.Component
         <ButtonSideBarButton imglink="../imgs/images-white.svg" onClick={this.triggerImageEditMode}
           unclickable={imageButtonUnclickable}/>
         <ButtonSideBarButton imglink="../imgs/shuffle-white.svg" hidden={shuffleHide}/>
+        <ButtonSideBarButton imglink="../imgs/flagfilled-white.svg" hidden={refModeHide}/>
+
         <ButtonSideBarButton imglink="../imgs/checkmark-white.svg" hidden={confirmButtonsHide}
           onClick={this.props.toggleImageEditor}/>
         <ButtonSideBarButton imglink="../imgs/close-salmon.svg" hidden={confirmButtonsHide}
