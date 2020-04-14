@@ -12,6 +12,8 @@ export interface EntryViewerStore
 
     entryQuery:EntryQuery //state of query filters
 
+    referenceMode:boolean
+
     dispatch:(action:StoreAction)=>void
 }
 
@@ -40,13 +42,21 @@ interface ToggleAddEditEntry
     entry:HistoryEntry
 }
 
+// replace the query with the given query
 interface ReplaceQuery
 {
     type:"replaceQuery"
     query:EntryQuery
 }
 
-type StoreAction=ReplaceEntriesAction|ChangeImageModeAction|ToggleAddEditEntry|ReplaceQuery;
+// toggle the reference mode
+interface ToggleReference
+{
+    type:"ToggleReference"
+}
+
+type StoreAction=ReplaceEntriesAction|ChangeImageModeAction
+    |ToggleAddEditEntry|ReplaceQuery|ToggleReference;
 
 // --- ACCESS FUNCTIONS ---
 // update the store by syncing with local storage
@@ -158,15 +168,26 @@ export function updateQuery(query:EntryQuery|null):void
     updateEntriesFromStorage();
 }
 
+// toggle the reference mode
+export function toggleReferenceMode():void
+{
+    store.dispatch({
+        type:"ToggleReference"
+    });
+
+    updateEntriesFromStorage();
+}
+
 // --- STORE REDUCERS ---
-function entriesReduce(entries:HistoryEntryDict,entryQuery:EntryQuery,act:StoreAction):HistoryEntryDict
+function entriesReduce(entries:HistoryEntryDict,entryQuery:EntryQuery,referenceMode:boolean,
+    act:StoreAction):HistoryEntryDict
 {
     if (act.type=="replaceEntries")
     {
-        return filterEntries(act.entries,entryQuery);
+        return filterEntries(act.entries,entryQuery,referenceMode);
     }
 
-    return filterEntries(entries,entryQuery);
+    return filterEntries(entries,entryQuery,referenceMode);
 }
 
 function imageEditModeReduce(currentMode:boolean,act:StoreAction):boolean
@@ -245,15 +266,26 @@ function entryQueryReduce(entryQuery:EntryQuery,act:StoreAction):EntryQuery
     return entryQuery;
 }
 
+function referenceModeReduce(referenceMode:boolean,act:StoreAction):boolean
+{
+    if (act.type=="ToggleReference")
+    {
+        return !referenceMode;
+    }
+
+    return referenceMode;
+}
+
 // --- STORE DEFINITION ---
 store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
     return {
-        entries:entriesReduce(state.entries,state.entryQuery,act),
+        entries:entriesReduce(state.entries,state.entryQuery,state.referenceMode,act),
         imageEditMode:imageEditModeReduce(state.imageEditMode,act),
         currentImageEditEntries:imageEditEntriesReduce(state.currentImageEditEntries,act),
         tagCounts:tagCountsReduce(state.tagCounts,act),
         groupCounts:groupCountsReduce(state.groupCounts,act),
-        entryQuery:entryQueryReduce(state.entryQuery,act)
+        entryQuery:entryQueryReduce(state.entryQuery,act),
+        referenceMode:referenceModeReduce(state.referenceMode,act)
     };
 },{
     entries:{},
@@ -266,7 +298,8 @@ store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
         subtractTags:[],
         group:null,
         type:null
-    }
+    },
+    referenceMode:false
 } as EntryViewerStore);
 
 export default store;

@@ -1,8 +1,10 @@
-export default function filterEntries(entries:HistoryEntryDict,query:EntryQuery):HistoryEntryDict
+export default function filterEntries(entries:HistoryEntryDict,query:EntryQuery,
+    referenceMode:boolean=false):HistoryEntryDict
 {
     return _.pickBy(entries,(x:HistoryEntry):boolean=>{
         return hasTags(x,query.tags) && doesNotHaveTags(x,query.subtractTags)
-            && isGroup(x,query.group) && isType(x,query.type);
+            && isGroup(x,query.group) && isType(x,query.type)
+            && (referenceMode || !(x.reference || false));
     });
 }
 

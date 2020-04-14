@@ -1,4 +1,4 @@
-import {EntryViewerStore,setImageEditMode} from "../../store/entryviewerstore";
+import {EntryViewerStore,setImageEditMode,toggleReferenceMode} from "../../store/entryviewerstore";
 
 import "./buttonsidebar.less";
 
@@ -60,7 +60,7 @@ class ButtonSideBar extends React.Component
         <ButtonSideBarButton imglink="../imgs/images-white.svg" onClick={this.triggerImageEditMode}
           unclickable={imageButtonUnclickable}/>
         <ButtonSideBarButton imglink="../imgs/shuffle-white.svg" hidden={shuffleHide}/>
-        <ButtonSideBarButton imglink="../imgs/flagfilled-white.svg" hidden={refModeHide}/>
+        <ButtonSideBarButton imglink="../imgs/flagfilled-white.svg" hidden={refModeHide} onClick={toggleReferenceMode}/>
 
         <ButtonSideBarButton imglink="../imgs/checkmark-white.svg" hidden={confirmButtonsHide}
           onClick={this.props.toggleImageEditor}/>
