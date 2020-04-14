@@ -4,11 +4,12 @@ import "./buttonsidebar.less";
 
 interface ButtonSideBarProps
 {
-  imageEditMode:boolean
+  imageEditMode:boolean //STORE
+  referenceMode:boolean //STORE
   toggleImageEditor:(editorOn?:boolean)=>void //callback function to toggle the image editor
 }
 
-/* ButtonSideBar(STORE-bool imageEditMode, function toggleImageEditor) */
+/* ButtonSideBar(STORE-bool imageEditMode, STORE-bool referenceMode, function toggleImageEditor) */
 class ButtonSideBar extends React.Component
 {
   props:ButtonSideBarProps
@@ -53,6 +54,10 @@ class ButtonSideBar extends React.Component
     }
     // --- END ---
 
+    // --- reference mode ---
+    var refModeButtonColour=this.props.referenceMode?"orange":"white";
+    // --- END ---
+
     return <div className="button-side-bar">
       <div className="float-bar">
         <ButtonSideBarButton imglink="../imgs/download-white.svg" hidden={exportHide}
@@ -60,7 +65,8 @@ class ButtonSideBar extends React.Component
         <ButtonSideBarButton imglink="../imgs/images-white.svg" onClick={this.triggerImageEditMode}
           unclickable={imageButtonUnclickable}/>
         <ButtonSideBarButton imglink="../imgs/shuffle-white.svg" hidden={shuffleHide}/>
-        <ButtonSideBarButton imglink="../imgs/flagfilled-white.svg" hidden={refModeHide} onClick={toggleReferenceMode}/>
+        <ButtonSideBarButton imglink={`../imgs/flagfilled-${refModeButtonColour}.svg`} hidden={refModeHide}
+          onClick={toggleReferenceMode} noTransparent={this.props.referenceMode}/>
 
         <ButtonSideBarButton imglink="../imgs/checkmark-white.svg" hidden={confirmButtonsHide}
           onClick={this.props.toggleImageEditor}/>
@@ -77,9 +83,10 @@ interface ButtonSideBarButtonProps
   onClick?:()=>void
   unclickable?:boolean //makes the button not trigger clicks and have no hover animations
   hidden?:boolean
+  noTransparent?:boolean //make this button not transparent
 }
 
-/* ButtonSideBarButton(string imglink, function onClick, bool unclickable, bool hidden) */
+/* ButtonSideBarButton(string imglink, function onClick, bool unclickable, bool hidden, bool noTransparent) */
 class ButtonSideBarButton extends React.PureComponent
 {
   props:ButtonSideBarButtonProps
@@ -101,9 +108,10 @@ class ButtonSideBarButton extends React.PureComponent
   render()
   {
     var unclickableClass=this.props.unclickable?"unclickable":"";
+    var notransparentClass=this.props.noTransparent?"no-transparent":"";
 
     return (
-      <div className={`button-side-bar-button ${unclickableClass}`} onClick={this.clickAction}
+      <div className={`button-side-bar-button ${unclickableClass} ${notransparentClass}`} onClick={this.clickAction}
         style={{display:this.props.hidden?"none":""}}
       >
         <img src={this.props.imglink}/>
@@ -114,6 +122,7 @@ class ButtonSideBarButton extends React.PureComponent
 
 export default ReactRedux.connect((storestate:EntryViewerStore)=>{
   return {
-    imageEditMode:storestate.imageEditMode
+    imageEditMode:storestate.imageEditMode,
+    referenceMode:storestate.referenceMode
   };
 })(ButtonSideBar);
