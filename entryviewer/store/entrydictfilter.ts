@@ -21,15 +21,15 @@ function doesNotHaveTags(entry:HistoryEntry,subtractTags:string[]):boolean
     return !subtractTags.length || _.intersection(entry.tags,subtractTags)==0;
 }
 
-// returns if the entry has the specified group name or always true if there was no
-// group name specified
-function isGroup(entry:HistoryEntry,group:string):boolean
+// returns true if the entry is one of the groups specified in groups, or if groups is empty
+function isGroup(entry:HistoryEntry,groups:string[]):boolean
 {
-    return !group || entry.group==group;
+    return !groups.length || groups.includes(entry.group);
 }
 
-// returns if entry was the type and always true if no type is given
-function isType(entry:HistoryEntry,type:EntryType):boolean
+// returns true if the entry has one of the types in the array of types, or the array
+// of types is empty
+function isType(entry:HistoryEntry,types:EntryType[]):boolean
 {
-    return !type || entry.type==type;
+    return !types.length || types.includes(entry.type);
 }

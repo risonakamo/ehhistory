@@ -75,22 +75,14 @@ function createEntryQuery(query:string):EntryQuery|null
   return _.reduce(query.split(" "),(r:EntryQuery,x:string):EntryQuery=>{
     var parsedQuery:SingleQuery=parseSingleQuery(x);
 
-    if (parsedQuery.type=="tags" || parsedQuery.type=="subtractTags")
-    {
-      r[parsedQuery.type].push(parsedQuery.query);
-    }
-
-    else if (!r[parsedQuery.type])
-    {
-      r[parsedQuery.type]=parsedQuery.query as EntryType;
-    }
+    r[parsedQuery.type].push(parsedQuery.query as EntryType);
 
     return r;
   },{
     tags:[],
     subtractTags:[],
-    group:null,
-    type:null
+    group:[],
+    type:[]
   });
 }
 

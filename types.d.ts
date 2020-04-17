@@ -62,6 +62,6 @@ interface EntryQuery
     tags:string[]
     subtractTags:string[]
 
-    group:string
-    type:EntryType
+    group:string[]
+    type:EntryType[]
 }
