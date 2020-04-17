@@ -17,6 +17,8 @@ export default class TagEditorInput extends React.Component
     currentValue:string
   }
 
+  theInput:ReactRef<HTMLElement>
+
   constructor(props:any)
   {
     super(props);
@@ -26,6 +28,8 @@ export default class TagEditorInput extends React.Component
     this.state={
       currentValue:""
     };
+
+    this.theInput=React.createRef();
   }
 
   // handle inputs
@@ -60,12 +64,18 @@ export default class TagEditorInput extends React.Component
     this.setState({currentValue:""});
   }
 
+  // focus on the input box
+  public focus():void
+  {
+    this.theInput.current.focus();
+  }
+
   render()
   {
     var extraClasses=this.props.className || "";
 
     return <input placeholder={this.props.placeholder} type="text" value={this.state.currentValue}
-      className={`tag-editor-input input-inherit ${extraClasses}`}
+      className={`tag-editor-input input-inherit ${extraClasses}`} ref={this.theInput}
       onChange={this.inputHandler} onKeyPress={this.keyHandler}/>;
   }
 }

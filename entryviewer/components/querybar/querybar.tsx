@@ -25,6 +25,7 @@ export default class QueryBar extends React.PureComponent
 {
   props:QueryBarProps
   state:QueryBarState
+  theInputBar:ReactRef<TagEditorInput>
 
   constructor(props:QueryBarProps)
   {
@@ -34,6 +35,13 @@ export default class QueryBar extends React.PureComponent
     this.state={
       currentQuery:""
     };
+
+    this.theInputBar=React.createRef();
+  }
+
+  componentDidMount()
+  {
+    this.theInputBar.current.focus();
   }
 
   // apply the query
@@ -47,7 +55,7 @@ export default class QueryBar extends React.PureComponent
   {
     return <div className="query-bar">
       <TagEditorInput placeholder="filter ehhistory" className="query-bar-input"
-        newTag={this.submitQuery} noSubmit={true}/>
+        newTag={this.submitQuery} noSubmit={true} ref={this.theInputBar}/>
       <div className="info-zone" style={{display:this.state.currentQuery.length?"":"none"}}>
         <img src="../imgs/rightpointingarrow-white.svg"/>
         <span>{this.state.currentQuery}</span>
