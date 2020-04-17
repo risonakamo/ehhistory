@@ -135,6 +135,16 @@ export default class Entry extends React.Component
     var groupCount=this.props.groupCount?`(${this.props.groupCount})`:"";
     // --- END ---
 
+    // --- ref mode ---
+    var refModeClass="";
+    var refModeImage;
+    if (this.props.entrydata.reference)
+    {
+      refModeClass="ref-mode";
+      refModeImage=<img src="../imgs/flagfilled-orange.svg"/>;
+    }
+    // --- END ---
+
     return <div className={`entry-row ${mainDiffModeClass}`}>
       <div className="image-contain">
         <div className={`image-box ${noImageClass} ${imageEditEnabledClass} ${diffModeImageClass}`}
@@ -155,7 +165,10 @@ export default class Entry extends React.Component
           <h1><a href={this.props.entrydata.link}>{this.props.entrydata.name}</a></h1>
           <p className="groupname">{this.props.entrydata.group} {groupCount}</p>
           <p className="tags">{typeelement} {tagsString}</p>
-          <p className="date">{datestring}</p>
+          <p className={`date ${refModeClass}`}>
+            {refModeImage}
+            {datestring}
+          </p>
         </div>
         <div className="diff-mode-edit" style={{display:this.props.diffMode?"":"none"}} onClick={this.toggleDiffMode}>
           <img src={diffModeImage(this.props.diffMode)}/>
