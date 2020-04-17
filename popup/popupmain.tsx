@@ -106,10 +106,10 @@ export default class PopupMain extends React.Component
           </div>
           <div className="submit-section ref-submit">
             <div className="submit-icon-hold bottom">
-              <img className="submit-plus" src="../imgs/addicon-brown.svg"/>
+              <img className="submit-plus" src="../imgs/flagfilled-white.svg"/>
             </div>
             <a className="submit-icon-hold top" href="" onClick={this.submitEntryReference}>
-              <img className="submit-plus" src="../imgs/addicon-orangebrown.svg"/>
+              <img className="submit-plus" src="../imgs/flagfilled-orange.svg"/>
             </a>
           </div>
         </div>
