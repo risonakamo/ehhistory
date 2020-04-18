@@ -1,5 +1,5 @@
 import {EntryViewerStore,updateEntriesFromStorage,toggleAddImageEditEntry} from "../../store/entryviewerstore";
-import Entry,{historyEntryDictToArray} from "./entry";
+import Entry from "./entry";
 
 import "./entrys.less";
 
@@ -41,3 +41,28 @@ export default ReactRedux.connect((storestate:EntryViewerStore)=>{
     groupCounts:storestate.groupCounts
   };
 })(Entrys);
+
+// converts a history entry dict to date sorted array for render
+export function historyEntryDictToArray(entries:HistoryEntryDict):HistoryEntry[]
+{
+  var entriesArray=Object.values(entries);
+
+  entriesArray.sort((a:HistoryEntry,b:HistoryEntry)=>{
+    var adate=Date.parse(a.date);
+    var bdate=Date.parse(b.date);
+
+    if (adate>bdate)
+    {
+      return -1;
+    }
+
+    else if (adate<bdate)
+    {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  return entriesArray;
+}

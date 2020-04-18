@@ -1,5 +1,5 @@
 import Entry from "../../../entryviewer/components/entrys/entry";
-import {historyEntryDictToArray} from "../../../entryviewer/components/entrys/entry";
+import {historyEntryDictToArray} from "../../../entryviewer/components/entrys/entrys";
 
 import "./entrydiff.less";
 
