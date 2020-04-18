@@ -65,3 +65,9 @@ interface EntryQuery
     group:string[]
     type:EntryType[]
 }
+
+interface SortState
+{
+    sortMode:"shuffle"|"date"
+    descend:boolean
+}
