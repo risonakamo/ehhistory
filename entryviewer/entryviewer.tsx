@@ -26,6 +26,7 @@ class EntryViewerMain extends React.Component
   }
 
   thetageditor:ReactRef<typeof TagEditor>
+  theentrys:ReactRef<typeof Entrys>
 
   constructor(props:any)
   {
@@ -35,6 +36,7 @@ class EntryViewerMain extends React.Component
     this.toggleImageEditor=this.toggleImageEditor.bind(this);
     this.loadTagEditor=this.loadTagEditor.bind(this);
     this.closeTagEditor=this.closeTagEditor.bind(this);
+    this.shuffleEntrys=this.shuffleEntrys.bind(this);
 
     this.state={
       currentEditEntry:{
@@ -57,6 +59,7 @@ class EntryViewerMain extends React.Component
     };
 
     this.thetageditor=React.createRef();
+    this.theentrys=React.createRef();
   }
 
   // load the editor with a history entry
@@ -115,20 +118,26 @@ class EntryViewerMain extends React.Component
     });
   }
 
+  // shuffle the entries
+  shuffleEntrys():void
+  {
+    this.theentrys.current.shuffle();
+  }
+
   render()
   {
     return <>
       <div className={`content-window ${this.state.cloakEnabled?"cloaked":""}`}>
         <div className="content">
           <QueryBar/>
-          <Entrys loadEditor={this.loadEditor} loadTagEditor={this.loadTagEditor}/>
+          <Entrys loadEditor={this.loadEditor} loadTagEditor={this.loadTagEditor} ref={this.theentrys}/>
           <EntryEditor shown={this.state.editorShown} loadEntry={this.state.currentEditEntry}
             closeEditor={this.closeEditor}/>
           <ImageLinkEditor showing={this.state.imageEditorShown} parentCloseEditor={this.toggleImageEditor}/>
           <TagEditor enabled={this.state.tagEditShow} editEntry={this.state.tagEditEntry} closeEditor={this.closeTagEditor}
             ref={this.thetageditor}/>
         </div>
-        <ButtonSideBar toggleImageEditor={this.toggleImageEditor}/>
+        <ButtonSideBar toggleImageEditor={this.toggleImageEditor} shuffleEntrys={this.shuffleEntrys}/>
       </div>
       <div className="menu-cloak" style={{display:this.state.cloakEnabled?"":"none"}}></div>
     </>;

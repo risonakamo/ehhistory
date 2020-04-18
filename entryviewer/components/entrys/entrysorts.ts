@@ -1,5 +1,5 @@
 // return a sorted Id array for given HistoryEntryDict and desired SortState
-export function sortEntries(entries:HistoryEntryDict,sortState:SortState,entryOrder:number[]=[]):HistoryEntry[]
+export function sortEntries(entries:HistoryEntryDict,sortState:SortState,entryOrder:number[]):HistoryEntry[]
 {
     if (sortState.sortMode=="date")
     {

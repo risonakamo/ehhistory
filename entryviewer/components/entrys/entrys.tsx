@@ -43,12 +43,21 @@ class Entrys extends React.PureComponent
   // create the Entry objects from the current entries and sort state settings
   createEntrys():Entry[]
   {
-    return _.map(sortEntries(this.props.entries,this.props.sortState),(x:HistoryEntry,i:number)=>{
+    return _.map(sortEntries(this.props.entries,this.props.sortState,this.state.entryOrder),
+    (x:HistoryEntry,i:number)=>{
       return <Entry entrydata={x} key={i} loadEditor={this.props.loadEditor}
         imageEditEnabled={this.props.imageEditEnabled}
         toggleAddImageEditEntry={toggleAddImageEditEntry}
         loadTagEditor={this.props.loadTagEditor}
         groupCount={this.props.groupCounts[x.group]}/>;
+    });
+  }
+
+  // shuffle the entries
+  public shuffle():void
+  {
+    this.setState({
+      entryOrder:_.shuffle(_.keys(this.props.entries))
     });
   }
 
@@ -67,4 +76,4 @@ export default ReactRedux.connect((storestate:EntryViewerStore)=>{
     groupCounts:storestate.groupCounts,
     sortState:storestate.sortState
   };
-})(Entrys);
+},null,null,{forwardRef:true})(Entrys);

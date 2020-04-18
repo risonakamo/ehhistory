@@ -7,9 +7,11 @@ interface ButtonSideBarProps
   imageEditMode:boolean //STORE
   referenceMode:boolean //STORE
   toggleImageEditor:(editorOn?:boolean)=>void //callback function to toggle the image editor
+  shuffleEntrys:()=>void //callback function called when shuffle button is pressed
 }
 
-/* ButtonSideBar(STORE-bool imageEditMode, STORE-bool referenceMode, function toggleImageEditor) */
+/* ButtonSideBar(STORE-bool imageEditMode, STORE-bool referenceMode, function toggleImageEditor,
+    function shuffleEntrys) */
 class ButtonSideBar extends React.Component
 {
   props:ButtonSideBarProps
@@ -64,7 +66,7 @@ class ButtonSideBar extends React.Component
           onClick={this.openExportPage}/>
         <ButtonSideBarButton imglink="../imgs/images-white.svg" onClick={this.triggerImageEditMode}
           unclickable={imageButtonUnclickable}/>
-        <ButtonSideBarButton imglink="../imgs/shuffle-white.svg" hidden={shuffleHide}/>
+        <ButtonSideBarButton imglink="../imgs/shuffle-white.svg" hidden={shuffleHide} onClick={this.props.shuffleEntrys}/>
         <ButtonSideBarButton imglink={`../imgs/flagfilled-${refModeButtonColour}.svg`} hidden={refModeHide}
           onClick={toggleReferenceMode} noTransparent={this.props.referenceMode}/>
 
