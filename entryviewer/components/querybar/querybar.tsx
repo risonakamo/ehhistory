@@ -117,6 +117,11 @@ function parseSingleQuery(query:string):SingleQuery
       query=query.toUpperCase();
     }
 
+    else if (colonsplit[0]=="group")
+    {
+      query=replaceUnderscores(query);
+    }
+
     return {
       type:colonsplit[0],
       query
@@ -127,4 +132,11 @@ function parseSingleQuery(query:string):SingleQuery
     type:"tags",
     query
   };
+}
+
+// replace all underscores with a single space, unless it is preceded by
+// a backslash
+function replaceUnderscores(input:string):string
+{
+  return input.replace(/(?<!\\)_/g," ").replace(/\\/g,"");
 }
