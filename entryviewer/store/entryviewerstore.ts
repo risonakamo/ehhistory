@@ -3,6 +3,7 @@ import filterEntries from "./entrydictfilter";
 export interface EntryViewerStore
 {
     entries:HistoryEntryDict //all the loaded entries
+    sortState:SortState
 
     imageEditMode:boolean //whether image edit mode is enabled
     currentImageEditEntries:HistoryEntryDict //dict of entries about to be edited by image editor
@@ -190,6 +191,11 @@ function entriesReduce(entries:HistoryEntryDict,entryQuery:EntryQuery,referenceM
     return filterEntries(entries,entryQuery,referenceMode);
 }
 
+function sortStateReduce(sortState:SortState,act:StoreAction):SortState
+{
+    return sortState;
+}
+
 function imageEditModeReduce(currentMode:boolean,act:StoreAction):boolean
 {
     if (act.type=="changeImageMode")
@@ -280,25 +286,38 @@ function referenceModeReduce(referenceMode:boolean,act:StoreAction):boolean
 store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
     return {
         entries:entriesReduce(state.entries,state.entryQuery,state.referenceMode,act),
+        sortState:sortStateReduce(state.sortState,act),
+
         imageEditMode:imageEditModeReduce(state.imageEditMode,act),
         currentImageEditEntries:imageEditEntriesReduce(state.currentImageEditEntries,act),
+
         tagCounts:tagCountsReduce(state.tagCounts,act),
         groupCounts:groupCountsReduce(state.groupCounts,act),
+
         entryQuery:entryQueryReduce(state.entryQuery,act),
+
         referenceMode:referenceModeReduce(state.referenceMode,act)
     };
 },{
     entries:{},
+    sortState:{
+        sortMode:"date",
+        descend:true
+    },
+
     imageEditMode:false,
     currentImageEditEntries:{},
+
     tagCounts:{},
     groupCounts:{},
+
     entryQuery:{
         tags:[],
         subtractTags:[],
         group:[],
         type:[]
     },
+
     referenceMode:false
 } as EntryViewerStore);
 
