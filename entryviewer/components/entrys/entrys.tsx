@@ -4,17 +4,35 @@ import {sortEntries} from "./entrysorts";
 
 import "./entrys.less";
 
+interface EntrysProps
+{
+  loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
+  loadTagEditor:(entry:HistoryEntry)=>void
+  entries:HistoryEntryDict //STORE: all the entries
+  imageEditEnabled:boolean //STORE: if image edit is enabled
+  groupCounts:GroupCounts //STORE
+  sortState:SortState //STORE
+}
+
+interface EntrysState
+{
+  entryOrder:number[]
+}
+
 /* Entrys(function loadEditor, STORE-HistoryEntryDict entries, STORE-bool imageEditEnabled,
     function loadTagEditor, STORE-GroupCounts groupCounts, STORE-SortState sortState) */
 class Entrys extends React.PureComponent
 {
-  props:{
-    loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
-    loadTagEditor:(entry:HistoryEntry)=>void
-    entries:HistoryEntryDict //STORE: all the entries
-    imageEditEnabled:boolean //STORE: if image edit is enabled
-    groupCounts:GroupCounts //STORE
-    sortState:SortState //STORE
+  props:EntrysProps
+  state:EntrysState
+
+  constructor(props:EntrysProps)
+  {
+    super(props);
+
+    this.state={
+      entryOrder:[]
+    };
   }
 
   componentDidMount():void

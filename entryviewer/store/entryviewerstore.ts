@@ -301,7 +301,7 @@ store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
 },{
     entries:{},
     sortState:{
-        sortMode:"date",
+        sortMode:"shuffle",
         descend:true
     },
 
