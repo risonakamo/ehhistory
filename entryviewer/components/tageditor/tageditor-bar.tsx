@@ -1,6 +1,6 @@
 import "./tageditor-bar.less";
 
-/* TagEditorInput(function newTag?, string placeholder?, string className?, bool noSubmit?) */
+/* TagEditorInput(function newTag?, string placeholder?, string className?, bool noSubmit?, bool hidden?) */
 export default class TagEditorInput extends React.Component
 {
   props:{
@@ -10,6 +10,7 @@ export default class TagEditorInput extends React.Component
     noSubmit?:boolean //when enabled, submitting with enter key will only call the newTag function but
                       //not do anything else (normally it will clear and replace spaces with underscores
                       //before emitting for event callback)
+    hidden?:boolean
 
     ref?:ReactRef<TagEditorInput>
   }
@@ -76,7 +77,8 @@ export default class TagEditorInput extends React.Component
 
     return <input placeholder={this.props.placeholder} type="text" value={this.state.currentValue}
       className={`tag-editor-input input-inherit ${extraClasses}`} ref={this.theInput}
-      onChange={this.inputHandler} onKeyPress={this.keyHandler}/>;
+      onChange={this.inputHandler} onKeyPress={this.keyHandler}
+      style={{display:this.props.hidden?"none":""}}/>;
   }
 }
 

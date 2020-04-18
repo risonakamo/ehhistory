@@ -1,4 +1,4 @@
-import {updateQuery} from "../../store/entryviewerstore";
+import {updateQuery,EntryViewerStore} from "../../store/entryviewerstore";
 
 import TagEditorInput from "../tageditor/tageditor-bar";
 
@@ -12,7 +12,7 @@ interface SingleQuery
 
 interface QueryBarProps
 {
-
+  imageEditMode:boolean //STORE
 }
 
 interface QueryBarState
@@ -20,8 +20,8 @@ interface QueryBarState
   currentQuery:string
 }
 
-/* QueryBar() */
-export default class QueryBar extends React.PureComponent
+/* QueryBar(STORE-bool imageEditMode) */
+class QueryBar extends React.PureComponent
 {
   props:QueryBarProps
   state:QueryBarState
@@ -55,7 +55,7 @@ export default class QueryBar extends React.PureComponent
   {
     return <div className="query-bar">
       <TagEditorInput placeholder="filter ehhistory" className="query-bar-input"
-        newTag={this.submitQuery} noSubmit={true} ref={this.theInputBar}/>
+        newTag={this.submitQuery} noSubmit={true} ref={this.theInputBar} hidden={this.props.imageEditMode}/>
       <div className="info-zone" style={{display:this.state.currentQuery.length?"":"none"}}>
         <img src="../imgs/rightpointingarrow-white.svg"/>
         <span>{this.state.currentQuery}</span>
@@ -140,3 +140,9 @@ function replaceUnderscores(input:string):string
 {
   return input.replace(/(?<!\\)_/g," ").replace(/\\/g,"");
 }
+
+export default ReactRedux.connect((storestate:EntryViewerStore)=>{
+  return {
+    imageEditMode:storestate.imageEditMode
+  };
+})(QueryBar);
