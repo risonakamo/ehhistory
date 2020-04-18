@@ -87,7 +87,8 @@ function createEntryQuery(query:string):EntryQuery|null
 }
 
 // given a single query, return an object giving the type of that query and the query itself,
-// with any type denominators removed. an unknown query will just be a tag query
+// with any type denominators removed. an unknown query will just be a tag query.
+// maybe improve this function later because it looks really ugly
 function parseSingleQuery(query:string):SingleQuery
 {
   var colonsplit=query.split(":");
@@ -109,9 +110,16 @@ function parseSingleQuery(query:string):SingleQuery
 
   if (colonsplit[0]=="group" || colonsplit[0]=="type")
   {
+    var query=colonsplit[1];
+
+    if (colonsplit[0]=="type")
+    {
+      query=query.toUpperCase();
+    }
+
     return {
       type:colonsplit[0],
-      query:colonsplit[1]
+      query
     };
   }
 
