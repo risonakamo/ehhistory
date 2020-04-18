@@ -66,8 +66,9 @@ interface EntryQuery
     type:EntryType[]
 }
 
+type SortMode="shuffle"|"date";
 interface SortState
 {
-    sortMode:"shuffle"|"date"
+    sortMode:SortMode
     descend:boolean
 }

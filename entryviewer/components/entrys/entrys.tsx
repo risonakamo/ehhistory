@@ -1,4 +1,5 @@
-import {EntryViewerStore,updateEntriesFromStorage,toggleAddImageEditEntry} from "../../store/entryviewerstore";
+import {EntryViewerStore,updateEntriesFromStorage,
+  toggleAddImageEditEntry,changeSortMode} from "../../store/entryviewerstore";
 import Entry from "./entry";
 import {sortEntries} from "./entrysorts";
 
@@ -56,6 +57,7 @@ class Entrys extends React.PureComponent
   // shuffle the entries
   public shuffle():void
   {
+    changeSortMode("shuffle");
     this.setState({
       entryOrder:_.shuffle(_.keys(this.props.entries))
     });

@@ -56,8 +56,14 @@ interface ToggleReference
     type:"ToggleReference"
 }
 
+interface ChangeSortMode
+{
+    type:"ChangeSortMode"
+    mode:SortMode
+}
+
 type StoreAction=ReplaceEntriesAction|ChangeImageModeAction
-    |ToggleAddEditEntry|ReplaceQuery|ToggleReference;
+    |ToggleAddEditEntry|ReplaceQuery|ToggleReference|ChangeSortMode;
 
 // --- ACCESS FUNCTIONS ---
 // update the store by syncing with local storage
@@ -179,6 +185,15 @@ export function toggleReferenceMode():void
     updateEntriesFromStorage();
 }
 
+// change the sort mode to the new given mode
+export function changeSortMode(newMode:SortMode):void
+{
+    store.dispatch({
+        type:"ChangeSortMode",
+        mode:newMode
+    });
+}
+
 // --- STORE REDUCERS ---
 function entriesReduce(entries:HistoryEntryDict,entryQuery:EntryQuery,referenceMode:boolean,
     act:StoreAction):HistoryEntryDict
@@ -193,6 +208,14 @@ function entriesReduce(entries:HistoryEntryDict,entryQuery:EntryQuery,referenceM
 
 function sortStateReduce(sortState:SortState,act:StoreAction):SortState
 {
+    if (act.type=="ChangeSortMode")
+    {
+        return {
+            ...sortState,
+            sortMode:act.mode
+        };
+    }
+
     return sortState;
 }
 
@@ -301,7 +324,7 @@ store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
 },{
     entries:{},
     sortState:{
-        sortMode:"shuffle",
+        sortMode:"date",
         descend:true
     },
 
