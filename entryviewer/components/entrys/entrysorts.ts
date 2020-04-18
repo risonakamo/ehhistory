@@ -1,14 +1,9 @@
 // return a sorted Id array for given HistoryEntryDict and desired SortState
-export function sortEntries(entries:HistoryEntryDict,sortState:SortState):number[]
+export function sortEntries(entries:HistoryEntryDict,sortState:SortState):HistoryEntry[]
 {
-    console.log("sorting",sortState);
-    console.log("sort entries",entries);
-
     if (sortState.sortMode=="date")
     {
-        return historyEntryDictToArray(entries).map((x:HistoryEntry)=>{
-            return x.id;
-        });
+        return historyEntryDictToArray(entries);
     }
 }
 

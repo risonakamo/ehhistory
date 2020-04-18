@@ -1,19 +1,20 @@
 import {EntryViewerStore,updateEntriesFromStorage,toggleAddImageEditEntry} from "../../store/entryviewerstore";
 import Entry from "./entry";
-import {historyEntryDictToArray} from "../../store/entrysorts";
+import {sortEntries} from "./entrysorts";
 
 import "./entrys.less";
 
 /* Entrys(function loadEditor, STORE-HistoryEntryDict entries, STORE-bool imageEditEnabled,
-    function loadTagEditor, STORE-GroupCounts groupCounts) */
+    function loadTagEditor, STORE-GroupCounts groupCounts, STORE-SortState sortState) */
 class Entrys extends React.PureComponent
 {
   props:{
     loadEditor:(entry:HistoryEntry)=>void //load entry for edit function from parent
     loadTagEditor:(entry:HistoryEntry)=>void
-    entries:HistoryEntryDict //all the entries
-    imageEditEnabled:boolean //if image edit is enabled
-    groupCounts:GroupCounts
+    entries:HistoryEntryDict //STORE: all the entries
+    imageEditEnabled:boolean //STORE: if image edit is enabled
+    groupCounts:GroupCounts //STORE
+    sortState:SortState //STORE
   }
 
   componentDidMount():void
@@ -21,16 +22,22 @@ class Entrys extends React.PureComponent
     updateEntriesFromStorage();
   }
 
+  // create the Entry objects from the current entries and sort state settings
+  createEntrys():Entry[]
+  {
+    return _.map(sortEntries(this.props.entries,this.props.sortState),(x:HistoryEntry,i:number)=>{
+      return <Entry entrydata={x} key={i} loadEditor={this.props.loadEditor}
+        imageEditEnabled={this.props.imageEditEnabled}
+        toggleAddImageEditEntry={toggleAddImageEditEntry}
+        loadTagEditor={this.props.loadTagEditor}
+        groupCount={this.props.groupCounts[x.group]}/>;
+    });
+  }
+
   render()
   {
     return <div className="entrys">
-      {historyEntryDictToArray(this.props.entries).map((x:HistoryEntry,i:number)=>{
-        return <Entry entrydata={x} key={i} loadEditor={this.props.loadEditor}
-          imageEditEnabled={this.props.imageEditEnabled}
-          toggleAddImageEditEntry={toggleAddImageEditEntry}
-          loadTagEditor={this.props.loadTagEditor}
-          groupCount={this.props.groupCounts[x.group]}/>;
-      })}
+      {this.createEntrys()}
     </div>;
   }
 }
@@ -39,6 +46,7 @@ export default ReactRedux.connect((storestate:EntryViewerStore)=>{
   return {
     entries:storestate.entries,
     imageEditEnabled:storestate.imageEditMode,
-    groupCounts:storestate.groupCounts
+    groupCounts:storestate.groupCounts,
+    sortState:storestate.sortState
   };
 })(Entrys);
