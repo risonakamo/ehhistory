@@ -3,12 +3,12 @@ export function sortEntries(entries:HistoryEntryDict,sortState:SortState):Histor
 {
     if (sortState.sortMode=="date")
     {
-        return historyEntryDictToArray(entries);
+        return historyEntryDictToArray(entries,!sortState.descend);
     }
 }
 
 // converts a history entry dict to date sorted array of HistoryEntries
-export function historyEntryDictToArray(entries:HistoryEntryDict):HistoryEntry[]
+export function historyEntryDictToArray(entries:HistoryEntryDict,reverse:boolean=false):HistoryEntry[]
 {
   var entriesArray=Object.values(entries);
 
@@ -28,6 +28,11 @@ export function historyEntryDictToArray(entries:HistoryEntryDict):HistoryEntry[]
 
     return 0;
   });
+
+  if (reverse)
+  {
+    return _.reverse(entriesArray);
+  }
 
   return entriesArray;
 }
