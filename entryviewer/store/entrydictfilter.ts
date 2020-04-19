@@ -4,7 +4,7 @@ export default function filterEntries(entries:HistoryEntryDict,query:EntryQuery,
     return _.pickBy(entries,(x:HistoryEntry):boolean=>{
         return hasTags(x,query.tags) && doesNotHaveTags(x,query.subtractTags)
             && isGroup(x,query.group) && isType(x,query.type)
-            && (referenceMode || !(x.reference || false));
+            && (referenceMode || !(x.reference || false)) && hasAnyTags(x,query.addTags);
     });
 }
 
@@ -32,4 +32,13 @@ function isGroup(entry:HistoryEntry,groups:string[]):boolean
 function isType(entry:HistoryEntry,types:EntryType[]):boolean
 {
     return !types.length || types.includes(entry.type);
+}
+
+// returns true if the entry has at least one of the the given tags,
+// or the given tags is empty
+function hasAnyTags(entry:HistoryEntry,tags:string[]):boolean
+{
+    return !tags.length || _.some(tags,(x:string)=>{
+        return _.includes(entry.tags,x);
+    });
 }

@@ -162,6 +162,7 @@ export function updateQuery(query:EntryQuery|null):void
         query={
             tags:[],
             subtractTags:[],
+            addTags:[],
             group:[],
             type:[]
         };
@@ -337,6 +338,7 @@ store=Redux.createStore((state:EntryViewerStore,act:StoreAction)=>{
     entryQuery:{
         tags:[],
         subtractTags:[],
+        addTags:[],
         group:[],
         type:[]
     },

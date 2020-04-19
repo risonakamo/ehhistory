@@ -61,6 +61,7 @@ interface EntryQuery
 {
     tags:string[]
     subtractTags:string[]
+    addTags:string[]
 
     group:string[]
     type:EntryType[]

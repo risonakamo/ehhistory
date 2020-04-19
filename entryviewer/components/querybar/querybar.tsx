@@ -81,6 +81,7 @@ function createEntryQuery(query:string):EntryQuery|null
   },{
     tags:[],
     subtractTags:[],
+    addTags:[],
     group:[],
     type:[]
   });
@@ -98,6 +99,14 @@ function parseSingleQuery(query:string):SingleQuery
     {
       return {
         type:"subtractTags",
+        query:query.slice(1)
+      };
+    }
+
+    else if (query[0]=="+")
+    {
+      return {
+        type:"addTags",
         query:query.slice(1)
       };
     }
