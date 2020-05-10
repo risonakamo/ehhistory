@@ -54,8 +54,13 @@ class QueryBar extends React.PureComponent
   render()
   {
     return <div className="query-bar">
-      <TagEditorInput placeholder="filter ehhistory" className="query-bar-input"
-        newTag={this.submitQuery} noSubmit={true} ref={this.theInputBar} hidden={this.props.imageEditMode}/>
+      <div className="input-hold">
+        <TagEditorInput placeholder="filter ehhistory" newTag={this.submitQuery}
+          noSubmit={true} ref={this.theInputBar} hidden={this.props.imageEditMode}/>
+
+        <div className="entry-count">1000</div>
+      </div>
+
       <div className="info-zone" style={{display:this.state.currentQuery.length?"":"none"}}>
         <img src="../imgs/rightpointingarrow-white.svg"/>
         <span>{this.state.currentQuery}</span>
