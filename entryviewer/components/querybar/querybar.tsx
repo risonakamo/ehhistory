@@ -13,6 +13,7 @@ interface SingleQuery
 interface QueryBarProps
 {
   imageEditMode:boolean //STORE
+  entries:HistoryEntryDict //STORE, only for counting number of entries
 }
 
 interface QueryBarState
@@ -20,7 +21,7 @@ interface QueryBarState
   currentQuery:string
 }
 
-/* QueryBar(STORE-bool imageEditMode) */
+/* QueryBar(STORE-bool imageEditMode, STORE-HistoryEntryDict entries) */
 class QueryBar extends React.PureComponent
 {
   props:QueryBarProps
@@ -58,7 +59,7 @@ class QueryBar extends React.PureComponent
         <TagEditorInput placeholder="filter ehhistory" newTag={this.submitQuery}
           noSubmit={true} ref={this.theInputBar} hidden={this.props.imageEditMode}/>
 
-        <div className="entry-count">1000</div>
+        <div className="entry-count">{_.keys(this.props.entries).length}</div>
       </div>
 
       <div className="info-zone" style={{display:this.state.currentQuery.length?"":"none"}}>
@@ -157,6 +158,7 @@ function replaceUnderscores(input:string):string
 
 export default ReactRedux.connect((storestate:EntryViewerStore)=>{
   return {
-    imageEditMode:storestate.imageEditMode
+    imageEditMode:storestate.imageEditMode,
+    entries:storestate.entries
   };
 })(QueryBar);
