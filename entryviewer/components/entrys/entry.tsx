@@ -157,7 +157,7 @@ export default class Entry extends React.Component
         </div>
         <div className="edit-zone" style={{display:this.props.diffMode?"none":""}}>
           <div className="edit-button edit-button" onClick={this.editButtonClick}><img src="../imgs/triangle-white.svg"/></div>
-          <div className="edit-button tag-button" onClick={this.tagButtonClick}><img src="../imgs/square-white.svg"/></div>
+          <div className="edit-button tag-button" onClick={this.tagButtonClick}><img src="../imgs/square-orange.svg"/></div>
         </div>
       </div>
       <div className="content-contain">
