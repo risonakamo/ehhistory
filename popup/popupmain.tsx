@@ -143,6 +143,14 @@ class EntryRow extends React.Component
     return this.contentElement.current.textContent;
   }
 
+  // handle paste event to paste plain text
+  pasteHandler(e:any):void
+  {
+    e.preventDefault();
+
+    e.target.innerText=e.clipboardData.getData("text/plain");
+  }
+
   render()
   {
     var editability=this.props.notEditable?false:true;
@@ -151,6 +159,7 @@ class EntryRow extends React.Component
       <div className="entry-name">{this.props.name}</div>
       <div className="entry-content" contentEditable={editability}
         ref={this.contentElement} suppressContentEditableWarning={true}
+        onPaste={this.pasteHandler}
       >
         {this.props.content}
       </div>
