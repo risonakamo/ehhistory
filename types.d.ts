@@ -14,6 +14,7 @@ interface HistoryEntry
     link:string
 
     date:DateString
+    dates:DateString[]
 
     tags:string[]
 

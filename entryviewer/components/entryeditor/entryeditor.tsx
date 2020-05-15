@@ -39,6 +39,7 @@ export default class EntryEditor extends React.Component
         image:"",
         link:"",
         date:"",
+        dates:[],
         tags:[]
       },
       deleteMode:false //prepare for deletion

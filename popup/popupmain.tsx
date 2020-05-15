@@ -64,6 +64,7 @@ export default class PopupMain extends React.Component
         link:this.currentUrl,
         image:"",
         date:new Date().toISOString(),
+        dates:[],
         tags:[],
         reference
       };

@@ -47,6 +47,7 @@ class EntryViewerMain extends React.Component
         image:"",
         link:"",
         date:"",
+        dates:[],
         tags:[]
       },
 
