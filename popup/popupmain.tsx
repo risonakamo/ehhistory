@@ -39,6 +39,9 @@ export default class PopupMain extends React.Component
     var parserResult:PageParseResultWithType=await runPageParser();
 
     this.currentUrl=parserResult.url;
+
+    console.log("attempt find",await findEntry(this.currentUrl));
+
     this.setState({
       currentName:parserResult.name,
       currentGroup:parserResult.group,
@@ -166,4 +169,19 @@ class EntryRow extends React.Component
       </div>
     </div>;
   }
+}
+
+// given a url, attempt to return an entry, or undefined if it could not
+// find it.
+function findEntry(url:string):Promise<HistoryEntry|undefined>
+{
+  return new Promise((resolve)=>{
+    chrome.storage.local.get("entries",(storage:LocalStorage)=>{
+      var entries:HistoryEntryDict=storage.entries || {};
+
+      resolve(Object.values(entries).find((x:HistoryEntry)=>{
+        return x.link==url;
+      }));
+    });
+  });
 }
