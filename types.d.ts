@@ -25,6 +25,7 @@ interface HistoryEntry
 interface LocalStorage
 {
     entries:HistoryEntryDict
+    entries2:EntriesDict2
     maxId:number
 }
 

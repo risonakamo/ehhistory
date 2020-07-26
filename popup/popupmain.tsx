@@ -1,4 +1,5 @@
 import runPageParser from "../pageparsers/parserrunner";
+import {addEntry2} from "../database/database";
 
 /* PopupMain() */
 export default class PopupMain extends React.Component
@@ -75,6 +76,15 @@ export default class PopupMain extends React.Component
       chrome.storage.local.set(storageResult,()=>{
         window.close();
       });
+    });
+
+    addEntry2({
+      name:this.nameElement.current.getContent(),
+      group:this.groupElement.current.getContent(),
+      type:this.state.currentType,
+      link:this.currentUrl,
+      dates:[new Date().toISOString()],
+      tags:[]
     });
   }
 
