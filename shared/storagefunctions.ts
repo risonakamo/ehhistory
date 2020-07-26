@@ -1,3 +1,5 @@
+import {convertOldEntries,clearEntries2} from "../database/database";
+
 function clearAll()
 {
     chrome.storage.local.clear();
@@ -76,4 +78,6 @@ export default function attachStorageFunctions()
     (window as any).convertStorageArrayToDict=convertStorageArrayToDict;
     (window as any).fixMissingIds=fixMissingIds;
     (window as any).resyncIds=resyncIds;
+    (window as any).convertOldEntries=convertOldEntries;
+    (window as any).clearEntries2=clearEntries2;
 }
