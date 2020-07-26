@@ -1,3 +1,5 @@
+import {getEntries2} from "../../../database/database";
+
 import "./importexportbox.less";
 
 /* ImportExportBox(function importedHistoryEntries, function finalImport) */
@@ -23,7 +25,6 @@ export default class ImportExportBox extends React.Component
     super(props);
     this.recievedFile=this.recievedFile.bind(this);
     this.loadImportFile=this.loadImportFile.bind(this);
-    this.loadImportFile=this.loadImportFile.bind(this);
 
     this.state={
       importButtonEnabled:false,
@@ -46,6 +47,18 @@ export default class ImportExportBox extends React.Component
         url:"data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(entries)))),
         filename:"entries.json"
       });
+    });
+  }
+
+  async exportEntries2(e:Event):Promise<void>
+  {
+    e.preventDefault();
+
+    var entries2:EntriesDict2=await getEntries2();
+
+    chrome.downloads.download({
+      url:"data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(entries2)))),
+      filename:"entries-new.json"
     });
   }
 
@@ -106,9 +119,8 @@ export default class ImportExportBox extends React.Component
         <input type="file" onChange={this.recievedFile} ref={this.fileInput}
           style={{display:this.state.finalImport?"none":""}}/>
       </p>
-      <p>
-        <a href="google.com" onClick={this.exportEntries}>export</a>
-      </p>
+      <p><a href="google.com" onClick={this.exportEntries}>export</a></p>
+      <p><a href="" onClick={this.exportEntries2}>export2</a></p>
     </div>;
   }
 }
