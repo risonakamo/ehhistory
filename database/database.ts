@@ -30,6 +30,43 @@ export async function getEntries2():Promise<EntriesDict2>
     });
 }
 
+// overwrite entrys in the database, do nothing if it doesnt exist.
+// return the entries after the update
+export async function updateEntrys2(newEntries:HistoryEntry2[]):Promise<EntriesDict2>
+{
+    return new Promise(async (resolve)=>{
+        var entries:EntriesDict2=await getEntries2();
+
+        for (var x=0,l=newEntries.length;x<l;x++)
+        {
+            var entry=newEntries[x];
+
+            if (!entries[entry.link])
+            {
+                console.log("tried to update non-existing entry",entry);
+                continue;
+            }
+
+            entries[entry.link]=entry;
+        }
+
+        chrome.storage.local.set({entries2:entries});
+
+        resolve(entries);
+    });
+}
+
+// remove an entry, returns the entries after the removal
+export async function removeEntry2(entry:HistoryEntry2):Promise<EntriesDict2>
+{
+    return new Promise(async (resolve)=>{
+        var entries:EntriesDict2=await getEntries2();
+        delete entries[entry.link];
+        chrome.storage.local.set({entries2:entries});
+        resolve(entries);
+    });
+}
+
 // upload all entries from old entries table into new table. no guarantees on which information is taken,
 // entries with the same link will be merged.
 export function convertOldEntries():void
