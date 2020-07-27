@@ -60,6 +60,7 @@ export function convertOldEntries():void
                     group:entry.group,
                     link:entry.link,
                     type:entry.type,
+                    image:entry.image,
 
                     dates:[entry.date],
                     tags:entry.tags

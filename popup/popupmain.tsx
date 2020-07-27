@@ -83,6 +83,7 @@ export default class PopupMain extends React.Component
       group:this.groupElement.current.getContent(),
       type:this.state.currentType,
       link:this.currentUrl,
+      image:"",
       dates:[new Date().toISOString()],
       tags:[]
     });

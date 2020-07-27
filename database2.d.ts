@@ -4,6 +4,7 @@ interface HistoryEntry2
     group:string
     link:string
     type:EntryType
+    image:string
 
     tags:string[]
     dates:DateString[]
